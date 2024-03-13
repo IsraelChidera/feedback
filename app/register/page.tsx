@@ -1,11 +1,45 @@
+'use client'
+
 import React from 'react'
 import Container from '@/components/Container';
 import Button from '@/components/Button';
 import TextField from '@/components/Forms/TextField';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Field, Form, Formik } from 'formik';
+import * as Yup from 'yup';
 
 const page = () => {
+    const initialValues = {
+        businessName: '',
+        workEmail: '',
+        phoneNumber: '',
+        password: '',
+        privacyAndTerms: true
+    };
+
+    const validationSchema = Yup.object({
+        businessName: Yup.string()
+            .required('Business name is required')
+            .min(3, 'Must be 3 characters or more'),
+        phoneNumber: Yup.string()
+            .required('Phone number is required')
+            .min(9, 'Must be 3 characters or more')
+            .max(11, 'Must be 11 characters'),
+        workEmail: Yup.string()
+            .email('Invalid email address')
+            .required('Email is required'),
+        password: Yup.string()
+            .required('Password is required')
+            .min(3, 'Must be 6 characters or more'),
+        privacyAndTerms: Yup.string().required('ProjectOwner is required'),
+    });
+
+    const onContactFormSubmission = (values: any) => {
+        console.log(values);
+
+    }
+
     return (
         <main className='grid grid-cols-5'>
             <section className='col-span-2 bg-primary relative'>
@@ -44,36 +78,57 @@ const page = () => {
                 </div>
 
                 <div className='mt-10 pb-20'>
-                    <form className='w-[520px] mx-auto space-y-6'>
-                        <TextField type="text" label="Business Name" placeholder='Business Name' />
+                    <Formik
+                        initialValues={initialValues}
+                        validationSchema={validationSchema}
+                        onSubmit={(values, { resetForm }: { resetForm: any }) => {
+                            onContactFormSubmission(values);
+                            resetForm({ values: '' });
+                        }}
+                    >
+                        {
+                            (
+                                { values, errors, touched, handleChange, }:
+                                    {
+                                        values: any, errors: any,
+                                        touched: any, handleChange: any,
+                                    }
+                            ) => (
+                                <>
+                                    <form className='w-[520px] mx-auto space-y-6'>
+                                        <TextField type="text" value={values.businessName} onChange={handleChange} label="Business Name" placeholder='Business Name' />
 
-                        <TextField type="email" label="Work email" placeholder='info@business.com' />
+                                        <TextField type="email" value={values.workEmail} onChange={handleChange} label="Work email" placeholder='info@business.com' />
 
-                        <TextField type="phone" label="Phone number" placeholder='+234 814 626 5074' />
+                                        <TextField type="phone" value={values.phoneNumber} onChange={handleChange} label="Phone number" placeholder='+234 814 626 5074' />
 
-                        <TextField type="password" label="Password" placeholder='info@business.com' />
+                                        <TextField type="password" value={values.password} onChange={handleChange} label="Password" placeholder='info@business.com' />
 
-                        <div>
-                            <input type="checkbox" />
-                            <span className='text-sm text-inputText pl-2'>
-                                Please exclude me from any future emails regarding Feedback App and related Intuit product and feature updates, marketing best practices, and promotions.
-                            </span>
-                        </div>
+                                        <div>
+                                            <input type="checkbox" value={values.privacyAndTerms} onChange={handleChange} />
+                                            <span className='text-sm text-inputText pl-2'>
+                                                Please exclude me from any future emails regarding Feedback App and related Intuit product and feature updates, marketing best practices, and promotions.
+                                            </span>
+                                        </div>
 
-                        <div>
-                            <p className='text-inputText'>
-                                By registering for an account, you are consenting to our Terms of Service and confirming that you have reviewed and accepted the Global Privacy Statement.
-                            </p>
-                        </div>
+                                        <div>
+                                            <p className='text-inputText'>
+                                                By registering for an account, you are consenting to our Terms of Service and confirming that you have reviewed and accepted the Global Privacy Statement.
+                                            </p>
+                                        </div>
 
-                        <Button className="w-full bg-primary text-white">
-                            Get started
-                        </Button>
+                                        <Button className="w-full bg-primary text-white">
+                                            Get started
+                                        </Button>
 
-                        <p className='text-center'>
-                            Already have an account? <Link className='underline text-primary' href="#">Login</Link>
-                        </p>
-                    </form>
+                                        <p className='text-center'>
+                                            Already have an account? <Link className='underline text-primary' href="#">Login</Link>
+                                        </p>
+                                    </form>
+                                </>
+                            )}
+                    </Formik>
+
                 </div>
             </section>
         </main>
