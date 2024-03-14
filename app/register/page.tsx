@@ -15,7 +15,7 @@ const page = () => {
         workEmail: '',
         phoneNumber: '',
         password: '',
-        privacyAndTerms: true
+        privacyAndTerms: false
     };
 
     const validationSchema = Yup.object({
@@ -37,7 +37,6 @@ const page = () => {
 
     const onContactFormSubmission = (values: any) => {
         console.log(values);
-
     }
 
     return (
@@ -95,20 +94,47 @@ const page = () => {
                                     }
                             ) => (
                                 <>
-                                    <form className='w-[520px] mx-auto space-y-6'>
-                                        <TextField type="text" value={values.businessName} onChange={handleChange} label="Business Name" placeholder='Business Name' />
+                                    <Form className='w-[520px] mx-auto space-y-6'>
+                                        <div>
+                                            <TextField type="text" name='businessName' id="businessName" value={values.businessName} onChange={handleChange} label="Business Name" placeholder='Business Name' />
 
-                                        <TextField type="email" value={values.workEmail} onChange={handleChange} label="Work email" placeholder='info@business.com' />
-
-                                        <TextField type="phone" value={values.phoneNumber} onChange={handleChange} label="Phone number" placeholder='+234 814 626 5074' />
-
-                                        <TextField type="password" value={values.password} onChange={handleChange} label="Password" placeholder='info@business.com' />
+                                            <p className='text-xs text-primary'>
+                                                {errors.businessName && touched.businessName && errors.businessName}
+                                            </p>
+                                        </div>
 
                                         <div>
-                                            <input type="checkbox" value={values.privacyAndTerms} onChange={handleChange} />
+                                            <TextField type="email" name='workEmail' id="workEmail" value={values.workEmail} onChange={handleChange} label="Work email" placeholder='info@business.com' />
+
+                                            <p className='text-xs text-primary'>
+                                                {errors.workEmail && touched.workEmail && errors.workEmail}
+                                            </p>
+                                        </div>
+
+                                        <div>
+                                            <TextField type="phone" name='phoneNumber' id="phoneNumber" value={values.phoneNumber} onChange={handleChange} label="Phone number" placeholder='+234 814 626 5074' />
+
+                                            <p className='text-xs text-primary'>
+                                                {errors.phoneNumber && touched.phoneNumber && errors.phoneNumber}
+                                            </p>
+                                        </div>
+
+                                        <div>
+                                            <TextField type="password" name='password' id="password" value={values.password} onChange={handleChange} label="Password" placeholder='enter password' />
+
+                                            <p className='text-xs text-primary'>
+                                                {errors.password && touched.password && errors.password}
+                                            </p>
+                                        </div>
+
+                                        <div>
+                                            <input name='privacyAndTerms' id="privacyAndTerms" type="checkbox" value={values.privacyAndTerms} onChange={handleChange} />
                                             <span className='text-sm text-inputText pl-2'>
                                                 Please exclude me from any future emails regarding Feedback App and related Intuit product and feature updates, marketing best practices, and promotions.
                                             </span>
+                                            <p className='text-xs text-primary'>
+                                                {errors.privacyAndTerms && touched.privacyAndTerms && errors.privacyAndTerms}
+                                            </p>
                                         </div>
 
                                         <div>
@@ -117,14 +143,14 @@ const page = () => {
                                             </p>
                                         </div>
 
-                                        <Button className="w-full bg-primary text-white">
+                                        <Button type="submit" className="w-full bg-primary text-white">
                                             Get started
                                         </Button>
 
                                         <p className='text-center'>
-                                            Already have an account? <Link className='underline text-primary' href="#">Login</Link>
+                                            Already have an account? <Link className='underline text-primary' href="/login">Login</Link>
                                         </p>
-                                    </form>
+                                    </Form>
                                 </>
                             )}
                     </Formik>

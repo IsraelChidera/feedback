@@ -8,10 +8,11 @@ type InputProps = {
     value?: any,
     name?: string,
     onChange?: any,
-    props?: any
+    props?: any,
+    id: any
 }
 
-const index = ({ label, type, placeholder, className, value, name, onChange, ...props }: InputProps) => {
+const index = ({ label, id, type, placeholder, className, value, name, onChange, ...props }: InputProps) => {
     return (
         <div>
             <label className='block text-inputText font-medium'>
@@ -20,6 +21,7 @@ const index = ({ label, type, placeholder, className, value, name, onChange, ...
 
             <input
                 type={type}
+                id={id}
                 placeholder={placeholder}
                 className={`rounded-[8px] bg-white text-[#0A0A0C] py-[20px] pl-[14px] pr-[10px] w-full ${className}`}
                 name={name}
