@@ -6,7 +6,7 @@ import Button from '@/components/Button';
 import TextField from '@/components/Forms/TextField';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Field, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
 const page = () => {
