@@ -33,11 +33,13 @@ const page = () => {
             <section className='col-span-2 bg-primary relative'>
                 <Container>
                     <div className='mt-10'>
-                        <div className='text-2xl font-semibold text-white'>Feedback</div>
+                        {/* <div className='text-2xl font-semibold text-white'>Feedback</div> */}
+                        <div>
+                            <Image width={204} height={58} src="/logo2.svg" alt="logo" />
+                        </div>
 
                         <h1 className='text-white font-semibold mt-10 text-[35px] leading-tight'>
-                            Welcome to Feedback Form
-                            App - Revolutionizing
+                            Welcome to Feedback Share - Revolutionizing
                             Client Feedback!
                         </h1>
 
@@ -86,14 +88,14 @@ const page = () => {
                                         }
                                 ) => (
                                     <>
-                                        <Form className='w-[520px] mx-auto space-y-6'>                                            
+                                        <Form className='w-[520px] mx-auto space-y-6'>
                                             <div>
                                                 <TextField type="email" name='workEmail' id="workEmail" value={values.workEmail} onChange={handleChange} label="Work email" placeholder='info@business.com' />
 
                                                 <p className='text-xs text-primary'>
                                                     {errors.workEmail && touched.workEmail && errors.workEmail}
                                                 </p>
-                                            </div>         
+                                            </div>
 
                                             <div>
                                                 <TextField type="password" name='password' id="password" value={values.password} onChange={handleChange} label="Password" placeholder='enter password' />
@@ -101,7 +103,7 @@ const page = () => {
                                                 <p className='text-xs text-primary'>
                                                     {errors.password && touched.password && errors.password}
                                                 </p>
-                                            </div>                                                                                       
+                                            </div>
 
                                             <Button type="submit" className="w-full bg-primary text-white">
                                                 Login
@@ -115,7 +117,7 @@ const page = () => {
                                                 Forgot Password? <Link className='underline text-primary' href="#">Reset now</Link>
                                             </p>
                                         </Form>
-                                       
+
                                     </>
                                 )}
                         </Formik>

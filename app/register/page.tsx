@@ -44,11 +44,13 @@ const page = () => {
             <section className='col-span-2 bg-primary relative'>
                 <Container>
                     <div className='mt-10'>
-                        <div className='text-2xl font-semibold text-white'>Feedback</div>
+                        {/* <div className='text-2xl font-semibold text-white'>Feedback</div> */}
+                        <div>
+                            <Image width={204} height={58} src="/logo2.svg" alt="logo" />
+                        </div>
 
                         <h1 className='text-white font-semibold mt-10 text-[35px] leading-tight'>
-                            Welcome to Feedback Form
-                            App - Revolutionizing
+                            Welcome to Feedback Share - Revolutionizing
                             Client Feedback!
                         </h1>
 
@@ -130,7 +132,7 @@ const page = () => {
                                         <div>
                                             <input name='privacyAndTerms' id="privacyAndTerms" type="checkbox" value={values.privacyAndTerms} onChange={handleChange} />
                                             <span className='text-sm text-inputText pl-2'>
-                                                Please exclude me from any future emails regarding Feedback App and related Intuit product and feature updates, marketing best practices, and promotions.
+                                                Please exclude me from any future emails regarding FeedbackShare and related product and feature updates, marketing best practices, and promotions.
                                             </span>
                                             <p className='text-xs text-primary'>
                                                 {errors.privacyAndTerms && touched.privacyAndTerms && errors.privacyAndTerms}
@@ -139,7 +141,9 @@ const page = () => {
 
                                         <div>
                                             <p className='text-inputText'>
-                                                By registering for an account, you are consenting to our Terms of Service and confirming that you have reviewed and accepted the Global Privacy Statement.
+                                                By registering for an account, you are consenting to our 
+                                                Terms of Service and confirming that you have reviewed and 
+                                                accepted the Global Privacy Statement.
                                             </p>
                                         </div>
 
