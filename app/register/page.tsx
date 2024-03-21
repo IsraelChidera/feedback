@@ -1,15 +1,20 @@
 'use client'
 
 import React from 'react'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import Container from '@/components/Container';
 import Button from '@/components/Button';
 import TextField from '@/components/Forms/TextField';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Field, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
+import { useRouter } from 'next/navigation';
 import * as Yup from 'yup';
 
 const page = () => {
+    const supabase = createClientComponentClient();
+    const router = useRouter();
+
     const initialValues = {
         businessName: '',
         workEmail: '',
@@ -35,8 +40,21 @@ const page = () => {
         privacyAndTerms: Yup.string().required('ProjectOwner is required'),
     });
 
-    const onContactFormSubmission = (values: any) => {
+    const onContactFormSubmission = async (values: any) => {
         console.log(values);
+
+        let { data, error } = await supabase.auth.signUp({
+            email: values.workEmail,
+            password: values.password,
+            options: {
+                emailRedirectTo: `${location.origin}/auth/callback`
+            }
+
+        })
+
+        router.refresh();
+
+        console.log({ data, error });
     }
 
     return (
@@ -141,8 +159,8 @@ const page = () => {
 
                                         <div>
                                             <p className='text-inputText'>
-                                                By registering for an account, you are consenting to our 
-                                                Terms of Service and confirming that you have reviewed and 
+                                                By registering for an account, you are consenting to our
+                                                Terms of Service and confirming that you have reviewed and
                                                 accepted the Global Privacy Statement.
                                             </p>
                                         </div>

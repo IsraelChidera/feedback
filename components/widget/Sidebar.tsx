@@ -12,15 +12,14 @@ const Sidebar = () => {
 
     return (
         <div className='w-[328px] h-screen flex flex-col  justify-between py-10 pl-3 pr-8 '>
-            <div>
-                {/* <h1 className='text-2xl font-semibold text-primary'>Feedback</h1> */}
+            <div>                
                 <div>
                     <Image width={204} height={58} src="/logo.svg" alt="logo" />
                 </div>
 
                 <ul className='mt-20 grid grid-cols-1 space-y-6'>
                     <li>
-                        <Link className={`${pathname==="/dashboard"? "bg-primary py-2 w-full pl-3 pr-2 text-white block rounded-[30px]": ""} text-primary text-base font-medium`} href="#">
+                        <Link className={`${pathname.includes("dashboard")? "bg-primary py-2 w-full pl-3 pr-2 text-white block rounded-[30px]": ""} text-primary text-base font-medium`} href="#">
                             Dashboard
                         </Link>
                     </li>
