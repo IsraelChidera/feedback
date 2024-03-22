@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Container from '@/components/Container';
 import Button from '@/components/Button';
 import TextField from '@/components/Forms/TextField';
@@ -8,8 +8,21 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { useRouter } from 'next/navigation';
+import { useSelector } from 'react-redux';
 
 const page = () => {
+    const supabase = createClientComponentClient();
+    const router = useRouter();
+    const [errors, setErrors] = useState<string>("");
+
+    const user = useSelector((state: any) => state.user.value)
+
+    useEffect(() => {
+        console.log(user)
+    }, []);
+    
     const initialValues = {
         workEmail: '',
         password: '',
@@ -24,8 +37,20 @@ const page = () => {
             .min(3, 'Must be 6 characters or more'),
     });
 
-    const onLogin = (values: any) => {
+    const onLogin = async (values: any) => {
         console.log(values);
+
+        let { data, error } = await supabase.auth.signInWithPassword({
+            email: values.workEmail,
+            password: values.password
+        });
+
+        console.log({ data, error });
+        if (error == null) {
+            router.push("/dashboard");
+        }
+
+        return data
     }
 
     return (
@@ -33,7 +58,6 @@ const page = () => {
             <section className='col-span-2 bg-primary relative'>
                 <Container>
                     <div className='mt-10'>
-                        {/* <div className='text-2xl font-semibold text-white'>Feedback</div> */}
                         <div>
                             <Image width={204} height={58} src="/logo2.svg" alt="logo" />
                         </div>

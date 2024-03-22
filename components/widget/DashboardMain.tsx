@@ -1,8 +1,14 @@
+'use client'
+
 import Image from 'next/image';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@/components/Button';
+import { useSelector } from 'react-redux';
+
 
 const DashboardMain = () => {
+ 
+
     return (
         <main className='mx-auto w-[98%]'>
             <section className='py-6 px-4 w-full bg-white my-3 rounded-[10px]'>

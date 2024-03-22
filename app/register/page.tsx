@@ -52,9 +52,13 @@ const page = () => {
 
         })
 
-        router.refresh();
+        if (data) {
+            router.push('/login');
+        }
 
         console.log({ data, error });
+
+        return { data, error }
     }
 
     return (

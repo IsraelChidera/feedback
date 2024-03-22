@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-// import "./globals.css";
 import DashboardNav from "@/components/widget/DasboardNav";
 import Sidebar from "@/components/widget/Sidebar";
 
