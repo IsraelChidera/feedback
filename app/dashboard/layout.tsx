@@ -17,7 +17,7 @@ export default function DashboardLayout({
         <html lang="en">
             <body>
                 <main className='bg-[#EBEBEB] flex relative'>
-                    <div className='bg-white fixed top-0 left-0 h-screen'>
+                    <div className='bg-white z-30 fixed top-0 left-0 h-screen'>
                         <Sidebar />
                     </div>
                     <div className='relative pl-[330px] w-full'>

@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import TextField from '@/components/Forms/TextField';
 import Image from 'next/image';
 import Button from '@/components/Button';
@@ -8,8 +8,26 @@ import Link from 'next/link';
 import { Form, Formik } from 'formik';
 import { useRouter } from 'next/navigation';
 import * as Yup from 'yup';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 const page = () => {
+    const [currentUser, setCurrentUser] = useState<any>(null);
+
+    const supabase = createClientComponentClient()
+
+    const getUser: any = async () => {
+        const { data: { user } } = await supabase.auth.getUser()
+        console.log(user);
+        setCurrentUser(user);
+        return user
+    }
+
+    useLayoutEffect(() => {
+        getUser();
+        setCurrentUser(getUser());
+    }, []);
+    
+    console.log(currentUser?.id);
 
     const initialValues = {
         businessName: '',
@@ -42,8 +60,25 @@ const page = () => {
             .min(3, 'Must be 3 characters or more'),
     });
 
+
     const onContactFormSubmission = async (values: any) => {
         console.log(values);
+
+        const { data, error } = await supabase
+            .from('profiles')
+            .insert([
+                {
+                    id: currentUser.id,
+                    businessname: values.businessName,
+                    fullname: values.fullName,
+                    phonenumber: values.phoneNumber,
+                    country: values.country,
+                    avatarurl: values.workEmail
+                },
+            ])
+            .select()
+
+        console.log({ data, error })
     }
 
     return (

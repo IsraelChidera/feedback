@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import Container from '@/components/Container';
 import Button from '@/components/Button';
@@ -10,10 +10,12 @@ import Link from 'next/link';
 import { Form, Formik } from 'formik';
 import { useRouter } from 'next/navigation';
 import * as Yup from 'yup';
+import { ImSpinner8 } from "react-icons/im";
 
 const page = () => {
     const supabase = createClientComponentClient();
     const router = useRouter();
+    const [loading, setLoading] = useState(false);
 
     const initialValues = {
         businessName: '',
@@ -41,24 +43,27 @@ const page = () => {
     });
 
     const onContactFormSubmission = async (values: any) => {
-        console.log(values);
+        try {
+            console.log(values);
+            setLoading(true);
 
-        let { data, error } = await supabase.auth.signUp({
-            email: values.workEmail,
-            password: values.password,
-            options: {
-                emailRedirectTo: `${location.origin}/auth/callback`
-            }
-
-        })
-
-        if (data) {
+            let { data, error } = await supabase.auth.signUp({
+                email: values.workEmail,
+                password: values.password,
+                options: {
+                    emailRedirectTo: `${location.origin}/auth/callback`
+                }
+            })
             router.push('/login');
+
+            console.log({ data, error });
+
+            return { data, error }
+        } catch (error) {
+            console.log(error);
+            setLoading(false)
         }
-
-        console.log({ data, error });
-
-        return { data, error }
+        setLoading(false)
     }
 
     return (
@@ -66,7 +71,6 @@ const page = () => {
             <section className='col-span-2 bg-primary relative'>
                 <Container>
                     <div className='mt-10'>
-                        {/* <div className='text-2xl font-semibold text-white'>Feedback</div> */}
                         <div>
                             <Image width={204} height={58} src="/logo2.svg" alt="logo" />
                         </div>
@@ -170,7 +174,15 @@ const page = () => {
                                         </div>
 
                                         <Button type="submit" className="w-full bg-primary text-white">
-                                            Get started
+                                            {
+                                                loading ? <div className="flex items-center justify-center">
+                                                    <ImSpinner8 className="text-white animate-spin" />
+                                                </div>
+                                                    :
+                                                    <span>
+                                                        Get started
+                                                    </span>
+                                            }
                                         </Button>
 
                                         <p className='text-center'>

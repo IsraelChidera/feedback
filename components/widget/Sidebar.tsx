@@ -1,25 +1,42 @@
 'use client'
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@/components/Button';
 import { usePathname } from 'next/navigation';
 import { MdOutlineLogout } from "react-icons/md";
 import Image from 'next/image';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { useRouter } from 'next/navigation';
+import { ImSpinner8 } from "react-icons/im";
 
 const Sidebar = () => {
 
     const pathname = usePathname();
+    const supabase = createClientComponentClient();
+    const router = useRouter();
+    const [loading, setLoading] = useState(false);
+
+    const handleLogout = async () => {
+        setLoading(true);
+        try {
+            await supabase.auth.signOut()
+            router.push("/login");
+            setLoading(false);
+        } catch (error) {
+            console.log("error:", error)
+        }
+    }
 
     return (
-        <div className='w-[328px] h-screen flex flex-col  justify-between py-10 pl-3 pr-8 '>
-            <div>                
-                <div>
+        <div className='w-[328px] h-screen flex flex-col relative z-40 justify-between py-10 pl-3 pr-8 '>
+            <div>
+                <Link href="/">
                     <Image width={204} height={58} src="/logo.svg" alt="logo" />
-                </div>
+                </Link>
 
                 <ul className='mt-20 grid grid-cols-1 space-y-6'>
                     <li>
-                        <Link className={`${pathname.includes("dashboard")? "bg-primary py-2 w-full pl-3 pr-2 text-white block rounded-[30px]": ""} text-primary text-base font-medium`} href="#">
+                        <Link className={`${pathname.includes("dashboard") ? "bg-primary py-2 w-full pl-3 pr-2 text-white block rounded-[30px]" : ""} text-primary text-base font-medium`} href="#">
                             Dashboard
                         </Link>
                     </li>
@@ -38,12 +55,21 @@ const Sidebar = () => {
                 </ul>
             </div>
 
-            <Button className='bg-[#FFE4E4] text-[#FF0000]'>
-                <div className='flex space-x-3 px-4'>
-                    <MdOutlineLogout className='text-2xl' /> <span>Logout</span>
-                </div>
-            </Button>
-        </div>
+            <Button onClick={handleLogout} className='cursor-pointer bg-[#FFE4E4] text-[#FF0000] hover:text-white hover:bg-red-900 transition-all ease-in'>
+                {
+                    loading ? <div className="flex items-center justify-center">
+                        <ImSpinner8 className="text-white animate-spin" />
+                    </div> :
+                        <div className='flex space-x-3 px-4'>
+                            <MdOutlineLogout className='text-2xl' /> <span>Logout</span>
+                        </div>
+                }
+
+
+
+
+            </Button >
+        </div >
     )
 }
 

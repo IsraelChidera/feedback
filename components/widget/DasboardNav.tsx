@@ -1,14 +1,33 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { FaCircleUser } from "react-icons/fa6";
 import { FaAngleDown } from "react-icons/fa";
 import Link from 'next/link';
 import Button from '@/components/Button';
 import { usePathname, useRouter } from 'next/navigation';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { IoIosArrowRoundBack } from "react-icons/io";
 
 const DashboardNav = () => {
     const [open, setOpen] = useState(false);
+    const [currentUser, setCurrentUser] = useState<any>(null);
+
+    const supabase = createClientComponentClient()
+
+    const getUser: any = async () => {
+        const { data: { user } } = await supabase.auth.getUser()
+        console.log(user);
+        setCurrentUser(user);
+        return user
+    }
+
+    useLayoutEffect(() => {
+        getUser();
+        setCurrentUser(getUser());
+    }, []);
+
+    console.log(currentUser);
 
     const router = useRouter();
     const pathname = usePathname();
@@ -28,7 +47,7 @@ const DashboardNav = () => {
                     {
                         pathname === "/dashboard/profile" &&
                         <div className='flex items-center space-x-2'>
-                            <div></div>
+                            <div> <IoIosArrowRoundBack /> </div>
                             <p className='text-[15px] text-[#0A0A0C] opacity-35'>Back</p>
                         </div>
                     }
@@ -36,7 +55,7 @@ const DashboardNav = () => {
                 </button>
 
                 <div className='flex items-center space-x-3'>
-                    <p className='text-[15px] text-[#0A0A0C] '>Israel Chidera</p>
+                    <p className='text-[15px] text-[#0A0A0C] '>{currentUser?.email}</p>
                     <div onClick={handleOpenProfileMenu} className='cursor-pointer flex items-center space-x-1'>
                         <FaCircleUser className='text-primary' width={43} height={43} />
                         <FaAngleDown width={25} height={25} className='text-[#0A0A0C] opacity-35' />

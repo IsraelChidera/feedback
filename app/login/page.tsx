@@ -10,19 +10,20 @@ import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
-import { useSelector } from 'react-redux';
+import { ImSpinner8 } from "react-icons/im";
 
 const page = () => {
     const supabase = createClientComponentClient();
     const router = useRouter();
     const [errors, setErrors] = useState<string>("");
+    const [loading, setLoading] = useState(false);
 
-    const user = useSelector((state: any) => state.user.value)
+    // const user = useSelector((state: any) => state.user.value)
 
-    useEffect(() => {
-        console.log(user)
-    }, []);
-    
+    // useEffect(() => {
+    //     console.log(user)
+    // }, []);
+
     const initialValues = {
         workEmail: '',
         password: '',
@@ -38,19 +39,27 @@ const page = () => {
     });
 
     const onLogin = async (values: any) => {
-        console.log(values);
+        try {
+            console.log(values);
+            setLoading(true);
+            let { data, error } = await supabase.auth.signInWithPassword({
+                email: values.workEmail,
+                password: values.password
+            });
 
-        let { data, error } = await supabase.auth.signInWithPassword({
-            email: values.workEmail,
-            password: values.password
-        });
-
-        console.log({ data, error });
-        if (error == null) {
+            console.log({ data, error });
             router.push("/dashboard");
+            // if (data) {
+            //     setLoading(false);
+            //     router.push("/dashboard");
+            // }
+            return data
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
         }
 
-        return data
+        setLoading(false);
     }
 
     return (
@@ -130,7 +139,15 @@ const page = () => {
                                             </div>
 
                                             <Button type="submit" className="w-full bg-primary text-white">
-                                                Login
+                                                {
+                                                    loading ? <div className="flex items-center justify-center">
+                                                        <ImSpinner8 className="text-white animate-spin" />
+                                                    </div>
+                                                        :
+                                                        <span>
+                                                            Login
+                                                        </span>
+                                                }
                                             </Button>
 
                                             <p className='text-center'>
