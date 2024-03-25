@@ -16,6 +16,7 @@ const page = () => {
     const supabase = createClientComponentClient();
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<any>({});
 
     const initialValues = {
         businessName: '',
@@ -56,9 +57,16 @@ const page = () => {
             })
             router.push('/login');
 
+            setError(error);
+
             console.log({ data, error });
 
-            return { data, error }
+            const updateUserProfile = await supabase.auth.updateUser({
+                email: "new@email.com",
+                password: "new-password",
+                data: { hello: 'world' }
+            })
+
         } catch (error) {
             console.log(error);
             setLoading(false)

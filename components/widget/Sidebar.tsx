@@ -64,10 +64,6 @@ const Sidebar = () => {
                             <MdOutlineLogout className='text-2xl' /> <span>Logout</span>
                         </div>
                 }
-
-
-
-
             </Button >
         </div >
     )

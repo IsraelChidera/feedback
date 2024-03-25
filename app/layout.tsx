@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { StoreProvider } from "@/store/UserContext";
+import { UserContextProvider } from "@/store/features/User/UserContext";
 
 
 export const metadata: Metadata = {
@@ -16,9 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <StoreProvider>
+        <UserContextProvider>
           {children}
-        </StoreProvider>
+        </UserContextProvider>
       </body>
     </html>
   );
