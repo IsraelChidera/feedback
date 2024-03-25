@@ -16,10 +16,6 @@ export async function middleware(req: any) {
 
     // if(!currentUser && !req.nextUrl.pathname.startsWith('login')){
     //     return Response.redirect(new URL('/login', req.url))
-    // }
-    console.log("req", req)
-    console.log("crrent", currentUser)
-
-
+    // }   
     return res;
 }

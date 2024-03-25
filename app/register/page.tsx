@@ -11,6 +11,10 @@ import { Form, Formik } from 'formik';
 import { useRouter } from 'next/navigation';
 import * as Yup from 'yup';
 import { ImSpinner8 } from "react-icons/im";
+import { FaFacebook } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+import { FaSquarePhone } from "react-icons/fa6";
+import { FaGoogle } from "react-icons/fa";
 
 const page = () => {
     const supabase = createClientComponentClient();
@@ -72,6 +76,16 @@ const page = () => {
             setLoading(false)
         }
         setLoading(false)
+    }
+
+    const LoginWithGoogle = async () => {
+        let { data, error } = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+        })
+
+        setError(error);
+        console.log(data);
+        return data;
     }
 
     return (
@@ -157,7 +171,9 @@ const page = () => {
 
                                         <div>
                                             <TextField type="password" name='password' id="password" value={values.password} onChange={handleChange} label="Password" placeholder='enter password' />
-
+                                            <p className='text-right text-sm underline'>
+                                                forgot password?
+                                            </p>
                                             <p className='text-xs text-primary'>
                                                 {errors.password && touched.password && errors.password}
                                             </p>
@@ -192,15 +208,29 @@ const page = () => {
                                                     </span>
                                             }
                                         </Button>
-
-                                        <p className='text-center'>
-                                            Already have an account? <Link className='underline text-primary' href="/login">Login</Link>
-                                        </p>
                                     </Form>
                                 </>
                             )}
                     </Formik>
 
+                    <div className='pb-12 mt-10 text-center'>
+                        <div className='relative'>
+                            <p className='login-options'>Or</p>
+                        </div>
+
+                        <div className='mt-3 flex items-center justify-center'>
+                            <div className='flex space-x-5 items-center'>
+                                <FaGoogle onClick={LoginWithGoogle} className='text-3xl text-[#ea4335]' />
+                                <FaFacebook className='text-3xl text-[#316ff6]' />
+                                <FaXTwitter className='text-3xl text-[#000]' />
+                                <FaSquarePhone className='text-4xl text-primary' />
+                            </div>
+                        </div>
+
+                        <p className='text-center mt-8'>
+                            Already have an account? <Link className='underline text-primary' href="/login">Login</Link>
+                        </p>
+                    </div>
                 </div>
             </section>
         </main>
