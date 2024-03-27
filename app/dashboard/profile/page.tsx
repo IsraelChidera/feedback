@@ -26,33 +26,27 @@ const page = () => {
         getUser();
         setCurrentUser(getUser());
     }, []);
-    
+
     console.log(currentUser?.id);
 
     const initialValues = {
-        businessName: '',                
+        businessname: "",
+        fullname: '',
         country: '',
-        displayName: '',
-        fullName: ''
+        phone: ""
     };
 
     const validationSchema = Yup.object({
-        businessName: Yup.string()
+        businessname: Yup.string()
             .required('Business name is required')
             .min(3, 'Must be 3 characters or more'),
-        fullName: Yup.string()
+        fullname: Yup.string()
             .required('Business name is required')
             .min(3, 'Must be 3 characters or more'),
-        displayName: Yup.string()
-            .required('Business name is required')
-            .min(3, 'Must be 3 characters or more'),
-        phoneNumber: Yup.string()
+        phone: Yup.string()
             .required('Phone number is required')
             .min(9, 'Must be 3 characters or more')
             .max(11, 'Must be 11 characters'),
-        workEmail: Yup.string()
-            .email('Invalid email address')
-            .required('Email is required'),
         country: Yup.string()
             .required('Business name is required')
             .min(3, 'Must be 3 characters or more'),
@@ -66,16 +60,16 @@ const page = () => {
             .from('profiles')
             .insert([
                 {
-                    id: currentUser.id,
-                    businessname: values.businessName,
-                    fullname: values.fullName,
-                    phonenumber: values.phoneNumber,
+                    profileid: currentUser.id,
+                    businessname: values.businessname,
+                    fullname: values.fullname,
                     country: values.country,
-                    avatarurl: values.workEmail
+                    phone: values.phone,
+                    isprofileupdated: true
                 },
             ])
-            .select()
-
+            .select();
+        console.log("dhjs")
         console.log({ data, error })
     }
 
@@ -83,7 +77,7 @@ const page = () => {
         <section className='mx-auto w-[98%]'>
             <div className="py-6 px-4 w-full bg-white my-3 rounded-[10px]">
                 <div>
-                    <h3 className='text-center text-[#828282]'>Account Information</h3>
+                    <h3 className='text-center text-primary'>Business Profile</h3>
                 </div>
 
                 <div className='mt-10 pb-20'>
@@ -105,27 +99,15 @@ const page = () => {
                             ) => (
                                 <>
                                     <Form className='w-[620px] mx-auto space-y-6'>
+
                                         <div>
                                             <label className='block font-medium'>
                                                 Full name
                                             </label>
                                             <input type="text"
-                                                name="fullName"
-                                                value={values.fullName}
+                                                name="fullname"
+                                                value={values.fullname}
                                                 placeholder="Israel Chidera"
-                                                onChange={handleChange}
-                                                className='border text-sm border-[#e0e0e0] w-full rounded-[10px] text-[#111827] py-[16px] pl-[14px] pr-[10px]'
-                                            />
-                                        </div>
-
-                                        <div>
-                                            <label className='block font-medium'>
-                                                Display name
-                                            </label>
-                                            <input type="text"
-                                                name="displayName"
-                                                value={values.displayName}
-                                                placeholder="Chidera22"
                                                 onChange={handleChange}
                                                 className='border text-sm border-[#e0e0e0] w-full rounded-[10px] text-[#111827] py-[16px] pl-[14px] pr-[10px]'
                                             />
@@ -136,22 +118,9 @@ const page = () => {
                                                 Business name
                                             </label>
                                             <input type="text"
-                                                name="businessName"
-                                                value={values.businessName}
+                                                name="businessname"
+                                                value={values.businessname}
                                                 placeholder="Lumixus studio"
-                                                onChange={handleChange}
-                                                className='border text-sm border-[#e0e0e0] w-full rounded-[10px] text-[#111827] py-[16px] pl-[14px] pr-[10px]'
-                                            />
-                                        </div>
-
-                                        <div>
-                                            <label className='block font-medium'>
-                                                Email
-                                            </label>
-                                            <input type="text"
-                                                name="workEmail"
-                                                value={values.workEmail}
-                                                placeholder="israel@gmail.com"
                                                 onChange={handleChange}
                                                 className='border text-sm border-[#e0e0e0] w-full rounded-[10px] text-[#111827] py-[16px] pl-[14px] pr-[10px]'
                                             />
@@ -162,8 +131,8 @@ const page = () => {
                                                 Phone number
                                             </label>
                                             <input type="text"
-                                                name="phoneNumber"
-                                                value={values.phoneNumber}
+                                                name="phone"
+                                                value={values.phone}
                                                 placeholder="09056356356"
                                                 onChange={handleChange}
                                                 className='border text-sm border-[#e0e0e0] w-full rounded-[10px] text-[#111827] py-[16px] pl-[14px] pr-[10px]'
