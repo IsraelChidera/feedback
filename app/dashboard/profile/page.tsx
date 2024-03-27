@@ -1,33 +1,31 @@
 "use client"
 
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useEffect, useState, useContext } from 'react';
 import TextField from '@/components/Forms/TextField';
 import Image from 'next/image';
 import Button from '@/components/Button';
 import Link from 'next/link';
 import { Form, Formik } from 'formik';
-import { useRouter } from 'next/navigation';
 import * as Yup from 'yup';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { UserContext } from '@/store/features/User/UserContext';
 
 const page = () => {
     const [currentUser, setCurrentUser] = useState<any>(null);
+
+    const { userProfile, setUserProfile } = useContext(UserContext);
 
     const supabase = createClientComponentClient()
 
     const getUser: any = async () => {
         const { data: { user } } = await supabase.auth.getUser()
-        console.log(user);
         setCurrentUser(user);
         return user
     }
 
     useLayoutEffect(() => {
         getUser();
-        setCurrentUser(getUser());
     }, []);
-
-    console.log(currentUser?.id);
 
     const initialValues = {
         businessname: "",
@@ -69,9 +67,24 @@ const page = () => {
                 },
             ])
             .select();
-        console.log("dhjs")
+
+        if (error === null) {
+            alert("You have successfully updated your business profile");
+        }
         console.log({ data, error })
     }
+
+    const checkUserProfile = async () => {
+        let { data: profiles, error } = await supabase.from('profiles').select('*').eq('profileid', currentUser.id)
+        setUserProfile(profiles)
+        console.log("ddd", userProfile);
+    }
+    // console.log("ddd", userProfile);
+    const userP = userProfile[0]?.isprofileupdated   
+
+    useLayoutEffect(() => {
+        checkUserProfile();
+    }, [currentUser])
 
     return (
         <section className='mx-auto w-[98%]'>
@@ -107,7 +120,7 @@ const page = () => {
                                             <input type="text"
                                                 name="fullname"
                                                 value={values.fullname}
-                                                placeholder="Israel Chidera"
+                                                placeholder={userProfile[0]?.isprofileupdated  ? userProfile[0]?.fullname : 'Israel Chidera'}
                                                 onChange={handleChange}
                                                 className='border text-sm border-[#e0e0e0] w-full rounded-[10px] text-[#111827] py-[16px] pl-[14px] pr-[10px]'
                                             />

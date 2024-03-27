@@ -8,6 +8,7 @@ export const UserContext = createContext<any>({});
 export const UserContextProvider = ({ children }: { children: React.ReactNode }) => {
 
     const [currentUser, setCurrentUser] = useState<any>("");
+    const [userProfile, setUserProfile] = useState<any>({});
     const supabase = createClientComponentClient();
 
     const getUser: any = async () => {
@@ -20,7 +21,7 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
     }, [currentUser])
 
 
-    return (<UserContext.Provider value={{ getUser, currentUser }}>
+    return (<UserContext.Provider value={{ getUser, currentUser, setUserProfile, userProfile }}>
         {children}
     </UserContext.Provider>)
 }
