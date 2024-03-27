@@ -82,6 +82,15 @@ const page = () => {
         let { data, error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
         })
+        setError(error);
+        console.log(data);
+        return data;
+    }
+
+    const LoginWithFacebook = async () => {
+        const { data, error } = await supabase.auth.signInWithOAuth({
+            provider: 'facebook',
+        });
 
         setError(error);
         console.log(data);
@@ -221,9 +230,8 @@ const page = () => {
                         <div className='mt-3 flex items-center justify-center'>
                             <div className='flex space-x-5 items-center'>
                                 <FaGoogle onClick={LoginWithGoogle} className='text-3xl text-[#ea4335]' />
-                                <FaFacebook className='text-3xl text-[#316ff6]' />
-                                <FaXTwitter className='text-3xl text-[#000]' />
-                                <FaSquarePhone className='text-4xl text-primary' />
+                                <FaFacebook onClick={LoginWithFacebook} className='text-3xl text-[#316ff6]' />
+                                {/* <FaXTwitter className='text-3xl text-[#000]' />                                 */}
                             </div>
                         </div>
 

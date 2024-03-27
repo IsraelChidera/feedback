@@ -11,11 +11,15 @@ import * as Yup from 'yup';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
 import { ImSpinner8 } from "react-icons/im";
+import { FaFacebook } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+import { FaSquarePhone } from "react-icons/fa6";
+import { FaGoogle } from "react-icons/fa";
 
 const page = () => {
     const supabase = createClientComponentClient();
     const router = useRouter();
-    const [errors, setErrors] = useState<string>("");
+    const [error, setError] = useState<any>();
     const [loading, setLoading] = useState(false);
 
     // const user = useSelector((state: any) => state.user.value)
@@ -61,6 +65,26 @@ const page = () => {
 
         setLoading(false);
     }
+
+    const LoginWithGoogle = async () => {
+        let { data, error } = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+        })
+        setError(error);
+        console.log(data);
+        return data;
+    }
+
+    const LoginWithFacebook = async () => {
+        const { data, error } = await supabase.auth.signInWithOAuth({
+            provider: 'facebook',
+        });
+
+        setError(error);
+        console.log(data);
+        return data;
+    }
+
 
     return (
         <main className='grid grid-cols-5'>
@@ -162,7 +186,23 @@ const page = () => {
                                     </>
                                 )}
                         </Formik>
+                        <div className='pb-12 mt-10 text-center'>
+                            <div className='relative'>
+                                <p className='login-options'>Or</p>
+                            </div>
 
+                            <div className='mt-3 flex items-center justify-center'>
+                                <div className='flex space-x-5 items-center'>
+                                    <FaGoogle onClick={LoginWithGoogle} className='text-3xl text-[#ea4335]' />
+                                    <FaFacebook onClick={LoginWithFacebook} className='text-3xl text-[#316ff6]' />
+                                    {/* <FaXTwitter className='text-3xl text-[#000]' />                                 */}
+                                </div>
+                            </div>
+
+                            <p className='text-center mt-8'>
+                                Already have an account? <Link className='underline text-primary' href="/login">Login</Link>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </section>

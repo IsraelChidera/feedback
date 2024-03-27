@@ -30,9 +30,7 @@ const page = () => {
     console.log(currentUser?.id);
 
     const initialValues = {
-        businessName: '',
-        workEmail: '',
-        phoneNumber: '',
+        businessName: '',                
         country: '',
         displayName: '',
         fullName: ''

@@ -22,8 +22,8 @@ const DashboardNav = () => {
     }
 
     useLayoutEffect(() => {
-        // getUser();
-        // setCurrentUser(getUser());
+        getUser();
+        setCurrentUser(getUser());
     }, []);
 
     // console.log(currentUser);
