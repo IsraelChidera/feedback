@@ -222,6 +222,10 @@ const page = () => {
                             )}
                     </Formik>
 
+                    <p className='text-center mt-8'>
+                        Already have an account? <Link className='underline text-primary' href="/login">Login</Link>
+                    </p>
+
                     <div className='pb-12 mt-10 text-center'>
                         <div className='relative'>
                             <p className='login-options'>Or</p>
@@ -235,9 +239,6 @@ const page = () => {
                             </div>
                         </div>
 
-                        <p className='text-center mt-8'>
-                            Already have an account? <Link className='underline text-primary' href="/login">Login</Link>
-                        </p>
                     </div>
                 </div>
             </section>

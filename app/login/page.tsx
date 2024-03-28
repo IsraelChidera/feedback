@@ -192,10 +192,7 @@ const page = () => {
                                     {/* <FaXTwitter className='text-3xl text-[#000]' />                                 */}
                                 </div>
                             </div>
-
-                            <p className='text-center mt-8'>
-                                Already have an account? <Link className='underline text-primary' href="/login">Login</Link>
-                            </p>
+                           
                         </div>
                     </div>
                 </div>
