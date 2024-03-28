@@ -7,12 +7,15 @@ import EmptyFeedback from './EmptyFeedback';
 import Link from 'next/link';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { IoReloadSharp } from "react-icons/io5";
+import { useRouter } from 'next/navigation';
 
 
 const DashboardMain = () => {
     const [userProfile, setUserProfile] = useState<any>({});
     const [loading, setLoading] = useState(false);
     const supabase = createClientComponentClient();
+
+    const router = useRouter();
 
     const getProfiles = async () => {
         setLoading(true);
@@ -37,6 +40,10 @@ const DashboardMain = () => {
         getProfiles();
     }, [])
 
+    const handleAddFeedback = () => {
+        router.push("/dashboard/add-admin-feedback")
+    }
+
     // console.log(userProfile[0]?.isprofileupdated);
 
 
@@ -50,7 +57,7 @@ const DashboardMain = () => {
                     <section className='py-6 px-4 w-full bg-primary text-white my-3 rounded-[10px]'>
                         <div className='flex justify-between'>
                             <div className='justify-between flex flex-col space-y-10'>
-                                <button className='text-sm bg-white rounded-2xl px-3 py-1 text-primary font-semibold'>
+                                <button onClick={handleAddFeedback} className='text-sm bg-white rounded-2xl px-3 py-1 text-primary font-semibold'>
                                     <span className="text-xl">+</span> Quick add
                                 </button>
 

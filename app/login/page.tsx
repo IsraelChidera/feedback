@@ -20,13 +20,7 @@ const page = () => {
     const supabase = createClientComponentClient();
     const router = useRouter();
     const [error, setError] = useState<any>();
-    const [loading, setLoading] = useState(false);
-
-    // const user = useSelector((state: any) => state.user.value)
-
-    // useEffect(() => {
-    //     console.log(user)
-    // }, []);
+    const [loading, setLoading] = useState(false);   
 
     const initialValues = {
         workEmail: '',

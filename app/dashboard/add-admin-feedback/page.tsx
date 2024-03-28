@@ -31,8 +31,7 @@ const page = () => {
     const initialValues = {
         businessname: "",
         fullname: '',
-        country: '',
-        phone: ""
+        feedback: '',
     };
 
     const validationSchema = Yup.object({
@@ -42,56 +41,33 @@ const page = () => {
         fullname: Yup.string()
             .required('Business name is required')
             .min(3, 'Must be 3 characters or more'),
-        phone: Yup.string()
-            .required('Phone number is required')
-            .min(9, 'Must be 3 characters or more')
-            .max(11, 'Must be 11 characters'),
-        country: Yup.string()
+        feedback: Yup.string()
             .required('Business name is required')
-            .min(3, 'Must be 3 characters or more'),
+            .min(10, 'Must be 3 characters or more'),
     });
 
 
-    const onContactFormSubmission = async (values: any) => {
+    const onAddAdminFeedback = async (values: any) => {
         console.log(values);
-
-        const { data, error } = await supabase
-            .from('profiles')
-            .insert([
-                {
-                    profileid: currentUser.id,
-                    businessname: values.businessname,
-                    fullname: values.fullname,
-                    country: values.country,
-                    phone: values.phone,
-                    isprofileupdated: true
-                },
-            ])
-            .select();
-
-        if (error === null) {
-            alert("You have successfully updated your business profile");
-        }
-        console.log({ data, error })
     }
 
-    const checkUserProfile = async () => {
-        let { data: profiles, error } = await supabase.from('profiles').select('*').eq('profileid', currentUser.id)
-        setUserProfile(profiles)
-        console.log("ddd", userProfile);
-    }
-    // console.log("ddd", userProfile);
-    const userP = userProfile[0]?.isprofileupdated   
+    // const checkUserProfile = async () => {
+    //     let { data: profiles, error } = await supabase.from('profiles').select('*').eq('profileid', currentUser.id)
+    //     setUserProfile(profiles)
+    //     console.log("ddd", userProfile);
+    // }
+    // // console.log("ddd", userProfile);
+    // const userP = userProfile[0]?.isprofileupdated   
 
-    useLayoutEffect(() => {
-        checkUserProfile();
-    }, [currentUser])
+    // useLayoutEffect(() => {
+    //     checkUserProfile();
+    // }, [currentUser])
 
-  return (
-    <section className='mx-auto w-[98%]'>
+    return (
+        <section className='mx-auto w-[98%]'>
             <div className="py-6 px-4 w-full bg-white my-3 rounded-[10px]">
                 <div>
-                    <h3 className='text-center text-primary'>Add Feedbeek {"as a business owner"}</h3>
+                    <h3 className='text-center text-xl font-medium pt-4 text-primary'>Add Feedbeek {"as a business owner"}</h3>
                 </div>
 
                 <div className='mt-10 pb-20'>
@@ -99,7 +75,7 @@ const page = () => {
                         initialValues={initialValues}
                         validationSchema={validationSchema}
                         onSubmit={(values, { resetForm }: { resetForm: any }) => {
-                            onContactFormSubmission(values);
+                            onAddAdminFeedback(values);
                             resetForm({ values: '' });
                         }}
                     >
@@ -121,10 +97,13 @@ const page = () => {
                                             <input type="text"
                                                 name="fullname"
                                                 value={values.fullname}
-                                                placeholder={userProfile[0]?.isprofileupdated  ? userProfile[0]?.fullname : 'Israel Chidera'}
+                                                placeholder={userProfile[0]?.isprofileupdated ? userProfile[0]?.fullname : 'Israel Chidera'}
                                                 onChange={handleChange}
                                                 className='border text-sm border-[#e0e0e0] w-full rounded-[10px] text-[#111827] py-[16px] pl-[14px] pr-[10px]'
                                             />
+                                            <p className='text-xs text-primary'>
+                                                {errors.fullname && touched.fullname && errors.fullname}
+                                            </p>
                                         </div>
 
                                         <div>
@@ -138,36 +117,32 @@ const page = () => {
                                                 onChange={handleChange}
                                                 className='border text-sm border-[#e0e0e0] w-full rounded-[10px] text-[#111827] py-[16px] pl-[14px] pr-[10px]'
                                             />
+                                            <p className='text-xs text-primary'>
+                                                {errors.businessname && touched.businessname && errors.businessname}
+                                            </p>
                                         </div>
 
                                         <div>
                                             <label className='block font-medium'>
-                                                Phone number
+                                                Feedback
                                             </label>
-                                            <input type="text"
-                                                name="phone"
-                                                value={values.phone}
-                                                placeholder="09056356356"
+                                            <textarea
+                                                name="feedback"
+                                                value={values.feedback}
+                                                placeholder="I love the cake. Taste was heavenly"
                                                 onChange={handleChange}
                                                 className='border text-sm border-[#e0e0e0] w-full rounded-[10px] text-[#111827] py-[16px] pl-[14px] pr-[10px]'
-                                            />
-                                        </div>
-
-                                        <div>
-                                            <label className='block font-medium'>
-                                                Country
-                                            </label>
-                                            <input type="text"
-                                                name="country"
-                                                value={values.country}
-                                                placeholder="Nigeria"
-                                                onChange={handleChange}
-                                                className='border text-sm border-[#e0e0e0] w-full rounded-[10px] text-[#111827] py-[16px] pl-[14px] pr-[10px]'
-                                            />
+                                                rows={6}
+                                                cols={6}
+                                            >
+                                            </textarea>
+                                            <p className='text-xs text-primary'>
+                                                {errors.feedback && touched.feedback && errors.feedback}
+                                            </p>
                                         </div>
 
                                         <Button type="submit" className="w-full bg-primary text-white rounded-[10px]">
-                                            Save changes
+                                            Add feedback
                                         </Button>
 
 
@@ -179,7 +154,7 @@ const page = () => {
                 </div>
             </div>
         </section>
-  )
+    )
 }
 
 export default page
