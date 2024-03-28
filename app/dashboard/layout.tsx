@@ -10,23 +10,19 @@ export const metadata: Metadata = {
 
 export default function DashboardLayout({
     children,
-}: Readonly<{
+}: {
     children: React.ReactNode;
-}>) {
+}) {
     return (
-        <html lang="en">
-            <body>
-                <main className='bg-[#EBEBEB] flex relative'>
-                    <div className='bg-white z-30 fixed top-0 left-0 h-screen'>
-                        <Sidebar />
-                    </div>
-                    <div className='relative pl-[330px] w-full'>
+        <main className='bg-[#EBEBEB] flex relative'>
+            <div className='bg-white z-30 fixed top-0 left-0 h-screen'>
+                <Sidebar />
+            </div>
+            <div className='relative pl-[330px] w-full'>
 
-                        <DashboardNav />
-                        {children}
-                    </div>                    
-                </main>
-            </body>
-        </html>
+                <DashboardNav />
+                {children}
+            </div>
+        </main>
     );
 }

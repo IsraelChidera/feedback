@@ -6,15 +6,16 @@ import Button from '@/components/Button';
 import EmptyFeedback from './EmptyFeedback';
 import Link from 'next/link';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-// import { UserContext } from '@/store/features/User/UserContext';
+import { IoReloadSharp } from "react-icons/io5";
 
 
 const DashboardMain = () => {
     const [userProfile, setUserProfile] = useState<any>({});
+    const [loading, setLoading] = useState(false);
     const supabase = createClientComponentClient();
 
     const getProfiles = async () => {
-
+        setLoading(true);
         const { data: { session } } = await supabase.auth.getSession();
         const user = session?.user;
 
@@ -23,27 +24,29 @@ const DashboardMain = () => {
             .select('*')
             .eq('profileid', user?.id)
 
+        if (!error) {
+            setLoading(false);
+        }
         setUserProfile(profiles);
     }
+
+    console.log(userProfile);
+
 
     useLayoutEffect(() => {
         getProfiles();
     }, [])
 
-    console.log(userProfile[0]?.isprofileupdated);
+    // console.log(userProfile[0]?.isprofileupdated);
 
 
     return (
         <main className='mx-auto w-[98%]'>
-            {
-                !userProfile[0]?.isprofileupdated ? <section className='py-6 px-4 w-full bg-primary text-white my-3 rounded-[10px]'>
-                    <h1 className='font-semibold text-2xl'>
-                        Congrats <span><BsStars className='inline text-xl text-yellow-400' /></span>
-                        <br />
-                        You are now a part of our big family
-                    </h1>
-                    <p className='mt-1'>Complete your registration by setting up your <Link className='underline hover:no-underline transition-all ease-linear' href="/dashboard/profile">business profile</Link></p>
-                </section> :
+            {loading && !userProfile[0]?.isprofileupdated ?
+                <div className="flex py-6 items-center justify-center">
+                    <IoReloadSharp className='animate-spin' />
+                </div>
+                : !loading && userProfile[0]?.isprofileupdated ?
                     <section className='py-6 px-4 w-full bg-primary text-white my-3 rounded-[10px]'>
                         <div className='flex justify-between'>
                             <div className='justify-between flex flex-col space-y-10'>
@@ -64,7 +67,16 @@ const DashboardMain = () => {
                             </div>
                         </div>
                     </section>
-            }
+                    :
+                    <section className='py-6 px-4 w-full bg-primary text-white my-3 rounded-[10px]'>
+                        <h1 className='font-semibold text-2xl'>
+                            Congrats <span><BsStars className='inline text-xl text-yellow-400' /></span>
+                            <br />
+                            You are now a part of our big family
+                        </h1>
+                        <p className='mt-1'>Complete your registration by setting up your <Link className='underline hover:no-underline transition-all ease-linear' href="/dashboard/profile">business profile</Link></p>
+                    </section>
+            }           
 
 
             <section className='py-6 px-4 w-full bg-white my-3 rounded-[10px]'>
@@ -78,11 +90,6 @@ const DashboardMain = () => {
                         <Button type="button" className='text-primary border border-primary flex items-center space-x-2 px-3 text-sm bg-transparent'>
                             <Image width={25} height={25} src="/analytics-icon.svg" alt="view icon" />
                             <p>View Analytics</p>
-                        </Button>
-
-                        <Button type="button" className='flex items-center space-x-2 px-3 text-sm bg-primary text-white'>
-                            <Image width={25} height={25} src="/add-icon.svg" alt="view icon" />
-                            <p>Create New Feedback</p>
                         </Button>
                     </div>
                 </div>
