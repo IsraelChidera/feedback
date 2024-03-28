@@ -18,17 +18,15 @@ const DashboardNav = () => {
     const getUser: any = async () => {
         const { data: { user } } = await supabase.auth.getUser()
         setCurrentUser(user);
-        console.log("current", currentUser);
+        // console.log("current", currentUser);
         return user
-    }
-    console.log("current", currentUser);
+    }    
 
     useLayoutEffect(() => {
         getUser();
         // setCurrentUser(getUser());
     }, []);
-
-    console.log("current", currentUser);
+    
 
     const router = useRouter();
     const pathname = usePathname();

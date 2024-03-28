@@ -36,7 +36,7 @@ const Sidebar = () => {
 
                 <ul className='mt-20 grid grid-cols-1 space-y-6'>
                     <li>
-                        <Link className={`${pathname.includes("dashboard") ? "bg-primary py-2 w-full pl-3 pr-2 text-white block rounded-[30px]" : ""} text-primary text-base font-medium`} href="#">
+                        <Link className={`${pathname.includes("dashboard") ? "bg-primary hover:bg-opacity-90 py-2 w-full pl-3 pr-2 text-white block rounded-[30px]" : ""} text-primary text-base font-medium`} href="/dashboard">
                             Dashboard
                         </Link>
                     </li>

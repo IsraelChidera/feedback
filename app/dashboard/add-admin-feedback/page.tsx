@@ -47,21 +47,40 @@ const page = () => {
     });
 
 
+
+
+    const checkUserProfile = async () => {
+        let { data: profiles, error } = await supabase.from('profiles').select('*').eq('profileid', currentUser.id)
+        setUserProfile(profiles)
+        console.log("ddd", userProfile);
+    }
+    // console.log("ddd", userProfile);
+    const userP = userProfile[0]?.isprofileupdated
+
+    useLayoutEffect(() => {
+        checkUserProfile();
+    }, [currentUser])
+
     const onAddAdminFeedback = async (values: any) => {
         console.log(values);
+
+        const { data, error } = await supabase
+            .from('feedbacks')
+            .insert([
+                {
+                    feedbackid: currentUser.id,
+                    businessname: values.businessname,
+                    fullname: values.fullname,
+                    feedback: values.feedback,
+                },
+            ])
+            .select()
+
+        if (!error) {
+            console.log("feedback added", data);
+        }
+        console.log({data, error})
     }
-
-    // const checkUserProfile = async () => {
-    //     let { data: profiles, error } = await supabase.from('profiles').select('*').eq('profileid', currentUser.id)
-    //     setUserProfile(profiles)
-    //     console.log("ddd", userProfile);
-    // }
-    // // console.log("ddd", userProfile);
-    // const userP = userProfile[0]?.isprofileupdated   
-
-    // useLayoutEffect(() => {
-    //     checkUserProfile();
-    // }, [currentUser])
 
     return (
         <section className='mx-auto w-[98%]'>
