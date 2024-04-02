@@ -106,9 +106,7 @@ const DashboardMain = () => {
                                 {
                                     feedbacks.map((feeds: any) => (
                                         <Feedback
-                                            businessname={feeds?.businessname}
-                                            feedback={feeds?.feedback}
-                                            fullname={feeds.fullname}
+                                            {...feeds}
                                         />
                                     ))
                                 }

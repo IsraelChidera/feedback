@@ -2,20 +2,24 @@ import React from 'react';
 import { IoEyeOutline } from "react-icons/io5";
 import { FiEdit } from "react-icons/fi";
 import { IoMdShare } from "react-icons/io";
+import Link from 'next/link';
 
 type FeedbackProps = {
     businessname: string,
     feedback: string,
     fullname: string,
+    id: any,
 }
 
-const Feedback = ({businessname, feedback, fullname}:FeedbackProps) => {
+const Feedback = ({ businessname, feedback, id, fullname }: FeedbackProps) => {
     return (
         <div>
             <div className='h-28 bg-primary w-full rounded-t-lg relative'>
                 <div className=" w-full absolute top-2 right-2 ">
                     <div className='flex space-x-2 justify-end items-center'>
-                        <IoEyeOutline className='text-white text-xl' />
+                        <Link href={`/dashboard/view-feedback/${id}`}>
+                            <IoEyeOutline className='text-white text-xl' />
+                        </Link>
                         <FiEdit className='text-white text-lg' />
                         <IoMdShare className='text-white text-lg' />
                     </div>
