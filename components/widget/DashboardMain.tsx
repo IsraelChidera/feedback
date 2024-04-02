@@ -31,10 +31,7 @@ import { FeedbackContext } from '@/store/features/Feedback/FeedbackContext';
 
 const DashboardMain = () => {      
     const {loading, userProfile} = useContext(UserContext);
-    const {loading: loadFeedback, feedbacks} = useContext(FeedbackContext);
-    console.log("checking", userProfile);
-
-    const supabase = createClientComponentClient();
+    const {loading: loadFeedback, feedbacks} = useContext(FeedbackContext);    
 
     const router = useRouter();
 
