@@ -1,6 +1,6 @@
 "use client"
 import Image from 'next/image';
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect, useContext } from 'react';
 import { BsStars } from "react-icons/bs";
 import Button from '@/components/Button';
 import EmptyFeedback from './EmptyFeedback';
@@ -9,60 +9,34 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { IoReloadSharp } from "react-icons/io5";
 import { IoEyeOutline } from "react-icons/io5";
 import { FiEdit } from "react-icons/fi";
+import { IoMdShare } from "react-icons/io";
 import { useRouter } from 'next/navigation';
+import {
+    FacebookShareButton,
+    LinkedinShareButton,
+    TelegramShareButton,
+    TwitterShareButton,
+    WhatsappShareButton,
 
+    FacebookIcon,
+    LinkedinIcon,
+    TelegramIcon,
+    TwitterIcon,
+    WhatsappIcon,
+    XIcon,
+} from "react-share";
+import Feedback from '../utils/Feedback';
+import { UserContext } from '@/store/features/User/UserContext';
+import { FeedbackContext } from '@/store/features/Feedback/FeedbackContext';
 
-const DashboardMain = () => {
-    const [userProfile, setUserProfile] = useState<any>({});
-    const [feedbacks, setFeedbacks] = useState<any>([]);
+const DashboardMain = () => {      
+    const {loading, userProfile} = useContext(UserContext);
+    const {loading: loadFeedback, feedbacks} = useContext(FeedbackContext);
+    console.log("checking", userProfile);
 
-    const [loading, setLoading] = useState(false);
     const supabase = createClientComponentClient();
 
     const router = useRouter();
-
-    const getProfiles = async () => {
-        setLoading(true);
-        const { data: { session } } = await supabase.auth.getSession();
-        const user = session?.user;
-
-        const { data: profiles, error } = await supabase
-            .from('profiles')
-            .select('*')
-            .eq('profileid', user?.id)
-
-        if (!error) {
-            setLoading(false);
-        }
-        setUserProfile(profiles);
-    }
-
-    const getFeedbacks = async () => {
-        setLoading(true);
-        const { data: { session } } = await supabase.auth.getSession();
-        const user = session?.user;
-
-        let { data: feedbacks, error } = await supabase
-            .from('feedbacks')
-            .select('*')
-            .eq("feedbackid", user?.id)
-
-        console.log({ feedbacks, error });
-
-        if (!error) {
-            setLoading(false);
-        }
-
-        setFeedbacks(feedbacks);
-    }
-
-    console.log(userProfile);
-    console.log("feedbacks", feedbacks)
-
-    useLayoutEffect(() => {
-        getProfiles();
-        getFeedbacks();
-    }, [])
 
     const handleAddFeedback = () => {
         router.push("/dashboard/add-admin-feedback")
@@ -84,7 +58,7 @@ const DashboardMain = () => {
 
                                 <div>
                                     <p className='text-sm text-[#f7f7f7]'>Total feedbacks</p>
-                                    <h3 className='text-2xl'>{feedbacks? feedbacks.length : "0" } Feedbacks</h3>
+                                    <h3 className='text-2xl'>{feedbacks ? feedbacks.length : "0"} Feedbacks</h3>
                                 </div>
                             </div>
 
@@ -125,38 +99,27 @@ const DashboardMain = () => {
 
             <section className="py-6 mb-10 px-4 bg-white mt-6 w-full rounded-[10px] ">
                 {
-                    loading && !feedbacks ?
+                    loadFeedback && !feedbacks ?
                         <div className="flex py-6 items-center justify-center">
                             <IoReloadSharp className='animate-spin' />
                         </div>
                         :
-                        feedbacks && !loading ?
+                        feedbacks && !loadFeedback ?
                             <div className='grid grid-cols-3 gap-x-6 gap-y-10'>
                                 {
                                     feedbacks.map((feeds: any) => (
-                                        <div>
-                                            <div className='h-28 bg-primary w-full rounded-t-lg relative'>
-                                                <div className=" w-full absolute top-2 right-2 ">
-                                                    <div className='flex space-x-2 justify-end items-center'>
-                                                        <IoEyeOutline className='text-white text-xl' />
-                                                        <FiEdit className='text-white text-lg' />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className='p-3 border-x rounded-b-lg border-b border-primary'>
-                                                <h5 className='font-semibold text-[#111827] text-xl '>{feeds.businessname} </h5>
-                                                <p className='text-[#334] mt-1 leading-tight'>
-                                                    {feeds?.feedback?.substring(0, 20)} . . .
-                                                </p>
-                                                <p className='text-right mt-2 text-xs text-[#0A0A0C]'>- {feeds.fullname}</p>
-                                            </div>
-                                        </div>
+                                        <Feedback
+                                            businessname={feeds?.businessname}
+                                            feedback={feeds?.feedback}
+                                            fullname={feeds.fullname}
+                                        />
                                     ))
                                 }
                             </div>
                             :
                             <EmptyFeedback />
                 }
+
             </section>
         </main>
     )

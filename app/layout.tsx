@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { UserContextProvider } from "@/store/features/User/UserContext";
+import { FeedbackContextProvider } from "@/store/features/Feedback/FeedbackContext";
 
 
 export const metadata: Metadata = {
@@ -17,7 +18,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <UserContextProvider>
-          {children}
+          <FeedbackContextProvider>
+            {children}
+          </FeedbackContextProvider>
         </UserContextProvider>
       </body>
     </html>

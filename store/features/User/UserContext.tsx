@@ -1,27 +1,38 @@
 'use client'
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useLayoutEffect, useState } from 'react';
 
 export const UserContext = createContext<any>({});
 
 export const UserContextProvider = ({ children }: { children: React.ReactNode }) => {
 
-    const [currentUser, setCurrentUser] = useState<any>("");
     const [userProfile, setUserProfile] = useState<any>({});
-    const supabase = createClientComponentClient();
+    const [loading, setLoading] = useState<boolean>(false);
+    const supabase = createClientComponentClient();    
 
     const getUser: any = async () => {
-        const { data: { user } } = await supabase.auth.getUser()
-        setCurrentUser(user);
+        setLoading(true);
+        const { data: { session } } = await supabase.auth.getSession();
+        const user = session?.user;
+
+        const { data: profiles, error } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('profileid', user?.id)
+
+        if (!error) {
+            setLoading(false);
+        }
+        setUserProfile(profiles);
     }
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         getUser();
-    }, [currentUser])
+    }, [])
 
 
-    return (<UserContext.Provider value={{ getUser, currentUser, setUserProfile, userProfile }}>
+    return (<UserContext.Provider value={{ userProfile, loading }}>
         {children}
     </UserContext.Provider>)
 }
