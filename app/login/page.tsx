@@ -187,8 +187,8 @@ const page = () => {
 
                             <div className='mt-3 flex items-center justify-center'>
                                 <div className='flex space-x-5 items-center'>
-                                    <FaGoogle onClick={LoginWithGoogle} className='text-3xl text-[#ea4335]' />
-                                    <FaFacebook onClick={LoginWithFacebook} className='text-3xl text-[#316ff6]' />
+                                    <FaGoogle onClick={LoginWithGoogle} className='text-3xl text-[#ea4335] cursor-pointer' />
+                                    <FaFacebook onClick={LoginWithFacebook} className='text-3xl text-[#316ff6] cursor-pointer' />
                                     {/* <FaXTwitter className='text-3xl text-[#000]' />                                 */}
                                 </div>
                             </div>
