@@ -29,9 +29,9 @@ import Feedback from '../utils/Feedback';
 import { UserContext } from '@/store/features/User/UserContext';
 import { FeedbackContext } from '@/store/features/Feedback/FeedbackContext';
 
-const DashboardMain = () => {      
-    const {loading, userProfile} = useContext(UserContext);
-    const {loading: loadFeedback, feedbacks} = useContext(FeedbackContext);    
+const DashboardMain = () => {
+    const { loading, userProfile } = useContext(UserContext);
+    const { loading: loadFeedback, feedbacks } = useContext(FeedbackContext);
 
     const router = useRouter();
 
@@ -106,6 +106,7 @@ const DashboardMain = () => {
                                 {
                                     feedbacks.map((feeds: any) => (
                                         <Feedback
+                                            key={feeds?.id}
                                             {...feeds}
                                         />
                                     ))

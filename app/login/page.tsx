@@ -12,8 +12,6 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
 import { ImSpinner8 } from "react-icons/im";
 import { FaFacebook } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
-import { FaSquarePhone } from "react-icons/fa6";
 import { FaGoogle } from "react-icons/fa";
 
 const page = () => {
@@ -46,11 +44,7 @@ const page = () => {
             });
 
             console.log({ data, error });
-            router.push("/dashboard");
-            // if (data) {
-            //     setLoading(false);
-            //     router.push("/dashboard");
-            // }
+            router.push("/dashboard");           
             return data
         } catch (error) {
             console.log(error);
@@ -176,7 +170,6 @@ const page = () => {
                                                 Forgot Password? <Link className='underline text-primary' href="#">Reset now</Link>
                                             </p>
                                         </Form>
-
                                     </>
                                 )}
                         </Formik>
@@ -188,8 +181,7 @@ const page = () => {
                             <div className='mt-3 flex items-center justify-center'>
                                 <div className='flex space-x-5 items-center'>
                                     <FaGoogle onClick={LoginWithGoogle} className='text-3xl text-[#ea4335] cursor-pointer' />
-                                    <FaFacebook onClick={LoginWithFacebook} className='text-3xl text-[#316ff6] cursor-pointer' />
-                                    {/* <FaXTwitter className='text-3xl text-[#000]' />                                 */}
+                                    <FaFacebook onClick={LoginWithFacebook} className='text-3xl text-[#316ff6] cursor-pointer' />                                    
                                 </div>
                             </div>
                            

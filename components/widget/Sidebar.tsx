@@ -36,7 +36,9 @@ const Sidebar = () => {
 
                 <ul className='mt-20 grid grid-cols-1 space-y-6'>
                     <li>
-                        <Link className={`${pathname.includes("dashboard") ? "bg-primary hover:bg-opacity-90 py-2 w-full pl-3 pr-2 text-white block rounded-[30px]" : ""} text-primary text-base font-medium`} href="/dashboard">
+                        <Link className={`${pathname === '/dashboard' ? "transition ease-in bg-primary hover:bg-opacity-90 py-2 w-full pl-3 pr-2 text-white block rounded-[30px]" : ""} text-primary text-base pl-3 font-medium transition ease-in`}
+                            href="/dashboard"
+                        >
                             Dashboard
                         </Link>
                     </li>
@@ -48,7 +50,10 @@ const Sidebar = () => {
                     </li>
 
                     <li>
-                        <Link className='text-primary pl-3 text-base font-medium' href="#">
+                        <Link
+                            className={`${pathname === '/dashboard/analytics' ? "transition ease-in bg-primary hover:bg-opacity-90 py-2 w-full pl-3 pr-2 text-white block rounded-[30px]" : ""} text-primary text-base font-medium transition ease-in pl-3`}
+                            href="/dashboard/analytics"
+                        >
                             Analysis
                         </Link>
                     </li>

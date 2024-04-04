@@ -22,7 +22,13 @@ export default function DashboardLayout({
 
                 <DashboardNav />
                 {children}
+
+                <footer className="bg-white">
+                    <p className="text-center text-sm pt-2 pb-4">&copy; 2024 | Israel Chidera</p>
+                </footer>
             </div>
+
+
         </main>
     );
 }
