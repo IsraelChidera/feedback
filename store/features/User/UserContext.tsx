@@ -1,7 +1,7 @@
 'use client'
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import React, { createContext, useEffect, useLayoutEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 
 export const UserContext = createContext<any>({});
 
@@ -12,6 +12,7 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
     const supabase = createClientComponentClient();    
 
     const getUser: any = async () => {
+        console.log("dskdjsk");
         setLoading(true);
         const { data: { session } } = await supabase.auth.getSession();
         const user = session?.user;
@@ -22,12 +23,14 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
             .eq('profileid', user?.id)
 
         if (!error) {
-            setLoading(false);
+            setLoading(false);                    
         }
         setUserProfile(profiles);
     }
 
-    useLayoutEffect(() => {
+    console.log("sss", userProfile)
+
+    useEffect(() => {
         getUser();
     }, [])
 

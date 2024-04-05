@@ -7,10 +7,11 @@ import { BsDownload } from "react-icons/bs";
 import { AiFillDelete } from "react-icons/ai";
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { FeedbackContext } from '@/store/features/Feedback/FeedbackContext';
+import { useRouter } from 'next/navigation';
 
 const Background = ({ children, params, feedback: dd, }: { children: React.ReactNode, params?: any, feedback: any }) => {
     const { feedbacks } = useContext(FeedbackContext);
-
+    const router = useRouter();
     const feedback = feedbacks?.find((item: any) => item.id === params?.id);
     console.log("params", dd)
 
@@ -42,7 +43,7 @@ const Background = ({ children, params, feedback: dd, }: { children: React.React
     const handleDeleteFeedback = async () => {
 
 
-        let { data: feedbacks, error:errors } = await supabase
+        let { data: feedbacks, error: errors } = await supabase
             .from('feedbacks')
             .select('feedback')
             .eq("id", dd.id)
@@ -57,7 +58,8 @@ const Background = ({ children, params, feedback: dd, }: { children: React.React
 
         if (!error) {
             alert("Deleted sucessfully")
-            window.location.href("/");
+            // window.location.href("/");
+            router.push("/dashboard")
         }
     }
 

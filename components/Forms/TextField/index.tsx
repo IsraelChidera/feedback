@@ -9,10 +9,11 @@ type InputProps = {
     name?: string,
     onChange?: any,
     props?: any,
-    id: any
+    id: any,
+    disabled?: boolean,
 }
 
-const index = ({ label, id, type, placeholder, className, value, name, onChange, ...props }: InputProps) => {
+const index = ({ label, id, type, placeholder, className, value, name, onChange, disabled, ...props }: InputProps) => {
     return (
         <div>
             {
@@ -30,6 +31,7 @@ const index = ({ label, id, type, placeholder, className, value, name, onChange,
                 value={value}
                 onChange={onChange}
                 {...props}
+                disabled={disabled}
             />
         </div>
     )

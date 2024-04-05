@@ -1,37 +1,22 @@
 "use client"
 
-import React, { useLayoutEffect, useEffect, useState, useContext } from 'react';
-import TextField from '@/components/Forms/TextField';
-import Image from 'next/image';
+import React, { useContext } from 'react';
 import Button from '@/components/Button';
-import Link from 'next/link';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { UserContext } from '@/store/features/User/UserContext';
 
 const page = () => {
-    const [currentUser, setCurrentUser] = useState<any>(null);
+    const { userProfile } = useContext(UserContext);
 
-    const { userProfile, setUserProfile } = useContext(UserContext);
-
-    const supabase = createClientComponentClient()
-
-    const getUser: any = async () => {
-        const { data: { user } } = await supabase.auth.getUser()
-        setCurrentUser(user);
-        return user
-    }
-
-    useLayoutEffect(() => {
-        getUser();
-    }, []);
+    const supabase = createClientComponentClient()      
 
     const initialValues = {
-        businessname: "",
-        fullname: '',
-        country: '',
-        phone: ""
+        businessname: userProfile[0]?.isprofileupdated ? userProfile[0].businessname : "",
+        fullname: userProfile[0]?.isprofileupdated ? userProfile[0].fullname : "",
+        country: userProfile[0]?.isprofileupdated ? userProfile[0].country : "",
+        phone: userProfile[0]?.isprofileupdated ? userProfile[0].phone : "",
     };
 
     const validationSchema = Yup.object({
@@ -58,7 +43,7 @@ const page = () => {
             .from('profiles')
             .insert([
                 {
-                    profileid: currentUser.id,
+                    profileid: userProfile[0]?.profileid,
                     businessname: values.businessname,
                     fullname: values.fullname,
                     country: values.country,
@@ -72,19 +57,8 @@ const page = () => {
             alert("You have successfully updated your business profile");
         }
         console.log({ data, error })
-    }
-
-    const checkUserProfile = async () => {
-        let { data: profiles, error } = await supabase.from('profiles').select('*').eq('profileid', currentUser.id)
-        setUserProfile(profiles)
-        console.log("ddd", userProfile);
-    }
-    // console.log("ddd", userProfile);
-    const userP = userProfile[0]?.isprofileupdated   
-
-    useLayoutEffect(() => {
-        checkUserProfile();
-    }, [currentUser])
+    }    
+   
 
     return (
         <section className='mx-auto w-[98%]'>

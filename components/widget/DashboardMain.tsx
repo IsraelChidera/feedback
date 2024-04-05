@@ -5,26 +5,8 @@ import { BsStars } from "react-icons/bs";
 import Button from '@/components/Button';
 import EmptyFeedback from './EmptyFeedback';
 import Link from 'next/link';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { IoReloadSharp } from "react-icons/io5";
-import { IoEyeOutline } from "react-icons/io5";
-import { FiEdit } from "react-icons/fi";
-import { IoMdShare } from "react-icons/io";
 import { useRouter } from 'next/navigation';
-import {
-    FacebookShareButton,
-    LinkedinShareButton,
-    TelegramShareButton,
-    TwitterShareButton,
-    WhatsappShareButton,
-
-    FacebookIcon,
-    LinkedinIcon,
-    TelegramIcon,
-    TwitterIcon,
-    WhatsappIcon,
-    XIcon,
-} from "react-share";
 import Feedback from '../utils/Feedback';
 import { UserContext } from '@/store/features/User/UserContext';
 import { FeedbackContext } from '@/store/features/Feedback/FeedbackContext';

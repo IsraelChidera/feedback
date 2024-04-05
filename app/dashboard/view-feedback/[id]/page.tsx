@@ -1,10 +1,6 @@
 'use client'
 import { FeedbackContext } from '@/store/features/Feedback/FeedbackContext';
-import Image from 'next/image';
 import React, { useContext } from 'react';
-import { BsDownload } from "react-icons/bs";
-import { AiFillDelete } from "react-icons/ai";
-import Button from '../../../../components/Button';
 import { saveAs } from 'file-saver';
 import Background from '@/components/utils/Background';
 

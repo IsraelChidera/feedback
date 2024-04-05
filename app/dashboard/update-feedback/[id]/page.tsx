@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import Button from '@/components/Button';
@@ -57,7 +57,7 @@ const page = ({ params }: { params: any }) => {
         console.log({ data, error });
         if (!error) {
             alert("Feedback updated successfully")
-            window.location.reload();
+            router.push("/dashboard")
         }
 
     }
@@ -95,24 +95,28 @@ const page = ({ params }: { params: any }) => {
                                             placeholder="id"
                                             value={values.id}
                                             onChange={handleChange}
+                                            className='cursor-not-allowed'
                                         />
 
                                         <TextField
                                             label="Business name"
                                             id="businessname"
                                             type="text"
-                                            placeholder="Business name"
+                                            placeholder={values.businessname}
                                             value={values.businessname}
                                             onChange={handleChange}
+                                            className='cursor-not-allowed'
+                                            disabled={true}
                                         />
 
                                         <TextField
                                             label="Full name"
                                             id="fullname"
                                             type="text"
-                                            placeholder="Full name"
+                                            placeholder={values.fullname}
                                             value={values.fullname}
                                             onChange={handleChange}
+                                            disabled={true}
                                         />
 
                                         <div>

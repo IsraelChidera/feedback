@@ -1,65 +1,35 @@
 "use client"
 
-import React, { useLayoutEffect, useEffect, useState, useContext } from 'react';
-import TextField from '@/components/Forms/TextField';
-import Image from 'next/image';
+import React, { useContext } from 'react';
 import Button from '@/components/Button';
 import Link from 'next/link';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { UserContext } from '@/store/features/User/UserContext';
+import { useRouter } from 'next/navigation';
 
 
 const page = () => {
-    const [currentUser, setCurrentUser] = useState<any>(null);
+    // const [currentUser, setCurrentUser] = useState<any>(null);
 
-    const { userProfile, setUserProfile } = useContext(UserContext);
-
-    const supabase = createClientComponentClient()
-
-    const getUser: any = async () => {
-        const { data: { user } } = await supabase.auth.getUser()
-        setCurrentUser(user);
-        return user
-    }
-
-    useLayoutEffect(() => {
-        getUser();
-    }, []);
+    const supabase = createClientComponentClient();
+    const { userProfile } = useContext(UserContext);
+    const router = useRouter();
 
     const initialValues = {
-        businessname: "",
-        fullname: '',
+        businessname: userProfile[0]?.businessname,
+        fullname: userProfile[0]?.fullname,
         feedback: '',
     };
 
     const validationSchema = Yup.object({
-        businessname: Yup.string()
-            .required('Business name is required')
-            .min(3, 'Must be 3 characters or more'),
-        fullname: Yup.string()
-            .required('Business name is required')
-            .min(3, 'Must be 3 characters or more'),
+
         feedback: Yup.string()
             .required('Business name is required')
-            .min(10, 'Must be 3 characters or more'),
+            .min(10, 'Must be 10 characters or more'),
     });
 
-
-
-
-    const checkUserProfile = async () => {
-        let { data: profiles, error } = await supabase.from('profiles').select('*').eq('profileid', currentUser?.id)
-        setUserProfile(profiles)
-        console.log("ddd", userProfile);
-    }
-    // console.log("ddd", userProfile);
-    const userP = userProfile[0]?.isprofileupdated
-
-    useLayoutEffect(() => {
-        checkUserProfile();
-    }, [currentUser])
 
     const onAddAdminFeedback = async (values: any) => {
         console.log(values);
@@ -68,7 +38,7 @@ const page = () => {
             .from('feedbacks')
             .insert([
                 {
-                    feedbackid: currentUser.id,
+                    feedbackid: userProfile[0]?.profileid,
                     businessname: values.businessname,
                     fullname: values.fullname,
                     feedback: values.feedback,
@@ -78,8 +48,10 @@ const page = () => {
 
         if (!error) {
             console.log("feedback added", data);
+            alert("feeded is added successfully")
+            router.push("/dashboard");
         }
-        console.log({data, error})
+        console.log({ data, error })
     }
 
     return (
@@ -108,7 +80,6 @@ const page = () => {
                             ) => (
                                 <>
                                     <Form className='w-[620px] mx-auto space-y-6'>
-
                                         <div>
                                             <label className='block font-medium'>
                                                 Full name
@@ -116,9 +87,10 @@ const page = () => {
                                             <input type="text"
                                                 name="fullname"
                                                 value={values.fullname}
-                                                placeholder={userProfile[0]?.isprofileupdated ? userProfile[0]?.fullname : 'Israel Chidera'}
-                                                onChange={handleChange}
-                                                className='border text-sm border-[#e0e0e0] w-full rounded-[10px] text-[#111827] py-[16px] pl-[14px] pr-[10px]'
+                                                placeholder={userProfile[0]?.fullname}
+                                                // onChange={handleChange}
+                                                className='cursor-not-allowed border text-sm border-[#e0e0e0] w-full rounded-[10px] text-[#111827] py-[16px] pl-[14px] pr-[10px]'
+                                                disabled
                                             />
                                             <p className='text-xs text-primary'>
                                                 {errors.fullname && touched.fullname && errors.fullname}
@@ -132,9 +104,10 @@ const page = () => {
                                             <input type="text"
                                                 name="businessname"
                                                 value={values.businessname}
-                                                placeholder="Lumixus studio"
-                                                onChange={handleChange}
-                                                className='border text-sm border-[#e0e0e0] w-full rounded-[10px] text-[#111827] py-[16px] pl-[14px] pr-[10px]'
+                                                placeholder={userProfile[0]?.businessname}
+                                                // onChange={handleChange}
+                                                className='cursor-not-allowed border text-sm border-[#e0e0e0] w-full rounded-[10px] text-[#111827] py-[16px] pl-[14px] pr-[10px]'
+                                                disabled
                                             />
                                             <p className='text-xs text-primary'>
                                                 {errors.businessname && touched.businessname && errors.businessname}
@@ -148,7 +121,7 @@ const page = () => {
                                             <textarea
                                                 name="feedback"
                                                 value={values.feedback}
-                                                placeholder="I love the cake. Taste was heavenly"
+                                                placeholder="Type your feedback here . . ."
                                                 onChange={handleChange}
                                                 className='border text-sm border-[#e0e0e0] w-full rounded-[10px] text-[#111827] py-[16px] pl-[14px] pr-[10px]'
                                                 rows={6}

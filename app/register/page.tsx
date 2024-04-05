@@ -12,8 +12,6 @@ import { useRouter } from 'next/navigation';
 import * as Yup from 'yup';
 import { ImSpinner8 } from "react-icons/im";
 import { FaFacebook } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
-import { FaSquarePhone } from "react-icons/fa6";
 import { FaGoogle } from "react-icons/fa";
 
 const page = () => {
