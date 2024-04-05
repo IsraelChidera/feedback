@@ -1,16 +1,23 @@
 'use client'
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import Button from '@/components/Button';
 import TextField from '@/components/Forms/TextField';
+import { FeedbackContext } from '@/store/features/Feedback/FeedbackContext';
 
-const page = () => {
+const page = ({ params }: { params: any }) => {
+
+    const { feedbacks } = useContext(FeedbackContext);
+
+    const feedback = feedbacks?.find((item: any) => item.id === params.id);
+    console.log(feedback)
     const initialValues = {
-        businessname: "",
-        fullname: '',
-        feedback: "",
+        businessname: feedback.businessname,
+        fullname: feedback.fullname,
+        feedback: feedback.feedback,
+        id: feedback.id
     };
 
     const validationSchema = Yup.object({
@@ -62,7 +69,7 @@ const page = () => {
                                             id="id"
                                             type="hidden"
                                             placeholder="id"
-                                            value={"jgh"}
+                                            value={values.id}
                                             onChange={handleChange}
                                         />
 
@@ -103,13 +110,11 @@ const page = () => {
                                             </p>
                                         </div>
 
-                                        {/* businessname: string,
-    feedback: string,
-    fullname: string,
-    id: any, */}
-
-
-                                        <Button type="submit" className="w-full bg-primary text-white rounded-[10px]" disable={false}>
+                                        <Button
+                                            type="submit"
+                                            className={`w-full text-white rounded-[10px] ${values.businessname === feedback.businessname && values.fullname === feedback.fullname && values.feedback === feedback.feedback ? 'bg-opacity-40 bg-primary' : 'bg-primary'}`}
+                                            disable={values.businessname === feedback.businessname && values.fullname === feedback.fullname && values.feedback === feedback.feedback}
+                                        >
                                             Update Feedback
                                         </Button>
 

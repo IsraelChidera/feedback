@@ -20,7 +20,10 @@ const Feedback = ({ businessname, feedback, id, fullname }: FeedbackProps) => {
                         <Link href={`/dashboard/view-feedback/${id}`}>
                             <IoEyeOutline className='text-white text-xl' />
                         </Link>
-                        <FiEdit className='text-white text-lg' />
+                        <Link href={`/dashboard/update-feedback/${id}`}>
+                            <FiEdit className='text-white text-lg' />
+                        </Link>
+
                         <IoMdShare className='text-white text-lg' />
                     </div>
                 </div>
