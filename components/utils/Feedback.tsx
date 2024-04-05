@@ -32,7 +32,7 @@ const Feedback = ({ businessname, feedback, id, fullname }: FeedbackProps) => {
             <div className='p-3 border-x rounded-b-lg '>
                 <div>
                     <h5 className='font-semibold text-[#111827] text-xl '>{businessname} </h5>
-                    <p className='text-[#334] mt-1 leading-tight'>
+                    <p className='text-[#334] mt-1 leading-tight break-words '>
                         {feedback?.substring(0, 100)} . . .
                     </p>
                     <p className='text-right mt-2 text-xs text-[#0A0A0C]'>- {fullname}</p>

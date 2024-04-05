@@ -50,7 +50,7 @@ const page = () => {
 
 
     const checkUserProfile = async () => {
-        let { data: profiles, error } = await supabase.from('profiles').select('*').eq('profileid', currentUser.id)
+        let { data: profiles, error } = await supabase.from('profiles').select('*').eq('profileid', currentUser?.id)
         setUserProfile(profiles)
         console.log("ddd", userProfile);
     }

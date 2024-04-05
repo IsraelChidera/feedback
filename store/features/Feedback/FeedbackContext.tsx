@@ -1,7 +1,7 @@
 'use client'
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import React, { createContext, useLayoutEffect, useState } from 'react';
+import React, { createContext, useLayoutEffect, useEffect, useState } from 'react';
 
 export const FeedbackContext = createContext<any>({});
 
@@ -30,9 +30,9 @@ export const FeedbackContextProvider = ({ children }: { children: React.ReactNod
         setFeedbacks(feedbacks);
     }
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         getProfile();
-    }, [])
+    }, [supabase])
 
     console.log("feed", feedbacks);
 

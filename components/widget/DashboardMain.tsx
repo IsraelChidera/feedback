@@ -1,6 +1,6 @@
 "use client"
 import Image from 'next/image';
-import React, { useState, useLayoutEffect, useContext } from 'react';
+import React, { useState, useLayoutEffect, useContext, useEffect } from 'react';
 import { BsStars } from "react-icons/bs";
 import Button from '@/components/Button';
 import EmptyFeedback from './EmptyFeedback';

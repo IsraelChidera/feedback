@@ -1,23 +1,28 @@
 'use client'
 
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import Button from '@/components/Button';
 import TextField from '@/components/Forms/TextField';
 import { FeedbackContext } from '@/store/features/Feedback/FeedbackContext';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { useRouter } from 'next/navigation';
 
 const page = ({ params }: { params: any }) => {
 
     const { feedbacks } = useContext(FeedbackContext);
+    const router = useRouter();
 
-    const feedback = feedbacks?.find((item: any) => item.id === params.id);
+    const supabase = createClientComponentClient();
+
+    const feedback: any = feedbacks?.find((item: any) => item.id === params.id);
     console.log(feedback)
     const initialValues = {
-        businessname: feedback.businessname,
-        fullname: feedback.fullname,
-        feedback: feedback.feedback,
-        id: feedback.id
+        businessname: feedback?.businessname,
+        fullname: feedback?.fullname,
+        feedback: feedback?.feedback,
+        id: feedback?.id
     };
 
     const validationSchema = Yup.object({
@@ -32,9 +37,28 @@ const page = ({ params }: { params: any }) => {
             .min(10, 'Must be 10 characters or more'),
     });
 
+    // useEffect(() => {
+
+    // }, [feedback])
+
 
     const onContactFormSubmission = async (values: any) => {
         console.log({ ...values });
+
+        const { data, error } = await supabase
+            .from('feedbacks')
+            .update({
+                businessname: values.businessname,
+                fullname: values.fullname,
+                feedback: values.feedback,
+            })
+            .eq('id', values.id)
+            .select()
+        console.log({ data, error });
+        if (!error) {
+            alert("Feedback updated successfully")
+            window.location.reload();
+        }
 
     }
     return (
@@ -112,8 +136,8 @@ const page = ({ params }: { params: any }) => {
 
                                         <Button
                                             type="submit"
-                                            className={`w-full text-white rounded-[10px] ${values.businessname === feedback.businessname && values.fullname === feedback.fullname && values.feedback === feedback.feedback ? 'bg-opacity-40 bg-primary' : 'bg-primary'}`}
-                                            disable={values.businessname === feedback.businessname && values.fullname === feedback.fullname && values.feedback === feedback.feedback}
+                                            className={`w-full text-white rounded-[10px] ${values.businessname === feedback?.businessname && values.fullname === feedback?.fullname && values.feedback === feedback?.feedback ? 'bg-opacity-40 bg-primary' : 'bg-primary'}`}
+                                            disable={values.businessname === feedback?.businessname && values.fullname === feedback?.fullname && values.feedback === feedback?.feedback}
                                         >
                                             Update Feedback
                                         </Button>
