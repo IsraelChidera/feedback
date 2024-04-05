@@ -11,13 +11,14 @@ import { useRouter } from 'next/navigation';
 const page = () => {
     const { userProfile } = useContext(UserContext);
 
-    const supabase = createClientComponentClient()
     const router = useRouter();
+    const supabase = createClientComponentClient()
+
     const initialValues = {
-        businessname: "",
-        fullname: "",
-        country: "",
-        phone: "",
+        businessname: userProfile[0]?.isprofileupdated ? userProfile[0].businessname : "",
+        fullname: userProfile[0]?.isprofileupdated ? userProfile[0].fullname : "",
+        country: userProfile[0]?.isprofileupdated ? userProfile[0].country : "",
+        phone: userProfile[0]?.isprofileupdated ? userProfile[0].phone : "",
     };
 
     const validationSchema = Yup.object({
@@ -42,33 +43,34 @@ const page = () => {
 
         const { data, error } = await supabase
             .from('profiles')
-            .insert([
-                {
-                    profileid: userProfile[0]?.profileid,
-                    businessname: values.businessname,
-                    fullname: values.fullname,
-                    country: values.country,
-                    phone: values.phone,
-                    isprofileupdated: true
-                },
-            ])
-            .select();
+            .update({
+                // profileid: userProfile[0]?.profileid,
+                businessname: values.businessname,
+                fullname: values.fullname,
+                country: values.country,
+                phone: values.phone,
+                // isprofileupdated: true
+            },)
+            .eq('profileid', userProfile[0]?.profileid)
+            .select()
 
-        if (error === null) {
+
+        if (!error) {
             alert("You have successfully updated your business profile");
+            router.push("/dashboard");
         }
         console.log({ data, error })
     }
 
-    if (userProfile[0]?.isprofileupdated) {
+    if (!userProfile[0]?.isprofileupdated) {
         return router.push("/dashboard/profile/edit")
     }
-    
+
     return (
         <section className='mx-auto w-[98%]'>
             <div className="py-6 px-4 w-full bg-white my-3 rounded-[10px]">
                 <div>
-                    <h3 className='text-center text-primary'>Business Profile</h3>
+                    <h3 className='text-center text-primary'>Update Profile</h3>
                 </div>
 
                 <div className='mt-10 pb-20'>
@@ -98,7 +100,7 @@ const page = () => {
                                             <input type="text"
                                                 name="fullname"
                                                 value={values.fullname}
-                                                placeholder={'Israel Chidera'}
+                                                placeholder={userProfile[0]?.isprofileupdated ? userProfile[0]?.fullname : 'Israel Chidera'}
                                                 onChange={handleChange}
                                                 className='border text-sm border-[#e0e0e0] w-full rounded-[10px] text-[#111827] py-[16px] pl-[14px] pr-[10px]'
                                             />
@@ -143,7 +145,12 @@ const page = () => {
                                             />
                                         </div>
 
-                                        <Button type="submit" className="w-full bg-primary text-white rounded-[10px]">
+                                        <Button 
+                                            type="submit" 
+                                            className={`${values.businessname === userProfile[0]?.businessname && values.fullname === userProfile[0]?.fullname && values.country === userProfile[0]?.country? "w-full bg-primary bg-opacity-60 text-white rounded-[10px]" : "w-full bg-primary text-white rounded-[10px]" }`}
+                                            // className=" w-full bg-primary text-white rounded-[10px]"
+                                            disable={values.businessname === userProfile[0]?.businessname && values.fullname === userProfile[0]?.fullname && values.country === userProfile[0]?.country}    
+                                        >
                                             Save changes
                                         </Button>
 

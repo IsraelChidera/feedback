@@ -12,8 +12,7 @@ import { useRouter } from 'next/navigation';
 const Background = ({ children, params, feedback: dd, }: { children: React.ReactNode, params?: any, feedback: any }) => {
     const { feedbacks } = useContext(FeedbackContext);
     const router = useRouter();
-    const feedback = feedbacks?.find((item: any) => item.id === params?.id);
-    console.log("params", dd)
+    const feedback = feedbacks?.find((item: any) => item.id === params?.id);    
 
     const [backgroundColor, setBackgroundColor] = useState<any>(generateRandomColor());
     const backgroundRef: any = useRef(null);
@@ -57,8 +56,7 @@ const Background = ({ children, params, feedback: dd, }: { children: React.React
             .eq("id", dd.id)
 
         if (!error) {
-            alert("Deleted sucessfully")
-            // window.location.href("/");
+            alert("Deleted sucessfully")            
             router.push("/dashboard")
         }
     }

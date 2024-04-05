@@ -17,8 +17,7 @@ const DashboardNav = () => {
 
     const getUser: any = async () => {
         const { data: { user } } = await supabase.auth.getUser()
-        setCurrentUser(user);
-        // console.log("current", currentUser);
+        setCurrentUser(user);    
         return user
     }    
 
@@ -67,7 +66,7 @@ const DashboardNav = () => {
                 <div className="z-20 px-3 py-3 text-right border rounded-md w-1/3 bg-white absolute top-14 right-2 ">
                     <ul className='text-sm space-y-4'>
                         <li>
-                            <Link onClick={() => setOpen(false)} href="/dashboard/profile">
+                            <Link onClick={() => setOpen(false)} href="/dashboard/profile/edit">
                                 View profile
                             </Link>
                         </li>
