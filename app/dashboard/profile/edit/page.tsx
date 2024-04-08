@@ -145,13 +145,13 @@ const page = () => {
                                             />
                                         </div>
 
-                                        <Button 
-                                            type="submit" 
-                                            className={`${values.businessname === userProfile[0]?.businessname && values.fullname === userProfile[0]?.fullname && values.country === userProfile[0]?.country? "w-full bg-primary bg-opacity-60 text-white rounded-[10px]" : "w-full bg-primary text-white rounded-[10px]" }`}
+                                        <Button
+                                            type="submit"
+                                            className={`${values.businessname === userProfile[0]?.businessname && values.fullname === userProfile[0]?.fullname && values.country === userProfile[0]?.country ? "w-full bg-primary bg-opacity-60 text-white rounded-[10px]" : "w-full bg-primary text-white rounded-[10px]"}`}
                                             // className=" w-full bg-primary text-white rounded-[10px]"
-                                            disable={values.businessname === userProfile[0]?.businessname && values.fullname === userProfile[0]?.fullname && values.country === userProfile[0]?.country}    
+                                            disable={values.businessname === userProfile[0]?.businessname && values.fullname === userProfile[0]?.fullname && values.country === userProfile[0]?.country}
                                         >
-                                            Save changes
+                                            Update
                                         </Button>
 
 

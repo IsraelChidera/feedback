@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation';
 const Background = ({ children, params, feedback: dd, }: { children: React.ReactNode, params?: any, feedback: any }) => {
     const { feedbacks } = useContext(FeedbackContext);
     const router = useRouter();
-    const feedback = feedbacks?.find((item: any) => item.id === params?.id);    
+    const feedback = feedbacks?.find((item: any) => item.id === params?.id);
 
     const [backgroundColor, setBackgroundColor] = useState<any>(generateRandomColor());
     const backgroundRef: any = useRef(null);
@@ -34,11 +34,27 @@ const Background = ({ children, params, feedback: dd, }: { children: React.React
     function downloadBackground() {
         html2canvas(backgroundRef.current).then(canvas => {
             canvas.toBlob((blob: any) => {
-                saveAs(blob, 'background.png');
+                {
+                    saveAs(blob, 'background.png');                    
+                }
             });
         });
     }
 
+    // function downloadBackground() {
+    //     html2canvas(backgroundRef.current).then(canvas => {
+    //         canvas.toBlob((blob:any) => {
+    //             const reader = new FileReader();
+    //             reader.readAsDataURL(blob);
+    //             reader.onloadend = () => {
+    //                 const dataUrl = reader.result;
+    //                 // Do something with the data URL, e.g., set it as the source for an image element or a link
+    //                 console.log("Data URL:", dataUrl);
+    //             };
+    //         });
+    //     });
+    // }
+    
     const handleDeleteFeedback = async () => {
 
 
@@ -56,7 +72,7 @@ const Background = ({ children, params, feedback: dd, }: { children: React.React
             .eq("id", dd.id)
 
         if (!error) {
-            alert("Deleted sucessfully")            
+            alert("Deleted sucessfully")
             router.push("/dashboard")
         }
     }

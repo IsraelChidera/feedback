@@ -21,7 +21,7 @@ export const FeedbackContextProvider = ({ children }: { children: React.ReactNod
             .select('*')
             .eq("feedbackid", user?.id)
 
-        console.log({ feedbacks, error });
+        // console.log({ feedbacks, error });
 
         if (!error) {
             setLoading(false);
@@ -32,9 +32,7 @@ export const FeedbackContextProvider = ({ children }: { children: React.ReactNod
 
     useEffect(() => {
         getProfile();
-    }, [supabase])
-
-    console.log("feed", feedbacks);
+    }, [supabase])    
 
     return (<FeedbackContext.Provider value={{ feedbacks, loading }}>
         {children}

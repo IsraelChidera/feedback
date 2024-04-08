@@ -27,8 +27,7 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
         }
         setUserProfile(profiles);
     }
-
-    console.log("sss", userProfile)
+    
 
     useEffect(() => {
         getUser();

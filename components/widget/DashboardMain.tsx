@@ -10,15 +10,45 @@ import { useRouter } from 'next/navigation';
 import Feedback from '../utils/Feedback';
 import { UserContext } from '@/store/features/User/UserContext';
 import { FeedbackContext } from '@/store/features/Feedback/FeedbackContext';
+import { uuid } from 'uuidv4';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import CopyToClipboardButton from './CopyToClipboardButton';
+
 
 const DashboardMain = () => {
     const { loading, userProfile } = useContext(UserContext);
     const { loading: loadFeedback, feedbacks } = useContext(FeedbackContext);
+    const [info, setInfo] = useState<any>("");
 
+    const supabase = createClientComponentClient();
     const router = useRouter();
 
     const handleAddFeedback = () => {
         router.push("/dashboard/add-admin-feedback")
+    }
+
+    const handleGenerateUserFeedbackLink = async () => {
+        try {
+            const link = uuid();
+
+            const { data, error } = await supabase
+                .from('clientfeedbacklinks')
+                .insert([
+                    {
+                        used: false,
+                        link: link
+                    },
+                ])
+                .select()
+
+            if (!error) {
+                alert("Successful. Share link to user for feedback")
+                setInfo(link);
+            }
+            console.log({ data, error })
+        } catch (error) {
+            alert(error)
+        }
     }
 
     return (
@@ -63,9 +93,13 @@ const DashboardMain = () => {
             <section className='py-6 px-4 w-full bg-white my-3 rounded-[10px]'>
                 <div>
                     <div className='flex justify-end space-x-4'>
+                        <Button onClick={handleGenerateUserFeedbackLink} type="button" className='text-white items-center flex space-x-2 px-3 text-sm bg-primary'>
+                            <p>Generate feedback link</p>
+                        </Button>
+
                         <Button type="button" className='text-primary items-center flex space-x-2 px-3 text-sm bg-[#C4FFF4]'>
                             <Image width={25} height={25} src="/view-icon.svg" alt="view icon" />
-                            <p>View Feedbacks</p>
+                            <p>View User Feedbacks</p>
                         </Button>
 
                         <Button type="button" className='text-primary border border-primary flex items-center space-x-2 px-3 text-sm bg-transparent'>
@@ -74,7 +108,16 @@ const DashboardMain = () => {
                         </Button>
                     </div>
                 </div>
+
+                {info && <div className=' flex justify-between items-center mt-4 bg-primary text-white py-3 text-sm px-4 w-full my-3 rounded-[10px]'>
+                    <p>
+                        Here is your link. Copy and share to user
+                    </p>
+                    <CopyToClipboardButton text= {`http://localhost:3000/feedback/${info}`} />                   
+                </div>}
             </section>
+
+
 
             <section className="py-6 mb-10 px-4 bg-white mt-6 w-full rounded-[10px] ">
                 {

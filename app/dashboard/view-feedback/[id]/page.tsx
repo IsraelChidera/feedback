@@ -20,8 +20,7 @@ const page = ({ params }: { params: any }) => {
     return (
         <section className='mx-auto mt-10 mb-12 w-[98%] bg-white rounded-2xl py-5 px-6'>        
 
-            <Background feedback={feedback}>
-                {/* Content to be downloaded */}
+            <Background feedback={feedback}>            
                 <div className='py-3 px-3 rounded-3xl'>
                     <div>
                         <div className='block'>
