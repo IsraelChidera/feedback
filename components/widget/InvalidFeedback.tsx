@@ -11,7 +11,7 @@ const InvalidFeedback = () => {
                 <div className='text-[#111827] text-center'>
                     <h2 className='text-[26px] text-semibold'>Invalid or used feedback link. </h2>
                     <p className='text-[16px]'>
-                        Kindly request another link.
+                        Thank you for your input
                     </p>
                 </div>
             </div>

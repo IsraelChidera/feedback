@@ -13,12 +13,14 @@ import { useRouter } from 'next/navigation';
 import { ImSpinner8 } from "react-icons/im";
 import { FaFacebook } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
+import { toast } from 'react-toastify';
 
 const page = () => {
     const supabase = createClientComponentClient();
     const router = useRouter();
     const [error, setError] = useState<any>();
-    const [loading, setLoading] = useState(false);   
+    const [errors, setErrors] = useState<any>();
+    const [loading, setLoading] = useState(false);
 
     const initialValues = {
         workEmail: '',
@@ -44,33 +46,55 @@ const page = () => {
             });
 
             console.log({ data, error });
-            router.push("/dashboard");           
-            return data
-        } catch (error) {
-            console.log(error);
+
+            if (error || !data?.session) {
+                console.log("error inside", error)
+                throw new Error("Login failed!");
+            }
+            router.push("/dashboard");
+        } catch (error: any) {
+            setErrors(error);
+            toast.error("Login failed!");
+        } finally {
             setLoading(false);
         }
-
-        setLoading(false);
     }
 
     const LoginWithGoogle = async () => {
-        let { data, error } = await supabase.auth.signInWithOAuth({
-            provider: 'google',
-        })
-        setError(error);
-        console.log(data);
-        return data;
+        try {
+            let { data, error } = await supabase.auth.signInWithOAuth({
+                provider: 'google',
+            })
+            setError(error);
+            console.log(data);
+
+            if (error) {
+                console.log("error inside", error)
+                throw new Error("Login failed!");
+            }
+        } catch (error: any) {
+            setErrors(error);
+            toast.error("Login failed!");
+        }
     }
 
     const LoginWithFacebook = async () => {
-        const { data, error } = await supabase.auth.signInWithOAuth({
-            provider: 'facebook',
-        });
+        try {
+            const { data, error } = await supabase.auth.signInWithOAuth({
+                provider: 'facebook',
+            });
 
-        setError(error);
-        console.log(data);
-        return data;
+            setError(error);
+            console.log("data: ", data);
+            if (error) {
+                console.log("error inside", error)
+                throw new Error("Login failed!");
+            }
+        } catch (error: any) {
+            setErrors(error);
+            toast.error("Login failed! ");
+        }
+
     }
 
 
@@ -181,10 +205,10 @@ const page = () => {
                             <div className='mt-3 flex items-center justify-center'>
                                 <div className='flex space-x-5 items-center'>
                                     <FaGoogle onClick={LoginWithGoogle} className='text-3xl text-[#ea4335] cursor-pointer' />
-                                    <FaFacebook onClick={LoginWithFacebook} className='text-3xl text-[#316ff6] cursor-pointer' />                                    
+                                    <FaFacebook onClick={LoginWithFacebook} className='text-3xl text-[#316ff6] cursor-pointer' />
                                 </div>
                             </div>
-                           
+
                         </div>
                     </div>
                 </div>

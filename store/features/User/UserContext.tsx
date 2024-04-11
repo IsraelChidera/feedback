@@ -11,23 +11,22 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
     const [loading, setLoading] = useState<boolean>(false);
     const supabase = createClientComponentClient();    
 
-    const getUser: any = async () => {
-        console.log("dskdjsk");
-        setLoading(true);
-        const { data: { session } } = await supabase.auth.getSession();
-        const user = session?.user;
-
+    const getUser: any = async () => {    
+        setLoading(true);    
+        const { data: { user: users } } = await supabase.auth.getUser();
+        // console.log("dskdjsk", users);
         const { data: profiles, error } = await supabase
             .from('profiles')
             .select('*')
-            .eq('profileid', user?.id)
+            .eq('profileid', users?.id)
 
+            // console.log("users profile check: ", users)
         if (!error) {
             setLoading(false);                    
         }
-        setUserProfile(profiles);
+        setUserProfile(users);
     }
-    
+    // console.log("userProfile:", userProfile)
 
     useEffect(() => {
         getUser();

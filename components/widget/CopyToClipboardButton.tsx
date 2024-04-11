@@ -9,7 +9,7 @@ export default function CopyToClipboardButton({ text }: { text: any }) {
         try {
             await navigator.clipboard.writeText(text);
             setCopied(true);
-            setTimeout(() => setCopied(false), 3000); // Reset copied state after 3 seconds
+            setTimeout(() => setCopied(false), 3000); 
         } catch (error) {
             console.error('Error copying to clipboard:', error);
         }

@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { UserContextProvider } from "@/store/features/User/UserContext";
 import { FeedbackContextProvider } from "@/store/features/Feedback/FeedbackContext";
-
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,6 +21,7 @@ export default function RootLayout({
         <UserContextProvider>
           <FeedbackContextProvider>
             {children}
+            <ToastContainer />
           </FeedbackContextProvider>
         </UserContextProvider>
       </body>

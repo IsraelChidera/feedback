@@ -7,13 +7,11 @@ import * as Yup from 'yup';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter, usePathname } from 'next/navigation';
 import InvalidFeedback from '@/components/widget/InvalidFeedback';
-import { UserContext } from '@/store/features/User/UserContext';
-
 
 const page = () => {
-    const { userProfile } = useContext(UserContext);
     const [loading, setLoading] = useState<boolean>(true);
     const [data, setData] = useState<any>([]);
+    const [profileId, setProfileId] = useState<any>([]);
     const supabase = createClientComponentClient();
 
     const router = useRouter();
@@ -27,7 +25,9 @@ const page = () => {
     };
 
     const validationSchema = Yup.object({
-
+        fullname: Yup.string()
+            .required('Full name is required')
+            .min(3, 'Must be 10 characters or more'),
         feedback: Yup.string()
             .required('Business name is required')
             .min(10, 'Must be 10 characters or more'),
@@ -42,11 +42,11 @@ const page = () => {
     }
 
     const urlpathname: any = getAbsoluteLink(pathname);
-    // console.log("worked", urlpathname);
-
+    console.log("here now", urlpathname)
 
     const onAddAdminFeedback = async (values: any) => {
-        console.log(values);
+        try{
+            console.log(values);
 
         const { data: feedData, error } = await supabase
             .from('clientfeedbacks')
@@ -54,31 +54,50 @@ const page = () => {
                 {
                     fullname: values.fullname,
                     feedback: values.feedback,
-                    // clientfeedbackid: urlpathname,
+                    clientfeedbackid: urlpathname,
                     // feedbackid: userProfile[0]?.id
                 },
             ])
             .select()
 
-        if (!error) {
-            alert("Successfully added ")
+        const { data, error: errorr } = await supabase
+            .from('clientfeedbacklinks')
+            .update({ 
+                used: true,
+                linkid: urlpathname 
+            })
+            .eq('link', urlpathname)
+            .select()
+
+        if (!error && !error) {
+            alert("Successfully added ");
+            alert("updated successfully");
+
+            window.location.reload();
         }
 
+
         console.log({ feedData, error })
+        console.log({data, errorr})
+        }catch(error){
+            console.log(error);
+        }
     }
 
     const feedbacklinks = async () => {
 
+
         let { data: clientfeedbacklinks, error } = await supabase
-        .from('clientfeedbacklinks')
-        .select('*')
+            .from('clientfeedbacklinks')
+            .select('*')
+            .eq('link', urlpathname)
 
         setData(clientfeedbacklinks);
-        console.log("dataaaaaaaaaa", data)
+        console.log("dataaaaaaaaaad", data)
         console.log({ clientfeedbacklinks, error })
     }
 
-    console.log("dataaaaaaaaaa", data)
+    console.log("dataaaaaaaqqaaa", data)
 
     const getUrl = async (pathname: any) => {
         try {
@@ -104,9 +123,8 @@ const page = () => {
         feedbacklinks();
     }, [])
 
-    console.log("dataa", loading)
 
-    if (!loading) {
+    if (!loading || data[0]?.used) {
         return (
             <main className="flex justify-center items-center h-screen">
                 <InvalidFeedback />

@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { UserContext } from '@/store/features/User/UserContext';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 const page = () => {
     const { userProfile } = useContext(UserContext);
@@ -37,33 +38,50 @@ const page = () => {
     });
 
 
+    console.log("userProfile: qq", userProfile)
+
+    // const checkProfileUpdate = async() => {
+    //     let { data: profiles, error } = await supabase
+    //     .from('profiles')
+    //     .select("*")
+        
+    // }
+
     const onContactFormSubmission = async (values: any) => {
-        console.log(values);
+        try {
+            console.log(values);
 
-        const { data, error } = await supabase
-            .from('profiles')
-            .insert([
-                {
-                    profileid: userProfile[0]?.profileid,
-                    businessname: values.businessname,
-                    fullname: values.fullname,
-                    country: values.country,
-                    phone: values.phone,
-                    isprofileupdated: true
-                },
-            ])
-            .select();
+            const { data, error } = await supabase
+                .from('profiles')
+                .insert([
+                    {
+                        profileid: userProfile.id,
+                        businessname: values.businessname,
+                        fullname: values.fullname,
+                        country: values.country,
+                        phone: values.phone,
+                        isprofileupdated: true
+                    },
+                ])
+                .select();
 
-        if (error === null) {
-            alert("You have successfully updated your business profile");
+            if (error) {
+                throw new Error("Unable to update profile")
+            }
+            if(!data){
+                toast.success("Profile updated successfully");
+                router.push("/dashboard");
+            }
+            console.log({ data, error })
+        } catch (error) {
+            toast.error("Unable to update profile")
         }
-        console.log({ data, error })
     }
 
     if (userProfile[0]?.isprofileupdated) {
         return router.push("/dashboard/profile/edit")
     }
-    
+
     return (
         <section className='mx-auto w-[98%]'>
             <div className="py-6 px-4 w-full bg-white my-3 rounded-[10px]">

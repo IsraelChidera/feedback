@@ -13,6 +13,7 @@ import * as Yup from 'yup';
 import { ImSpinner8 } from "react-icons/im";
 import { FaFacebook } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
+import { toast } from 'react-toastify';
 
 const page = () => {
     const supabase = createClientComponentClient();
@@ -57,23 +58,24 @@ const page = () => {
                     emailRedirectTo: `${location.origin}/auth/callback`
                 }
             })
-            router.push('/login');
 
             setError(error);
 
             console.log({ data, error });
 
-            const updateUserProfile = await supabase.auth.updateUser({
-                email: "new@email.com",
-                password: "new-password",
-                data: { hello: 'world' }
-            })
-
+            if (error) {
+                throw new Error("Registration failed!")
+            }
+            toast.success("Registration successful");
+            toast.info("Complete your email verification to continue the app");
+            router.push('/login');
         } catch (error) {
             console.log(error);
             setLoading(false)
+            toast.error("Registration failed");
+        } finally {
+            setLoading(false);
         }
-        setLoading(false)
     }
 
     const LoginWithGoogle = async () => {

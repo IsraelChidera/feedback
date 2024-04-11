@@ -8,16 +8,15 @@ import Link from 'next/link';
 import { IoReloadSharp } from "react-icons/io5";
 import { useRouter } from 'next/navigation';
 import Feedback from '../utils/Feedback';
-import { UserContext } from '@/store/features/User/UserContext';
 import { FeedbackContext } from '@/store/features/Feedback/FeedbackContext';
-import { uuid } from 'uuidv4';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import CopyToClipboardButton from './CopyToClipboardButton';
-
+import { toast } from 'react-toastify';
 
 const DashboardMain = () => {
-    const { loading, userProfile } = useContext(UserContext);
-    const { loading: loadFeedback, feedbacks } = useContext(FeedbackContext);
+    const [userProfile, setUserProfile] = useState<any>([]);
+    const [loading, setLoading] = useState<boolean>(false);
+    const { loading: loadFeedback, getFeedbacks: feedbacks } = useContext(FeedbackContext);
     const [info, setInfo] = useState<any>("");
 
     const supabase = createClientComponentClient();
@@ -29,7 +28,7 @@ const DashboardMain = () => {
 
     const handleGenerateUserFeedbackLink = async () => {
         try {
-            const link = uuid();
+            const link = userProfile?.profileid;
 
             const { data, error } = await supabase
                 .from('clientfeedbacklinks')
@@ -50,6 +49,35 @@ const DashboardMain = () => {
             alert(error)
         }
     }
+
+    const getProfile: any = async () => {
+        try {
+            setLoading(true);
+            const { data: { session } } = await supabase.auth.getSession();
+            const user = session?.user;
+            console.log("user", user);
+            let { data: profiles, error } = await supabase
+                .from('profiles')
+                .select("*")
+                .eq("profileid", user?.id)
+
+            console.log({ profiles, error });
+
+            if (!error) {
+                setLoading(false);
+                setUserProfile(profiles)
+            }
+            if(error){
+                throw new Error("Unable to get user");
+            }
+        } catch (error) {
+            toast.error("Unable to get user");
+        }
+    }
+
+    useEffect(() => {
+        getProfile();
+    }, [])
 
     return (
         <main className='mx-auto w-[98%]'>
@@ -93,7 +121,7 @@ const DashboardMain = () => {
             <section className='py-6 px-4 w-full bg-white my-3 rounded-[10px]'>
                 <div>
                     <div className='flex justify-end space-x-4'>
-                        <Button onClick={handleGenerateUserFeedbackLink} type="button" className='text-white items-center flex space-x-2 px-3 text-sm bg-primary'>
+                        <Button onClick={handleGenerateUserFeedbackLink} type="button" className='text-white items-center flex space-x-2 px-3 text-sm bg-primary' disable>
                             <p>Generate feedback link</p>
                         </Button>
 
@@ -113,20 +141,17 @@ const DashboardMain = () => {
                     <p>
                         Here is your link. Copy and share to user
                     </p>
-                    <CopyToClipboardButton text= {`http://localhost:3000/feedback/${info}`} />                   
+                    <CopyToClipboardButton text={`http://localhost:3000/feedback/${info}`} />
                 </div>}
             </section>
 
-
-
             <section className="py-6 mb-10 px-4 bg-white mt-6 w-full rounded-[10px] ">
                 {
-                    loadFeedback && !feedbacks ?
+                    loadFeedback ?
                         <div className="flex py-6 items-center justify-center">
                             <IoReloadSharp className='animate-spin' />
                         </div>
-                        :
-                        feedbacks && !loadFeedback ?
+                        : feedbacks.length !== 0 ?
                             <div className='grid grid-cols-3 gap-x-6 gap-y-10'>
                                 {
                                     feedbacks.map((feeds: any) => (
