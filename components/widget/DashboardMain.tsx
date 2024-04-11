@@ -67,7 +67,7 @@ const DashboardMain = () => {
                 setLoading(false);
                 setUserProfile(profiles)
             }
-            if(error){
+            if (error) {
                 throw new Error("Unable to get user");
             }
         } catch (error) {
@@ -81,6 +81,13 @@ const DashboardMain = () => {
 
     return (
         <main className='mx-auto w-[98%]'>
+            <section className='py-6 px-4 w-full bg-white my-3 rounded-[10px]'>
+                <h2 className='text-2xl'>Hi, Good morning</h2>
+                <p>
+                    Have you gotten any feedback today?
+                </p>
+            </section>
+
             {loading && !userProfile[0]?.isprofileupdated ?
                 <div className="flex py-6 items-center justify-center">
                     <IoReloadSharp className='animate-spin' />
@@ -99,11 +106,6 @@ const DashboardMain = () => {
                                 </div>
                             </div>
 
-                            <div>
-                                <button className='text-sm bg-white rounded-2xl px-3 py-2 text-primary font-semibold'>
-                                    View all feedback
-                                </button>
-                            </div>
                         </div>
                     </section>
                     :
@@ -147,12 +149,12 @@ const DashboardMain = () => {
 
             <section className="py-6 mb-10 px-4 bg-white mt-6 w-full rounded-[10px] ">
                 {
-                    loadFeedback ?
+                    loadFeedback && feedbacks.length === 0 ?
                         <div className="flex py-6 items-center justify-center">
                             <IoReloadSharp className='animate-spin' />
                         </div>
                         : feedbacks.length !== 0 ?
-                            <div className='grid grid-cols-3 gap-x-6 gap-y-10'>
+                            <div className='grid grid-cols-2 gap-x-6 gap-y-10'>
                                 {
                                     feedbacks.map((feeds: any) => (
                                         <Feedback
