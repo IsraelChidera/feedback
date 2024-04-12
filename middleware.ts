@@ -21,5 +21,5 @@ export async function middleware(req: any) {
 }
 
 export const config = {
-    matcher: ['/login', '/dashboard', '/dashboard/profile', '/dashboard/add-admin-feedback']
+    // matcher: ['/login', '/dashboard', '/dashboard/profile', '/dashboard/add-admin-feedback']
 }

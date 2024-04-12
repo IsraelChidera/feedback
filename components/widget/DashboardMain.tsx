@@ -12,6 +12,9 @@ import { FeedbackContext } from '@/store/features/Feedback/FeedbackContext';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import CopyToClipboardButton from './CopyToClipboardButton';
 import { toast } from 'react-toastify';
+import { MdOutlineFeed } from "react-icons/md";
+import { FaUsersLine } from "react-icons/fa6";
+import { MdOutlineMoreTime } from "react-icons/md";
 
 const DashboardMain = () => {
     const [userProfile, setUserProfile] = useState<any>([]);
@@ -21,6 +24,8 @@ const DashboardMain = () => {
 
     const supabase = createClientComponentClient();
     const router = useRouter();
+
+    console.log("Check here: ", feedbacks)
 
     const handleAddFeedback = () => {
         router.push("/dashboard/add-admin-feedback")
@@ -102,7 +107,7 @@ const DashboardMain = () => {
 
                                 <div>
                                     <p className='text-sm text-[#f7f7f7]'>Total feedbacks</p>
-                                    <h3 className='text-2xl'>{feedbacks ? feedbacks.length : "0"} Feedbacks</h3>
+                                    <h3 className='text-2xl'>{feedbacks ? feedbacks.length : "0"} Feedback{feedbacks.length === 0 || 1 ? null : "s"}</h3>
                                 </div>
                             </div>
 
@@ -145,6 +150,39 @@ const DashboardMain = () => {
                     </p>
                     <CopyToClipboardButton text={`http://localhost:3000/feedback/${info}`} />
                 </div>}
+            </section>
+
+            <section className='py-6 px-4 w-full bg-white my-3 rounded-[10px]'>
+                <h3 className="text-lg font-medium ">Overview</h3>
+
+                <div className='mt-10 grid grid-cols-3 gap-10'>
+                    <div className='px-3 py-4 shadow-md flex justify-between items-center rounded-lg'>
+                        <div className='space-y-4'>
+                            <p className='text-lg font-semibold'>{feedbacks ? feedbacks.length : "0"}</p>
+                            <p>All feedbacks</p>
+                        </div>
+
+                        <MdOutlineFeed className='text-2xl text-primary' />
+                    </div>
+
+                    <div className='px-3 py-4 shadow-md flex justify-between items-center rounded-lg'>
+                        <div className='space-y-4'>
+                            <p className='text-lg font-semibold'>0</p>
+                            <p>Users feedback</p>
+                        </div>
+
+                        <FaUsersLine className='text-2xl text-primary' />
+                    </div>
+
+                    <div className='px-3 py-4 shadow-md flex justify-between items-center rounded-lg'>
+                        <div className='space-y-4'>
+                            <p className='text-lg font-semibold'>0</p>
+                            <p>Today's Feedback</p>
+                        </div>
+
+                        <MdOutlineMoreTime className='text-2xl text-primary' />
+                    </div>
+                </div>
             </section>
 
             <section className="py-6 mb-10 px-4 bg-white mt-6 w-full rounded-[10px] ">
