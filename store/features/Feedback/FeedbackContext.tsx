@@ -17,7 +17,7 @@ export const FeedbackContextProvider = ({ children }: { children: React.ReactNod
             setLoading(true);
             const { data: { user: users } } = await supabase.auth.getUser();
 
-            console.log("user session", users)
+            // console.log("user session", users)
             let { data: feedbacks, error } = await supabase
                 .from('feedbacks')
                 .select('*')

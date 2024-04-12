@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import Button from '@/components/Button';
@@ -8,20 +8,25 @@ import TextField from '@/components/Forms/TextField';
 import { FeedbackContext } from '@/store/features/Feedback/FeedbackContext';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
+import { ImSpinner8 } from "react-icons/im";
+import { UserContext } from '@/store/features/User/UserContext';
 
 const page = ({ params }: { params: any }) => {
 
-    const { feedbacks } = useContext(FeedbackContext);
+    const [loading, setLoading] = useState(false);
+    const { getFeedbacks: feedbacks } = useContext(FeedbackContext);
+    // const {userProfile} = useContext(UserContext );
     const router = useRouter();
 
     const supabase = createClientComponentClient();
 
     const feedback: any = feedbacks?.find((item: any) => item.id === params.id);
-    console.log(feedback)
+    
     const initialValues = {
-        businessname: feedback?.businessname,
-        fullname: feedback?.fullname,
-        feedback: feedback?.feedback,
+        businessname: "",
+        fullname: "",
+        feedback: "",
         id: feedback?.id
     };
 
@@ -37,30 +42,36 @@ const page = ({ params }: { params: any }) => {
             .min(10, 'Must be 10 characters or more'),
     });
 
-    // useEffect(() => {
-
-    // }, [feedback])
-
-
     const onContactFormSubmission = async (values: any) => {
-        console.log({ ...values });
+        try {
+            setLoading(true);
+            console.log({ ...values });
 
-        const { data, error } = await supabase
-            .from('feedbacks')
-            .update({
-                businessname: values.businessname,
-                fullname: values.fullname,
-                feedback: values.feedback,
-            })
-            .eq('id', values.id)
-            .select()
-        console.log({ data, error });
-        if (!error) {
-            alert("Feedback updated successfully")
-            router.push("/dashboard")
+            const { data, error } = await supabase
+                .from('feedbacks')
+                .update({
+                    businessname: values.businessname,
+                    fullname: values.fullname,
+                    feedback: values.feedback,
+                })
+                .eq('id', values.id)
+                .select()
+            console.log({ data, error });
+            if (!error) {
+                toast.success("Feedback updated successfully")
+                router.push("/dashboard")
+                setLoading(false);
+            }
+            if (error) {
+                throw new Error("Error updating feedback");
+            }
+        } catch (error) {
+            toast.error("Error updating feedback")
+            setLoading(false);
         }
 
     }
+
     return (
         <main className='mx-auto w-[98%]'>
             <section className='py-6 px-4 w-full bg-white my-3 rounded-[10px]'>
@@ -98,26 +109,37 @@ const page = ({ params }: { params: any }) => {
                                             className='cursor-not-allowed'
                                         />
 
-                                        <TextField
-                                            label="Business name"
-                                            id="businessname"
-                                            type="text"
-                                            placeholder={values.businessname}
-                                            value={values.businessname}
-                                            onChange={handleChange}
-                                            className='cursor-not-allowed'
-                                            disabled={true}
-                                        />
+                                        <div>
+                                            <TextField
+                                                label="Business name"
+                                                id="businessname"
+                                                type="text"
+                                                placeholder={feedback?.businessname}
+                                                value={values.businessname}
+                                                onChange={handleChange}
+                                            // className='cursor-not-allowed'
+                                            // disabled={true}
+                                            />
+                                            <p className='text-xs text-primary'>
+                                                {errors.businessname && touched.businessname && errors.businessname}
+                                            </p>
+                                        </div>
 
-                                        <TextField
-                                            label="Full name"
-                                            id="fullname"
-                                            type="text"
-                                            placeholder={values.fullname}
-                                            value={values.fullname}
-                                            onChange={handleChange}
-                                            disabled={true}
-                                        />
+
+                                        <div>
+                                            <TextField
+                                                label="Full name"
+                                                id="fullname"
+                                                type="text"
+                                                placeholder={feedback?.fullname}
+                                                value={values.fullname}
+                                                onChange={handleChange}
+                                            // disabled={true}
+                                            />
+                                            <p className='text-xs text-primary'>
+                                                {errors.fullname && touched.fullname && errors.fullname}
+                                            </p>
+                                        </div>
 
                                         <div>
                                             <label className='block font-medium'>
@@ -126,7 +148,7 @@ const page = ({ params }: { params: any }) => {
                                             <textarea
                                                 name="feedback"
                                                 value={values.feedback}
-                                                placeholder="I love the cake. Taste was heavenly"
+                                                placeholder={feedback?.feedback}
                                                 onChange={handleChange}
                                                 className='border text-sm border-[#e0e0e0] w-full rounded-[10px] text-[#111827] py-[16px] pl-[14px] pr-[10px]'
                                                 rows={6}
@@ -143,7 +165,13 @@ const page = ({ params }: { params: any }) => {
                                             className={`w-full text-white rounded-[10px] ${values.businessname === feedback?.businessname && values.fullname === feedback?.fullname && values.feedback === feedback?.feedback ? 'bg-opacity-40 bg-primary' : 'bg-primary'}`}
                                             disable={values.businessname === feedback?.businessname && values.fullname === feedback?.fullname && values.feedback === feedback?.feedback}
                                         >
-                                            Update Feedback
+                                            {loading ? <div className="flex items-center justify-center">
+                                                <ImSpinner8 className="text-white animate-spin" />
+                                            </div>
+                                                :
+                                                <span>
+                                                    Update feedback
+                                                </span>}
                                         </Button>
 
 

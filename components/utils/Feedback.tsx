@@ -9,12 +9,13 @@ type FeedbackProps = {
     feedback: string,
     fullname: string,
     id: any,
+    createdat: any
 }
 
-const Feedback = ({ businessname, feedback, id, fullname }: FeedbackProps) => {
+const Feedback = ({ businessname, feedback, id, fullname, createdat }: FeedbackProps) => {
     return (
         <div className='flex justify-between flex-col border-x rounded-b-lg border-b border-primary h-full'>
-            <div className='h-28 bg-primary w-full  relative'>
+            <div className='h-28 bg-primary opacity-80 w-full  relative'>
                 <div className=" w-full absolute top-2 right-2 ">
                     <div className='flex space-x-2 justify-end items-center'>
                         <Link href={`/dashboard/view-feedback/${id}`}>
@@ -31,11 +32,19 @@ const Feedback = ({ businessname, feedback, id, fullname }: FeedbackProps) => {
 
             <div className='p-3 border-x rounded-b-lg '>
                 <div>
-                    <h5 className='font-semibold text-[#111827] text-xl '>{businessname} </h5>
+                    <div>
+                        <h5 className='font-semibold text-[#111827] text-xl '>{businessname} </h5>
+
+                    </div>
                     <p className='text-[#334] mt-1 leading-tight break-words '>
                         {feedback?.substring(0, 100)} . . .
                     </p>
-                    <p className='text-right mt-2 text-xs text-[#0A0A0C]'>- {fullname}</p>
+                    <div className="mt-2 flex items-center justify-between">
+                        <p className='text-xs'>
+                            Created on {new Date(createdat).toLocaleDateString()}
+                        </p>
+                        <p className='text-right text-xs text-[#0A0A0C]'>- {fullname}</p>
+                    </div>
                 </div>
             </div>
         </div>

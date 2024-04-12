@@ -5,8 +5,8 @@ import { saveAs } from 'file-saver';
 import Background from '@/components/utils/Background';
 
 const page = ({ params }: { params: any }) => {
-    const { feedbacks } = useContext(FeedbackContext);
-
+    const { loading: loadFeedback, getFeedbacks: feedbacks } = useContext(FeedbackContext);
+    // console.log("feeds", feedbacks)
     const feedback = feedbacks?.find((item: any) => item.id === params.id);
 
     const handleDownload = () => {
@@ -18,9 +18,9 @@ const page = ({ params }: { params: any }) => {
     };
 
     return (
-        <section className='mx-auto mt-10 mb-12 w-[98%] bg-white rounded-2xl py-5 px-6'>        
+        <section className='mx-auto mt-10 mb-12 w-[98%] bg-white rounded-2xl py-5 px-6'>
 
-            <Background feedback={feedback}>            
+            <Background feedback={feedback}>
                 <div className='py-3 px-3 rounded-3xl'>
                     <div>
                         <div className='block'>
@@ -40,7 +40,7 @@ const page = ({ params }: { params: any }) => {
                         </div>
 
                     </div>
-                    
+
                 </div>
             </Background>
         </section>

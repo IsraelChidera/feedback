@@ -23,9 +23,9 @@ const DashboardMain = () => {
     const [info, setInfo] = useState<any>("");
 
     const supabase = createClientComponentClient();
-    const router = useRouter();
-
-    console.log("Check here: ", feedbacks)
+    const router = useRouter();   
+    
+    console.log("feddd", feedbacks)
 
     const handleAddFeedback = () => {
         router.push("/dashboard/add-admin-feedback")
@@ -60,13 +60,13 @@ const DashboardMain = () => {
             setLoading(true);
             const { data: { session } } = await supabase.auth.getSession();
             const user = session?.user;
-            console.log("user", user);
+            // console.log("user", user);
             let { data: profiles, error } = await supabase
                 .from('profiles')
                 .select("*")
                 .eq("profileid", user?.id)
 
-            console.log({ profiles, error });
+            // console.log({ profiles, error });
 
             if (!error) {
                 setLoading(false);
@@ -88,8 +88,10 @@ const DashboardMain = () => {
         <main className='mx-auto w-[98%]'>
             <section className='py-6 px-4 w-full bg-white my-3 rounded-[10px]'>
                 <h2 className='text-2xl'>Hi, Good morning</h2>
-                <p>
-                    Have you gotten any feedback today?
+                <p >
+                    Have you gotten any feedback for {" "}
+                    <span className='italic font-medium text-primary text-lg'>{userProfile[0]?.businessname}</span> {" "}
+                    today?
                 </p>
             </section>
 
