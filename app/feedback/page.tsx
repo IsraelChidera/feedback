@@ -35,19 +35,11 @@ const page = () => {
 
 
     const onAddAdminFeedback = async (values: any) => {
-        console.log(values);
-
-        //         const { data, error } = await supabase
-        //   .from('clientfeedbacks')
-        //   .insert([
-        //     { some_column: 'someValue', other_column: 'otherValue' },
-        //   ])
-        //   .select()
-
+        console.log(values);    
     }
 
     return (
-        <section className='mx-auto w-[98%]'>
+        <section className='mt-24 mx-auto w-[98%]'>
             <div className="py-6 px-4 w-full bg-white my-3 rounded-[10px]">
                 <div>
                     <h3 className='text-center font-semibold text-xl pt-4 text-primary'>Add Feedback {"as a user"}</h3>
@@ -75,7 +67,7 @@ const page = () => {
                             ) => (
                                 <>
 
-                                    <Form className='w-[620px] mx-auto space-y-6'>
+                                    <Form className='md:w-[620px] mx-auto space-y-6'>
                                         <img src="/feedback-header.png" alt="feedback banner" />
                                         <div>
                                             <label className='block font-medium'>

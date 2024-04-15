@@ -98,8 +98,8 @@ const page = () => {
     }
 
     return (
-        <main className='grid grid-cols-5'>
-            <section className='col-span-2 bg-primary relative'>
+        <main className='lg:grid grid-cols-5'>
+            <section className='lg:block hidden col-span-2 bg-primary relative'>
                 <Container>
                     <div className='mt-10'>
                         <div>
@@ -153,7 +153,7 @@ const page = () => {
                                     }
                             ) => (
                                 <>
-                                    <Form className='w-[520px] mx-auto space-y-6'>
+                                    <Form className='md:w-[520px] px-3 lg:px-0 mx-auto space-y-6'>
                                         <div>
                                             <TextField type="text" name='businessName' id="businessName" value={values.businessName} onChange={handleChange} label="Business Name" placeholder='Business Name' />
 

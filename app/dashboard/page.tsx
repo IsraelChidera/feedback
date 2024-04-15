@@ -7,7 +7,7 @@ import React from 'react'
 const page = () => {
 
   return (
-    <main>
+    <main className='mt-24'>
       <DashboardMain />
     </main>
   )

@@ -15,10 +15,10 @@ export default function DashboardLayout({
 }) {
     return (
         <main className='bg-[#EBEBEB] flex relative'>
-            <div className='bg-white z-30 fixed top-0 left-0 h-screen'>
+            <div className='lg:block hidden bg-white z-30 fixed top-0 left-0 h-screen'>
                 <Sidebar />
             </div>
-            <div className='relative pl-[330px] w-full'>
+            <div className='relative lg:pl-[330px] w-full'>
 
                 <DashboardNav />
                 {children}

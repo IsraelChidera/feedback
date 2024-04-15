@@ -15,6 +15,8 @@ import { toast } from 'react-toastify';
 import { MdOutlineFeed } from "react-icons/md";
 import { FaUsersLine } from "react-icons/fa6";
 import { MdOutlineMoreTime } from "react-icons/md";
+import { GetTime } from '../utils/GetTime';
+import { MdWavingHand } from "react-icons/md";
 
 const DashboardMain = () => {
     const [userProfile, setUserProfile] = useState<any>([]);
@@ -23,9 +25,9 @@ const DashboardMain = () => {
     const [info, setInfo] = useState<any>("");
 
     const supabase = createClientComponentClient();
-    const router = useRouter();   
-    
-    console.log("feddd", feedbacks)
+    const router = useRouter();
+
+    // console.log("feddd", feedbacks)
 
     const handleAddFeedback = () => {
         router.push("/dashboard/add-admin-feedback")
@@ -87,7 +89,10 @@ const DashboardMain = () => {
     return (
         <main className='mx-auto w-[98%]'>
             <section className='py-6 px-4 w-full bg-white my-3 rounded-[10px]'>
-                <h2 className='text-2xl'>Hi, Good morning</h2>
+                <h2 className='text-2xl flex items-center space-x-2'>
+                    <span>Hi, {GetTime()}</span>
+                    <MdWavingHand className="text-primary text-2xl" />
+                </h2>
                 <p >
                     Have you gotten any feedback for {" "}
                     <span className='italic font-medium text-primary text-lg'>{userProfile[0]?.businessname}</span> {" "}
@@ -129,19 +134,19 @@ const DashboardMain = () => {
 
             <section className='py-6 px-4 w-full bg-white my-3 rounded-[10px]'>
                 <div>
-                    <div className='flex justify-end space-x-4'>
+                    <div className='flex items-center justify-start md:justify-end md:space-x-4 space-x-2'>
                         <Button onClick={handleGenerateUserFeedbackLink} type="button" className='text-white items-center flex space-x-2 px-3 text-sm bg-primary' disable>
                             <p>Generate feedback link</p>
                         </Button>
 
                         <Button type="button" className='text-primary items-center flex space-x-2 px-3 text-sm bg-[#C4FFF4]'>
                             <Image width={25} height={25} src="/view-icon.svg" alt="view icon" />
-                            <p>View User Feedbacks</p>
+                            <p className='md:block hidden'>View User Feedbacks</p>
                         </Button>
 
                         <Button type="button" className='text-primary border border-primary flex items-center space-x-2 px-3 text-sm bg-transparent'>
                             <Image width={25} height={25} src="/analytics-icon.svg" alt="view icon" />
-                            <p>View Analytics</p>
+                            <p className='md:block hidden'>View Analytics</p>
                         </Button>
                     </div>
                 </div>
@@ -157,7 +162,7 @@ const DashboardMain = () => {
             <section className='py-6 px-4 w-full bg-white my-3 rounded-[10px]'>
                 <h3 className="text-lg font-medium ">Overview</h3>
 
-                <div className='mt-10 grid grid-cols-3 gap-10'>
+                <div className='mt-10 grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10'>
                     <div className='px-3 py-4 shadow-md flex justify-between items-center rounded-lg'>
                         <div className='space-y-4'>
                             <p className='text-lg font-semibold'>{feedbacks ? feedbacks.length : "0"}</p>
@@ -194,15 +199,18 @@ const DashboardMain = () => {
                             <IoReloadSharp className='animate-spin' />
                         </div>
                         : feedbacks.length !== 0 ?
-                            <div className='grid grid-cols-2 gap-x-6 gap-y-10'>
-                                {
-                                    feedbacks.map((feeds: any) => (
-                                        <Feedback
-                                            key={feeds?.id}
-                                            {...feeds}
-                                        />
-                                    ))
-                                }
+                            <div >
+                                <h3 className="text-lg font-medium ">Feedbacks</h3>
+                                <div className='mt-5 md:mt-10 grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-x-6 gap-y-10'>
+                                    {
+                                        feedbacks.map((feeds: any) => (
+                                            <Feedback
+                                                key={feeds?.id}
+                                                {...feeds}
+                                            />
+                                        ))
+                                    }
+                                </div>
                             </div>
                             :
                             <EmptyFeedback />

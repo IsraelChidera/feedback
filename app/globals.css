@@ -35,7 +35,7 @@ a {
   z-index: 1;
   opacity: 1;
   height: 2px;
-  width: 32%;
+  width: 22%;
 }
 
 .login-options:after {
@@ -47,5 +47,5 @@ a {
   z-index: 1;
   opacity: 1;
   height: 2px;
-  width: 32%;
+  width: 22%;
 }

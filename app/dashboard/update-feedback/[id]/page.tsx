@@ -24,9 +24,9 @@ const page = ({ params }: { params: any }) => {
     const feedback: any = feedbacks?.find((item: any) => item.id === params.id);
     
     const initialValues = {
-        businessname: "",
-        fullname: "",
-        feedback: "",
+        businessname: feedback?.businessname,
+        fullname: feedback?.fullname,
+        feedback: feedback?.feedback,
         id: feedback?.id
     };
 
@@ -73,7 +73,7 @@ const page = ({ params }: { params: any }) => {
     }
 
     return (
-        <main className='mx-auto w-[98%]'>
+        <main className='mt-24 mx-auto w-[98%]'>
             <section className='py-6 px-4 w-full bg-white my-3 rounded-[10px]'>
                 <div>
                     <h3 className='text-center text-xl font-semibold text-primary'>Update Feedback</h3>
@@ -98,7 +98,7 @@ const page = ({ params }: { params: any }) => {
                                     }
                             ) => (
                                 <>
-                                    <Form className='w-[620px] mx-auto space-y-6'>
+                                    <Form className='md:w-[620px] mx-auto space-y-6'>
                                         <TextField
                                             label="id"
                                             id="id"

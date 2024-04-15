@@ -12,8 +12,12 @@ import { IoIosArrowRoundBack } from "react-icons/io";
 const DashboardNav = () => {
     const [open, setOpen] = useState(false);
     const [currentUser, setCurrentUser] = useState<any>(null);
+    const [loading, setLoading] = useState(false);
 
     const supabase = createClientComponentClient()
+    const router = useRouter();
+    const pathname = usePathname();
+    
 
     const getUser: any = async () => {
         const { data: { user } } = await supabase.auth.getUser()
@@ -26,10 +30,6 @@ const DashboardNav = () => {
         // setCurrentUser(getUser());
     }, []);
     
-
-    const router = useRouter();
-    const pathname = usePathname();
-
     const handleOpenProfileMenu = () => {
         setOpen(prev => !prev)
     }
@@ -38,19 +38,33 @@ const DashboardNav = () => {
         router.push("/dashboard")
     }
 
+    const handleLogout = async () => {
+        setLoading(true);
+        try {
+            await supabase.auth.signOut()
+            router.push("/login");
+            setLoading(false);
+        } catch (error) {
+            console.log("error:", error)
+        }
+    }
+
     return (
-        <nav className='bg-white w-full pl-0.5 py-6 px-3 relative'>
-            <div className='flex justify-between'>
-                <button onClick={returnToDashboard} type="button">
+        <nav className='fixed z-40 top-0 right-0 bg-white w-full pl-0.5 py-6 px-3 '>
+            <div className='flex justify-between items-center relative md:px-0 px-2'>
+                <button className="lg:block hidden" onClick={returnToDashboard} type="button">
                     {
                         pathname === "/dashboard/profile" &&
                         <div className='flex items-center space-x-2'>
                             <div> <IoIosArrowRoundBack /> </div>
                             <p className='text-[15px] text-[#0A0A0C] opacity-35'>Back</p>
                         </div>
-                    }
-
+                    }                    
                 </button>
+
+                <Link className='tracking-tight lg:hidden block italic text-xl font-extrabold text-primary' href="/dashboard">
+                    FS
+                </Link>
 
                 <div className='flex items-center space-x-3'>
                     <p className='text-[15px] text-[#0A0A0C] '>{currentUser?.email}</p>
@@ -72,14 +86,13 @@ const DashboardNav = () => {
                         </li>
 
                         <li>
-                            <Button className='text-sm bg-red-400 px-6 text-white py-1.5 rounded-md'>
+                            <Button onClick={handleLogout} className='text-sm bg-red-400 px-6 text-white py-1.5 rounded-md'>
                                 Logout
                             </Button>
                         </li>
                     </ul>
                 </div>
             }
-
 
         </nav>
     )

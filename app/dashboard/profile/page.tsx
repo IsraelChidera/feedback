@@ -83,7 +83,7 @@ const page = () => {
     }
 
     return (
-        <section className='mx-auto w-[98%]'>
+        <section className='mt-24 mx-auto w-[98%]'>
             <div className="py-6 px-4 w-full bg-white my-3 rounded-[10px]">
                 <div>
                     <h3 className='text-center text-primary'>Business Profile</h3>
@@ -107,7 +107,7 @@ const page = () => {
                                     }
                             ) => (
                                 <>
-                                    <Form className='w-[620px] mx-auto space-y-6'>
+                                    <Form className='md:w-[620px] mx-auto space-y-6'>
 
                                         <div>
                                             <label className='block font-medium'>

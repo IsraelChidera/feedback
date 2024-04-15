@@ -99,8 +99,8 @@ const page = () => {
 
 
     return (
-        <main className='grid grid-cols-5'>
-            <section className='col-span-2 bg-primary relative'>
+        <main className='lg:grid grid-cols-5'>
+            <section className='lg:block hidden col-span-2 bg-primary relative'>
                 <Container>
                     <div className='mt-10'>
                         <div>
@@ -128,8 +128,8 @@ const page = () => {
                 <Image className='absolute bottom-0 left-0' src="/points2.svg" width={305.29} height={373.14} alt="points" />
             </section>
 
-            <section className='h-full flex justify-center flex-col col-span-3 pt-6 bg-offWhite  '>
-                <div>
+            <section className='lg:h-full h-screen flex justify-center items-center lg:items-center lg:col-span-3 pt-6 bg-offWhite  '>
+                <div className='w-full h-full'>
                     <div className='text-center'>
                         <h3 className='text-[#0A0A0C] font-semibold text-[28px]'>
                             Welcome back!
@@ -139,7 +139,7 @@ const page = () => {
                         </p>
                     </div>
 
-                    <div className='mt-10 pb-20'>
+                    <div className='mt-10 pb-20 px-4 md:px-0'>
                         <Formik
                             initialValues={initialValues}
                             validationSchema={validationSchema}
@@ -157,7 +157,7 @@ const page = () => {
                                         }
                                 ) => (
                                     <>
-                                        <Form className='w-[520px] mx-auto space-y-6'>
+                                        <Form className='md:w-[520px] w-full mx-auto space-y-6'>
                                             <div>
                                                 <TextField type="email" name='workEmail' id="workEmail" value={values.workEmail} onChange={handleChange} label="Work email" placeholder='info@business.com' />
 
@@ -168,7 +168,9 @@ const page = () => {
 
                                             <div>
                                                 <TextField type="password" name='password' id="password" value={values.password} onChange={handleChange} label="Password" placeholder='enter password' />
-
+                                                <p className='text-right text-sm underline'>
+                                                    forgot password?
+                                                </p>
                                                 <p className='text-xs text-primary'>
                                                     {errors.password && touched.password && errors.password}
                                                 </p>
@@ -189,10 +191,7 @@ const page = () => {
                                             <p className='text-center'>
                                                 Don't have an account yet? <Link className='underline text-primary' href="/register">Register</Link>
                                             </p>
-
-                                            <p className='text-center'>
-                                                Forgot Password? <Link className='underline text-primary' href="#">Reset now</Link>
-                                            </p>
+                                            
                                         </Form>
                                     </>
                                 )}
