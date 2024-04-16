@@ -127,9 +127,13 @@ const page = () => {
                 <Image className='absolute bottom-0 left-0' src="/points2.svg" width={305.29} height={373.14} alt="points" />
             </section>
 
-            <section className='lg:h-full h-screen flex justify-center items-center lg:items-center lg:col-span-3 pt-6 bg-offWhite  '>
-                <div className='w-full h-full h-screen flex items-center justify-center'>
+            <section className='lg:h-full h-screen flex justify-center items-center lg:items-center lg:col-span-3 lg:px-0 px-3 pt-6 bg-offWhite  '>
+                <div className='w-full'>
                     <div>
+                        <div className="lg:hidden flex items-center justify-center mb">
+                            <Image width={184} height={48} src="/logo.svg" alt="logo" />
+                        </div>
+                        
                         <div className='text-center'>
                             <h3 className='text-[#0A0A0C] font-semibold text-[28px]'>
                                 Welcome back!

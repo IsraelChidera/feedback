@@ -127,7 +127,10 @@ const page = () => {
                 <Image className='absolute bottom-0 left-0' src="/points2.svg" width={305.29} height={373.14} alt="points" />
             </section>
 
-            <section className='col-span-3 pt-6 bg-offWhite'>
+            <section className='col-span-3 pt-12 px-3 lg:px-0 bg-offWhite'>
+                <div className="lg:hidden flex items-center justify-center mb">
+                    <Image width={184} height={48} src="/logo.svg" alt="logo" />
+                </div>
                 <div className='text-center'>
                     <h3 className='text-[#0A0A0C] font-semibold text-[28px]'>
                         Sign up with free trial
@@ -199,7 +202,7 @@ const page = () => {
                                         </div>
 
                                         <div>
-                                            <p className='text-inputText'>
+                                            <p className='text-inputText text-sm lg:text-base'>
                                                 By registering for an account, you are consenting to our
                                                 Terms of Service and confirming that you have reviewed and
                                                 accepted the Global Privacy Statement.
@@ -222,7 +225,7 @@ const page = () => {
                             )}
                     </Formik>
 
-                    <p className='text-center mt-8'>
+                    <p className='text-center text-sm lg:text-base mt-8'>
                         Already have an account? <Link className='underline text-primary' href="/login">Login</Link>
                     </p>
 
