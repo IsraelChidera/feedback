@@ -104,7 +104,7 @@ const page = () => {
     }, [])
 
     return (
-        <section className='mx-auto mt-24 w-[98%]'>
+        <section className='mx-auto mt-2 w-[98%]'>
             <div className="py-6 px-4 w-full bg-white my-3 rounded-[10px]">
                 <div>
                     <h3 className='text-center text-primary'>Update Profile</h3>

@@ -56,11 +56,11 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
     }
 
     useEffect(() => {
-        getProfile();
+        // getProfile();
     }, [])
 
     useEffect(() => {
-        getUser();
+        // getUser();
     }, [])
 
 

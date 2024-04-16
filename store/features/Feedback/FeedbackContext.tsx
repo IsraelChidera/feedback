@@ -36,7 +36,7 @@ export const FeedbackContextProvider = ({ children }: { children: React.ReactNod
     }
 
     useEffect(() => {
-        getProfile();
+        // getProfile();
     }, [])
 
     return (<FeedbackContext.Provider value={{ getFeedbacks, loading }}>

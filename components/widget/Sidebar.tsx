@@ -28,7 +28,7 @@ const Sidebar = () => {
     }
 
     return (
-        <div className='w-[328px] h-screen flex flex-col relative z-40 justify-between py-10 pl-3 pr-8 '>
+        <div className='md:max-w-[328px] w-full z-50 h-screen flex flex-col relative justify-between py-10 pl-3 pr-8 '>
             <div>
                 <Link href="/">
                     <Image width={204} height={58} src="/logo.svg" alt="logo" />

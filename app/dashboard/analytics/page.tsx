@@ -2,7 +2,7 @@ import React from 'react'
 
 const page = () => {
   return (
-    <main className='mt-24'>
+    <main className='mt-2'>
       analytics
     </main>
   )

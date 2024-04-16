@@ -72,7 +72,7 @@ const page = () => {
 
 
     return (
-        <section className='mt-24 mx-auto w-[98%]'>
+        <section className='mt-2 mx-auto w-[98%]'>
             <div className="py-6 px-4 w-full bg-white my-3 rounded-[10px]">
                 <div>
                     <h3 className='text-center text-xl font-medium pt-4 text-primary'>Add Feedback</h3>
