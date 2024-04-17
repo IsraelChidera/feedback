@@ -217,7 +217,7 @@ const page = () => {
                                                 </p>
                                             </div>
 
-                                            <div className='mt-1'>
+                                            <div className='mt-1 md:text-base text-sm'>
                                                 <p className='text-inputText text-sm lg:text-base'>
                                                     By registering for an account, you are consenting to our
                                                     Terms of Service and confirming that you have reviewed and
