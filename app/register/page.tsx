@@ -147,11 +147,10 @@ const page = () => {
                 <div className="lg:hidden flex items-center justify-center mb">
                     <Image width={184} height={48} src="/logo.svg" alt="logo" />
                 </div>
-                <div className='text-center'>
-                    <h3 className='text-[#0A0A0C] font-semibold text-[28px]'>
-                        Sign up with free trial
-                    </h3>
-                    <p className='text-[#414143]'>Empower your experience, sign up for a free account today</p>
+                <div className='text-center'>                    
+                    <p className='text-[#414143] md:text-sm text-base'>
+                        Sign up for a free account today
+                    </p>
                 </div>
 
                 <div className='mt-10 pb-20'>

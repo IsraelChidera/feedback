@@ -135,10 +135,10 @@ const page = () => {
                         </div>
 
                         <div className='text-center'>
-                            <h3 className='text-[#0A0A0C] font-semibold text-[28px]'>
+                            {/* <h3 className='text-[#0A0A0C] font-semibold text-[28px]'>
                                 Welcome back!
-                            </h3>
-                            <p className='text-[#414143]'>
+                            </h3> */}
+                            <p className='text-[#414143] md:text-sm text-base'>
                                 Please login to access your account
                             </p>
                         </div>
