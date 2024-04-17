@@ -22,7 +22,7 @@ a {
 
 .login-options {
   position: relative;
-  z-index: 1;  
+  z-index: 1;
   width: 100%;
 }
 
@@ -30,22 +30,26 @@ a {
   content: '';
   position: absolute;
   top: 10px;
-  left: 100px;
+  left: 40%;
   background-color: #334;
   z-index: 1;
   opacity: 1;
   height: 2px;
-  width: 22%;
+  width: 22px;
 }
 
 .login-options:after {
   content: '';
   position: absolute;
   top: 10px;
-  right: 100px;
+  right: 40%;
   background-color: #334;
   z-index: 1;
   opacity: 1;
   height: 2px;
-  width: 22%;
+  width: 22px;
+}
+
+@media screen and (max-width:1024px) {
+  
 }

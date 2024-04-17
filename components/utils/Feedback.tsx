@@ -41,7 +41,7 @@ const Feedback = ({ businessname, feedback, id, fullname, createdat }: FeedbackP
                     </p>
                     <div className="mt-2 flex items-center justify-between">
                         <p className='text-xs'>
-                            Created on {new Date(createdat).toLocaleDateString()}
+                            {new Date(createdat).toLocaleDateString()}
                         </p>
                         <p className='text-right text-xs text-[#0A0A0C]'>- {fullname}</p>
                     </div>

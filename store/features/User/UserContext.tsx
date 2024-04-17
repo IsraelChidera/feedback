@@ -51,16 +51,16 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
                 throw new Error("Unable to get user");
             }
         } catch (error) {
-            toast.error("Unable to get user");
+            console.log("Unable to get user");
         }
     }
 
     useEffect(() => {
-        // getProfile();
+        getProfile();
     }, [])
 
     useEffect(() => {
-        // getUser();
+        getUser();
     }, [])
 
 

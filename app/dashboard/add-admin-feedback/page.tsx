@@ -15,6 +15,7 @@ const page = () => {
     const [loading, setLoading] = useState(false);
 
     const { userProfile } = useContext(UserContext);
+    console.log("user",userProfile)
 
     const supabase = createClientComponentClient();
     const router = useRouter();

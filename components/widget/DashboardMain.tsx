@@ -27,7 +27,7 @@ const DashboardMain = () => {
     const supabase = createClientComponentClient();
     const router = useRouter();
 
-    // console.log("feddd", feedbacks)
+    // console.log("feddd", router)
 
     const handleAddFeedback = () => {
         router.push("/dashboard/add-admin-feedback")

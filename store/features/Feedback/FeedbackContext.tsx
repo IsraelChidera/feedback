@@ -31,12 +31,12 @@ export const FeedbackContextProvider = ({ children }: { children: React.ReactNod
 
             setGetFeedbacks(feedbacks);
         } catch (error) {
-            toast.error("Error getting feedbacks")
+            console.log("Error getting feedbacks")
         }
     }
 
     useEffect(() => {
-        // getProfile();
+        getProfile();
     }, [])
 
     return (<FeedbackContext.Provider value={{ getFeedbacks, loading }}>

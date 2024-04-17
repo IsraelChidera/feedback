@@ -79,22 +79,38 @@ const page = () => {
     }
 
     const LoginWithGoogle = async () => {
-        let { data, error } = await supabase.auth.signInWithOAuth({
-            provider: 'google',
-        })
-        setError(error);
-        console.log(data);
-        return data;
+        try {
+            let { data, error } = await supabase.auth.signInWithOAuth({
+                provider: 'google',
+            })
+            setError(error);
+            console.log(data);
+
+            if (error) {
+                console.log("error inside", error)
+                throw new Error("Login failed!");
+            }
+        } catch (error: any) {            
+            toast.error("Login failed!");
+        }
     }
 
     const LoginWithFacebook = async () => {
-        const { data, error } = await supabase.auth.signInWithOAuth({
-            provider: 'facebook',
-        });
+        try {
+            const { data, error } = await supabase.auth.signInWithOAuth({
+                provider: 'facebook',
+            });
 
-        setError(error);
-        console.log(data);
-        return data;
+            setError(error);
+            console.log("data: ", data);
+            if (error) {
+                console.log("error inside", error)
+                throw new Error("Login failed!");
+            }
+        } catch (error: any) {        
+            toast.error("Login failed!");
+        }
+
     }
 
     return (
@@ -127,7 +143,7 @@ const page = () => {
                 <Image className='absolute bottom-0 left-0' src="/points2.svg" width={305.29} height={373.14} alt="points" />
             </section>
 
-            <section className='col-span-3 pt-12 px-3 lg:px-0 bg-offWhite'>
+            <section className='col-span-3 pt-12 px-3 lg:px-0 bg-white'>
                 <div className="lg:hidden flex items-center justify-center mb">
                     <Image width={184} height={48} src="/logo.svg" alt="logo" />
                 </div>
@@ -192,22 +208,26 @@ const page = () => {
                                         </div>
 
                                         <div>
-                                            <input name='privacyAndTerms' id="privacyAndTerms" type="checkbox" value={values.privacyAndTerms} onChange={handleChange} />
-                                            <span className='text-sm text-inputText pl-2'>
-                                                Please exclude me from any future emails regarding FeedbackShare and related product and feature updates, marketing best practices, and promotions.
-                                            </span>
-                                            <p className='text-xs text-primary'>
-                                                {errors.privacyAndTerms && touched.privacyAndTerms && errors.privacyAndTerms}
-                                            </p>
+                                            <div>
+                                                <input name='privacyAndTerms' id="privacyAndTerms" type="checkbox" value={values.privacyAndTerms} onChange={handleChange} />
+                                                <span className='text-sm text-inputText pl-2'>
+                                                    Please exclude me from any future emails regarding FeedbackShare and related product and feature updates, marketing best practices, and promotions.
+                                                </span>
+                                                <p className='text-xs text-primary'>
+                                                    {errors.privacyAndTerms && touched.privacyAndTerms && errors.privacyAndTerms}
+                                                </p>
+                                            </div>
+
+                                            <div className='mt-1'>
+                                                <p className='text-inputText text-sm lg:text-base'>
+                                                    By registering for an account, you are consenting to our
+                                                    Terms of Service and confirming that you have reviewed and
+                                                    accepted the Global Privacy Statement.
+                                                </p>
+                                            </div>
                                         </div>
 
-                                        <div>
-                                            <p className='text-inputText text-sm lg:text-base'>
-                                                By registering for an account, you are consenting to our
-                                                Terms of Service and confirming that you have reviewed and
-                                                accepted the Global Privacy Statement.
-                                            </p>
-                                        </div>
+
 
                                         <Button type="submit" className="w-full bg-primary text-white">
                                             {
