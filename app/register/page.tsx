@@ -218,10 +218,9 @@ const page = () => {
                                             </div>
 
                                             <div className='mt-1 md:text-base text-sm'>
-                                                <p className='text-inputText text-sm lg:text-base'>
+                                                <p className='text-inputText'>
                                                     By registering for an account, you are consenting to our
-                                                    Terms of Service and confirming that you have reviewed and
-                                                    accepted the Global Privacy Statement.
+                                                    Terms of Service
                                                 </p>
                                             </div>
                                         </div>
