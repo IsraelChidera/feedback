@@ -114,7 +114,7 @@ const DashboardMain = () => {
 
                                 <div>
                                     <p className='text-sm text-[#f7f7f7]'>Total feedbacks</p>
-                                    <h3 className='text-2xl'>{feedbacks ? feedbacks.length : "0"} Feedback{feedbacks.length === 0 || 1 ? null : "s"}</h3>
+                                    <h3 className='text-2xl'>{feedbacks ? feedbacks?.length : "0"} Feedback{feedbacks?.length === 0 || 1 ? null : "s"}</h3>
                                 </div>
                             </div>
 
