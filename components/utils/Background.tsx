@@ -8,10 +8,17 @@ import { AiFillDelete } from "react-icons/ai";
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { FeedbackContext } from '@/store/features/Feedback/FeedbackContext';
 import { useRouter } from 'next/navigation';
+import {
+    useQueryClient,
+    useMutation
+} from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 
 const Background = ({ children, params, feedback: dd, }: { children: React.ReactNode, params?: any, feedback: any }) => {
     const { feedbacks } = useContext(FeedbackContext);
     const router = useRouter();
+
+    const queryClient = useQueryClient();
     const feedback = feedbacks?.find((item: any) => item.id === params?.id);
 
     const [backgroundColor, setBackgroundColor] = useState<any>(generateRandomColor());
@@ -35,46 +42,64 @@ const Background = ({ children, params, feedback: dd, }: { children: React.React
         html2canvas(backgroundRef.current).then(canvas => {
             canvas.toBlob((blob: any) => {
                 {
-                    saveAs(blob, 'background.png');                    
+                    saveAs(blob, 'background.png');
                 }
             });
         });
     }
 
-    // function downloadBackground() {
-    //     html2canvas(backgroundRef.current).then(canvas => {
-    //         canvas.toBlob((blob:any) => {
-    //             const reader = new FileReader();
-    //             reader.readAsDataURL(blob);
-    //             reader.onloadend = () => {
-    //                 const dataUrl = reader.result;
-    //                 // Do something with the data URL, e.g., set it as the source for an image element or a link
-    //                 console.log("Data URL:", dataUrl);
-    //             };
-    //         });
-    //     });
-    // }
-    
-    const handleDeleteFeedback = async () => {
+    const mutation = useMutation({
+        mutationFn: async (values: any) => {
+            let { data: feedbacks, error: errors } = await supabase
+                .from('feedbacks')
+                .select('feedback')
+                .eq("id", dd.id)
 
 
-        let { data: feedbacks, error: errors } = await supabase
-            .from('feedbacks')
-            .select('feedback')
-            .eq("id", dd.id)
+            console.log({ feedbacks, errors })
 
-
-        console.log({ feedbacks, errors })
-
-        const { error } = await supabase
-            .from('feedbacks')
-            .delete()
-            .eq("id", dd.id)
-
-        if (!error) {
-            alert("Deleted sucessfully")
-            router.push("/dashboard")
+            return await supabase
+                .from('feedbacks')
+                .delete()
+                .eq("id", dd.id)
+        },
+        onSuccess: () => {
+            // setLoading(false);
+            queryClient.invalidateQueries({ queryKey: ['feedbackData'] })
+            queryClient.invalidateQueries({ queryKey: ['userData'] })
+            router.push("/dashboard");
+        },
+        onError: () => {
+            toast.error("Unable to delete feedback");
         }
+
+    })
+
+
+    const handleDeleteFeedback = async (values: any) => {
+        try {
+            await mutation.mutateAsync(values);
+        } catch (error) {
+            console.log(error);
+        }
+
+        // let { data: feedbacks, error: errors } = await supabase
+        //     .from('feedbacks')
+        //     .select('feedback')
+        //     .eq("id", dd.id)
+
+
+        // console.log({ feedbacks, errors })
+
+        // const { error } = await supabase
+        //     .from('feedbacks')
+        //     .delete()
+        //     .eq("id", dd.id)
+
+        // if (!error) {
+        //     alert("Deleted sucessfully")
+        //     router.push("/dashboard")
+        // }
     }
 
     return (

@@ -10,19 +10,24 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { ImSpinner8 } from "react-icons/im";
-import { UserContext } from '@/store/features/User/UserContext';
+import {
+    useQueryClient,
+    useMutation
+} from '@tanstack/react-query';
 
 const page = ({ params }: { params: any }) => {
 
     const [loading, setLoading] = useState(false);
     const { getFeedbacks: feedbacks } = useContext(FeedbackContext);
     // const {userProfile} = useContext(UserContext );
+
+    const queryClient = useQueryClient();
     const router = useRouter();
 
     const supabase = createClientComponentClient();
 
     const feedback: any = feedbacks?.find((item: any) => item.id === params.id);
-    
+
     const initialValues = {
         businessname: feedback?.businessname,
         fullname: feedback?.fullname,
@@ -42,12 +47,9 @@ const page = ({ params }: { params: any }) => {
             .min(10, 'Must be 10 characters or more'),
     });
 
-    const onContactFormSubmission = async (values: any) => {
-        try {
-            setLoading(true);
-            console.log({ ...values });
-
-            const { data, error } = await supabase
+    const mutation = useMutation({
+        mutationFn: async (values: any) => {
+            return await supabase
                 .from('feedbacks')
                 .update({
                     businessname: values.businessname,
@@ -56,15 +58,28 @@ const page = ({ params }: { params: any }) => {
                 })
                 .eq('id', values.id)
                 .select()
-            console.log({ data, error });
-            if (!error) {
-                toast.success("Feedback updated successfully")
-                router.push("/dashboard")
-                setLoading(false);
-            }
-            if (error) {
-                throw new Error("Error updating feedback");
-            }
+        },
+        onSuccess: () => {
+            setLoading(false);
+            queryClient.invalidateQueries({ queryKey: ['feedbackData'] })
+            queryClient.invalidateQueries({ queryKey: ['userData'] })
+            toast.success("Feedback added successfully");
+            router.push("/dashboard");
+        },
+        onError: () => {
+            setLoading(false);
+            toast.error("Unable to add feedback");
+        }
+
+    })
+
+
+    const onContactFormSubmission = async (values: any) => {
+        try {
+            setLoading(true);
+            console.log({ ...values });
+            await mutation.mutateAsync(values);
+            
         } catch (error) {
             toast.error("Error updating feedback")
             setLoading(false);
