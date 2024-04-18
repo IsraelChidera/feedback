@@ -10,12 +10,17 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { ImSpinner8 } from "react-icons/im";
 import { UserContext } from '@/store/features/User/UserContext';
+import {
+    useQueryClient,
+    useMutation
+} from '@tanstack/react-query';
 
 const page = () => {
     const [loading, setLoading] = useState(false);
 
     const { userProfile } = useContext(UserContext);
-    console.log("user",userProfile)
+    const queryClient = useQueryClient();
+
 
     const supabase = createClientComponentClient();
     const router = useRouter();
@@ -38,33 +43,64 @@ const page = () => {
             .min(10, 'Must be 10 characters or more'),
     });
 
-
-    const onAddAdminFeedback = async (values: any) => {
-        try {
-            console.log(values);
-            setLoading(true);
-            const { data, error } = await supabase
+    const mutation = useMutation({
+        mutationFn: async (values: any) => {
+            return await supabase
                 .from('feedbacks')
                 .insert([
                     {
                         feedbackid: userProfile.id,
-                        businessname: values.businessname,
-                        fullname: values.fullname,
-                        feedback: values.feedback,
+                        businessname: values?.businessname,
+                        fullname: values?.fullname,
+                        feedback: values?.feedback,
                     },
                 ])
                 .select()
+        },
+        onSuccess: () => {
+            setLoading(false);
+            queryClient.invalidateQueries({queryKey: ['feedbackData']})
+            queryClient.invalidateQueries({queryKey: ['userData']})
+            toast.success("Feedback added successfully");
+            router.push("/dashboard");
+        },
+        onError: () => {
+            setLoading(false);
+            toast.error("Unable to add feedback");
+        }
 
-            if (!error) {
-                console.log("feedback added", data);
-                setLoading(false);
-                toast.success("Feedback added successfully")
-                router.push("/dashboard");
-            }
-            console.log({ data, error })
-            if (error) {
-                throw new Error("Unable to add feedback");
-            }
+    })
+
+
+    const onAddAdminFeedback = async (values: any) => {
+        try {
+            setLoading(true);
+
+            await mutation.mutateAsync(values);
+            console.log(values);
+
+            // const { data, error } = await supabase
+            //     .from('feedbacks')
+            //     .insert([
+            //         {
+            //             feedbackid: userProfile.id,
+            //             businessname: values.businessname,
+            //             fullname: values.fullname,
+            //             feedback: values.feedback,
+            //         },
+            //     ])
+            //     .select()
+
+            // if (!error) {
+            //     console.log("feedback added", data);
+            //     setLoading(false);
+            //     toast.success("Feedback added successfully")
+            //     router.push("/dashboard");
+            // }
+            // console.log({ data, error })
+            // if (error) {
+            //     throw new Error("Unable to add feedback");
+            // }
         } catch (error) {
             setLoading(false);
             toast.error("Unable to add feedback");

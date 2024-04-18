@@ -12,6 +12,7 @@
     "@reduxjs/toolkit": "^2.2.2",
     "@supabase/auth-helpers-nextjs": "^0.9.0",
     "@supabase/supabase-js": "^2.39.8",
+    "@tanstack/react-query": "^5.29.2",
     "file-saver": "^2.0.5",
     "formik": "^2.4.5",
     "html2canvas": "^1.4.1",

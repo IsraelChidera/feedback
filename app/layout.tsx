@@ -4,6 +4,7 @@ import { UserContextProvider } from "@/store/features/User/UserContext";
 import { FeedbackContextProvider } from "@/store/features/Feedback/FeedbackContext";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
+import QueryClientProviders from "@/store/QueryClientProviders";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,12 +19,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <UserContextProvider>
-          <FeedbackContextProvider>
-            {children}
-            <ToastContainer />
-          </FeedbackContextProvider>
-        </UserContextProvider>
+        <QueryClientProviders>
+          <UserContextProvider>
+            <FeedbackContextProvider>
+              {children}
+              <ToastContainer />
+            </FeedbackContextProvider>
+          </UserContextProvider>
+        </QueryClientProviders>
       </body>
     </html>
   );
