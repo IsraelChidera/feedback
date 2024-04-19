@@ -194,16 +194,16 @@ const DashboardMain = () => {
 
             <section className="py-6 mb-10 px-4 bg-white mt-6 w-full rounded-[10px] ">
                 {
-                    loadFeedback && feedbacks.length === 0 ?
+                    loadFeedback && feedbacks?.length === 0 ?
                         <div className="flex py-6 items-center justify-center">
                             <IoReloadSharp className='animate-spin' />
                         </div>
-                        : feedbacks.length !== 0 ?
+                        : feedbacks?.length !== 0 ?
                             <div >
                                 <h3 className="text-lg font-medium ">Feedbacks</h3>
                                 <div className='mt-5 md:mt-10 grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-x-6 gap-y-10'>
                                     {
-                                        feedbacks.map((feeds: any) => (
+                                        feedbacks?.map((feeds: any) => (
                                             <Feedback
                                                 key={feeds?.id}
                                                 {...feeds}
