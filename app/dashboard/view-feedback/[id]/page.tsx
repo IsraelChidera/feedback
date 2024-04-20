@@ -33,10 +33,9 @@ const page = ({ params }: { params: any }) => {
                                 {feedback?.feedback}
                             </p>
 
-                            <p className='text-sm text-right mt-1'>
+                            {/* <p className='text-sm text-right mt-1'>
                                 - {feedback?.businessname}
-                            </p>
-
+                            </p> */}
                         </div>
 
                     </div>
