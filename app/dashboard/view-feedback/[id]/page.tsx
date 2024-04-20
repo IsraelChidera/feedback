@@ -32,10 +32,6 @@ const page = ({ params }: { params: any }) => {
                             <p className="text-[15px] text-[#202124] mt-1">
                                 {feedback?.feedback}
                             </p>
-
-                            {/* <p className='text-sm text-right mt-1'>
-                                - {feedback?.businessname}
-                            </p> */}
                         </div>
 
                     </div>
