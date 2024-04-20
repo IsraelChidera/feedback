@@ -90,7 +90,7 @@ const page = () => {
                 console.log("error inside", error)
                 throw new Error("Login failed!");
             }
-        } catch (error: any) {            
+        } catch (error: any) {
             toast.error("Login failed!");
         }
     }
@@ -107,7 +107,7 @@ const page = () => {
                 console.log("error inside", error)
                 throw new Error("Login failed!");
             }
-        } catch (error: any) {        
+        } catch (error: any) {
             toast.error("Login failed!");
         }
 
@@ -147,7 +147,10 @@ const page = () => {
                 <div className="lg:hidden flex items-center justify-center mb">
                     <Image width={184} height={48} src="/logo.svg" alt="logo" />
                 </div>
-                <div className='text-center'>                    
+                <div className='text-center'>
+                    <h3 className='text-[#0A0A0C] lg:block hidden font-semibold text-[28px]'>
+                        Create account
+                    </h3>
                     <p className='text-[#414143] md:text-sm text-base'>
                         Sign up for a free account today
                     </p>
@@ -254,8 +257,8 @@ const page = () => {
 
                         <div className='mt-3 flex items-center justify-center'>
                             <div className='flex space-x-5 items-center'>
-                                <FaGoogle onClick={LoginWithGoogle} className='text-3xl text-[#ea4335]' />
-                                <FaFacebook onClick={LoginWithFacebook} className='text-3xl text-[#316ff6]' />
+                                <FaGoogle onClick={LoginWithGoogle} className='cursor-pointer text-3xl text-[#ea4335]' />
+                                <FaFacebook onClick={LoginWithFacebook} className='cursor-pointer text-3xl text-[#316ff6]' />
                                 {/* <FaXTwitter className='text-3xl text-[#000]' />                                 */}
                             </div>
                         </div>

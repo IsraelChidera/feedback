@@ -17,6 +17,9 @@ import { FaUsersLine } from "react-icons/fa6";
 import { MdOutlineMoreTime } from "react-icons/md";
 import { GetTime } from '../utils/GetTime';
 import { MdWavingHand } from "react-icons/md";
+import {    
+    useQueryClient
+} from '@tanstack/react-query';
 
 const DashboardMain = () => {
     const [userProfile, setUserProfile] = useState<any>([]);
@@ -26,6 +29,15 @@ const DashboardMain = () => {
 
     const supabase = createClientComponentClient();
     const router = useRouter();
+
+    // const queryClient = useQueryClient();
+    
+    // queryClient.invalidateQueries({
+    //     queryKey: ['userData'],
+    //     exact: true,
+    // })
+
+
 
     // console.log("feddd", router)
 

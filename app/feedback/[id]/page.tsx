@@ -42,7 +42,7 @@ const page = () => {
     }
 
     const urlpathname: any = getAbsoluteLink(pathname);
-    console.log("here now", urlpathname)
+    // console.log("here now", urlpathname)
 
     const onAddAdminFeedback = async (values: any) => {
         try{

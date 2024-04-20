@@ -77,30 +77,8 @@ const page = () => {
             setLoading(true);
 
             await mutation.mutateAsync(values);
-            console.log(values);
-
-            // const { data, error } = await supabase
-            //     .from('feedbacks')
-            //     .insert([
-            //         {
-            //             feedbackid: userProfile.id,
-            //             businessname: values.businessname,
-            //             fullname: values.fullname,
-            //             feedback: values.feedback,
-            //         },
-            //     ])
-            //     .select()
-
-            // if (!error) {
-            //     console.log("feedback added", data);
-            //     setLoading(false);
-            //     toast.success("Feedback added successfully")
-            //     router.push("/dashboard");
-            // }
-            // console.log({ data, error })
-            // if (error) {
-            //     throw new Error("Unable to add feedback");
-            // }
+            console.log(values);            
+           
         } catch (error) {
             setLoading(false);
             toast.error("Unable to add feedback");

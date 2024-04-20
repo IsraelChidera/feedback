@@ -72,10 +72,7 @@ const DashboardNav = () => {
                             <div> <IoIosArrowRoundBack /> </div>
                             <p className='text-[15px] text-[#0A0A0C] opacity-35'>Back</p>
                         </div>
-                    }
-                    {/* <span className=''>
-                        Here
-                    </span> */}
+                    }                    
                 </button>
 
                 <Link className='tracking-tight flex items-center space-x-1 pl-4 md:hidden italic text-xl font-extrabold text-primary' href="/dashboard">
