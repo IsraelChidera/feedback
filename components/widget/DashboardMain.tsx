@@ -17,9 +17,6 @@ import { FaUsersLine } from "react-icons/fa6";
 import { MdOutlineMoreTime } from "react-icons/md";
 import { GetTime } from '../utils/GetTime';
 import { MdWavingHand } from "react-icons/md";
-import {    
-    useQueryClient
-} from '@tanstack/react-query';
 
 const DashboardMain = () => {
     const [userProfile, setUserProfile] = useState<any>([]);
@@ -31,7 +28,7 @@ const DashboardMain = () => {
     const router = useRouter();
 
     // const queryClient = useQueryClient();
-    
+
     // queryClient.invalidateQueries({
     //     queryKey: ['userData'],
     //     exact: true,
@@ -212,10 +209,18 @@ const DashboardMain = () => {
                         </div>
                         : feedbacks?.length !== 0 ?
                             <div >
-                                <h3 className="text-lg font-medium ">Feedbacks</h3>
+                                <div className='flex items-center mb justify-between'>
+                                    <h3 className="text-lg font-medium ">Feedbacks</h3>
+
+                                    <div>
+                                        <Link className="text-sm underline hover:no-underline" href="/dashboard/feedbacks">
+                                            View all
+                                        </Link>
+                                    </div>
+                                </div>
                                 <div className='mt-5 md:mt-10 grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-x-6 gap-y-10'>
                                     {
-                                        feedbacks?.map((feeds: any) => (
+                                        feedbacks?.slice(0, 4).map((feeds: any) => (
                                             <Feedback
                                                 key={feeds?.id}
                                                 {...feeds}

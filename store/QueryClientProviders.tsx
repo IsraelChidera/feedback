@@ -6,16 +6,6 @@ import {
     QueryClientProvider,
 } from '@tanstack/react-query'
 
-
-
-// await queryClient.invalidateQueries(
-//     {
-//       queryKey: ['posts'],
-//       exact,
-//       refetchType: 'active',
-//     },
-//     { throwOnError, cancelRefetch },
-//   )
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {

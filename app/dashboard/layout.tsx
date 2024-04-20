@@ -27,7 +27,7 @@ export default function DashboardLayout({
                     {children}
                 </div>
 
-                <footer className="bg-white">
+                <footer className="bg-white fixed bottom-0 left-0 w-full">
                     <p className="text-center text-sm pt-2 pb-4">&copy; 2024 | Israel Chidera</p>
                 </footer>
             </div>

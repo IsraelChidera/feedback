@@ -1,4 +1,3 @@
-'use client'
 
 import DashboardMain from '@/components/widget/DashboardMain'
 import React from 'react'
