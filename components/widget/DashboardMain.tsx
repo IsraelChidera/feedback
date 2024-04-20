@@ -144,8 +144,8 @@ const DashboardMain = () => {
             <section className='py-6 px-4 w-full bg-white my-3 rounded-[10px]'>
                 <div>
                     <div className='flex items-center justify-start md:justify-end md:space-x-4 space-x-2'>
-                        <Button onClick={handleGenerateUserFeedbackLink} type="button" className='text-white items-center flex space-x-2 px-3 text-sm bg-primary' disable>
-                            <p>Generate feedback link</p>
+                        <Button onClick={handleGenerateUserFeedbackLink} type="button" className='text-white cursor-not-allowed items-center flex space-x-2 px-3 text-sm bg-primary' disable>
+                            <span>Generate feedback link</span>
                         </Button>
 
                         <Button type="button" className='text-primary items-center flex space-x-2 px-3 text-sm bg-[#C4FFF4]'>

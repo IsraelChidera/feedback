@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useContext } from 'react';
 import Button from '@/components/Button';
-import Link from 'next/link';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
@@ -33,7 +32,7 @@ const page = () => {
 
     const validationSchema = Yup.object({
         businessname: Yup.string()
-            .required('Full name is required')
+            // .required('Full name is required')
             .min(3, 'Must be 3 characters or more'),
         fullname: Yup.string()
             .required('Business name is required')
@@ -114,7 +113,7 @@ const page = () => {
                                     <Form className='md:w-[620px] mx-auto space-y-6'>
                                         <div>
                                             <label className='block font-medium'>
-                                                Full name
+                                                Full name<span className='text-[#ff0000]'>*</span>
                                             </label>
                                             <input type="text"
                                                 name="fullname"
@@ -130,7 +129,7 @@ const page = () => {
 
                                         <div>
                                             <label className='block font-medium'>
-                                                Business name
+                                                Business name<span className='text-xs'>{"("}optional{")"}</span>
                                             </label>
                                             <input type="text"
                                                 name="businessname"
@@ -146,7 +145,7 @@ const page = () => {
 
                                         <div>
                                             <label className='block font-medium'>
-                                                Feedback
+                                                Feedback <span className='text-[#ff0000]'>*</span>
                                             </label>
                                             <textarea
                                                 name="feedback"

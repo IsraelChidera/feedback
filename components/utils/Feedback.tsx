@@ -29,17 +29,19 @@ const Feedback = ({ businessname, feedback, id, fullname, createdat }: FeedbackP
             <div className='p-3 border-x rounded-b-lg '>
                 <div className="flex flex-col justify-between h-full">
                     <div>
-                        <h5 className='font-semibold text-[#111827] text-xl '>{businessname} </h5>
+                        <h5 className='font-semibold text-[#111827] text-xl '> {fullname} </h5>
                         <p className='text-[#334] mt-1 leading-tight break-words '>
                             {feedback?.substring(0, 100)} . . .
                         </p>
                     </div>
-                    <div>                        
+                    <div>
                         <div className="mt-2 flex items-center justify-between">
                             <p className='text-xs'>
                                 {new Date(createdat).toLocaleDateString()}
                             </p>
-                            <p className='text-right text-xs text-[#0A0A0C]'>- {fullname}</p>
+                            {businessname &&
+                                <p className='text-right text-xs text-[#0A0A0C]'>- {businessname}</p>
+                            }
                         </div>
                     </div>
                 </div>
