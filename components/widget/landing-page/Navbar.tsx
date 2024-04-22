@@ -26,11 +26,11 @@ const Navbar = () => {
 
                     <ul className='text-white hidden md:flex items-center space-x-6'>
                         <li>
-                            <Link href="#">Features</Link>
+                            <Link className='hover:underline transition-all ease-linear underline-offset-8' href="#features">Features</Link>
                         </li>
 
                         <li>
-                            <Link href="#">How it works</Link>
+                            <Link className='cursor-not-allowed' href="#">How it works</Link>
                         </li>
                     </ul>
 
@@ -47,7 +47,7 @@ const Navbar = () => {
 
                 {/* Mobile navigation */}
                 {
-                    openNavbar && <div className={`absolute transition-all -translate-y-2 ${openNavbar && 'translate-y-0'} top-10 right-0 w-full md:hidden block mt-2 rounded-md px-3 py-6 bg-white text-primary`}>
+                    openNavbar && <div className={`absolute transition-all -translate-y-8 ${openNavbar && 'translate-y-0'} top-10 right-0 w-full md:hidden block mt-2 rounded-md px-3 py-6 bg-white text-primary`}>
                         <ul className='space-y-6 text-right'>
                             <li>
                                 <Link onClick={()=> setOpenNavbar(false)} href="#">Features</Link>
