@@ -220,7 +220,7 @@ const page = () => {
                                                 </p>
                                             </div>
 
-                                            <div className='mt-1 md:text-base text-sm'>
+                                            <div className='mt-1 text-sm'>
                                                 <p className='text-inputText'>
                                                     By registering for an account, you are consenting to our
                                                     Terms of Service

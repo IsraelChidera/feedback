@@ -1,11 +1,12 @@
-import Navbar from "@/components/widget/landing-page/Navbar";
+import Hero from "@/components/widget/landing-page/Hero";
+
 
 
 export default function Home() {
 
   return (
     <main>
-      <Navbar />
+      <Hero />
 
     </main>
   );
