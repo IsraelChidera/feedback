@@ -50,7 +50,7 @@ const Navbar = () => {
                     openNavbar && <div className={`absolute transition-all -translate-y-8 ${openNavbar && 'translate-y-0'} top-10 right-0 w-full md:hidden block mt-2 rounded-md px-3 py-6 bg-white text-primary`}>
                         <ul className='space-y-6 text-right'>
                             <li>
-                                <Link onClick={()=> setOpenNavbar(false)} href="#">Features</Link>
+                                <Link onClick={()=> setOpenNavbar(false)} href="#features">Features</Link>
                             </li>
 
                             <li>
