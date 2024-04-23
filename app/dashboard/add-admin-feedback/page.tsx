@@ -58,8 +58,8 @@ const page = () => {
         },
         onSuccess: () => {
             setLoading(false);
-            queryClient.invalidateQueries({queryKey: ['feedbackData']})
-            queryClient.invalidateQueries({queryKey: ['userData']})
+            queryClient.invalidateQueries({ queryKey: ['feedbackData'] })
+            queryClient.invalidateQueries({ queryKey: ['userData'] })
             toast.success("Feedback added successfully");
             router.push("/dashboard");
         },
@@ -76,8 +76,8 @@ const page = () => {
             setLoading(true);
 
             await mutation.mutateAsync(values);
-            console.log(values);            
-           
+            console.log(values);
+
         } catch (error) {
             setLoading(false);
             toast.error("Unable to add feedback");

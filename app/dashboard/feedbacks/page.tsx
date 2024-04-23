@@ -1,5 +1,6 @@
 'use client'
 import Feedback from '@/components/utils/Feedback';
+import EmptyFeedback from '@/components/widget/EmptyFeedback';
 import { FeedbackContext } from '@/store/features/Feedback/FeedbackContext';
 import Link from 'next/link';
 import React, { useContext } from 'react';
@@ -18,14 +19,23 @@ const page = () => {
                     </Link>
                 </div>
 
-                <div className='mt-5 md:mt-10 grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-x-6 gap-y-10'>
+                <div>
                     {
-                        feedbacks?.map((feeds: any) => (
-                            <Feedback
-                                key={feeds?.id}
-                                {...feeds}
-                            />
-                        ))
+                        feedbacks?.length > 0 ?
+                            <div className='mt-5 md:mt-10 grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-x-6 gap-y-10'>
+                                {
+                                    feedbacks?.map((feeds: any) => (
+                                        <Feedback
+                                            key={feeds?.id}
+                                            {...feeds}
+                                        />
+                                    ))
+                                }
+                            </div>
+                            :
+                            <div className='flex items-center w-full justify-center'>
+                                <EmptyFeedback />
+                            </div>
                     }
                 </div>
             </section>

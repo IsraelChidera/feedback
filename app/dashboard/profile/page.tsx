@@ -9,6 +9,7 @@ import { UserContext } from '@/store/features/User/UserContext';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { ImSpinner8 } from 'react-icons/im';
+import { useMutation } from '@tanstack/react-query';
 
 const page = () => {
     const { userProfile } = useContext(UserContext);
@@ -48,12 +49,9 @@ const page = () => {
 
     // }
 
-    const onContactFormSubmission = async (values: any) => {
-        try {
-            setLoading(true);
-            console.log(values);
-
-            const { data, error } = await supabase
+    const mutation = useMutation({
+        mutationFn: async (values: any) => {
+            return await supabase
                 .from('profiles')
                 .insert([
                     {
@@ -66,18 +64,27 @@ const page = () => {
                     },
                 ])
                 .select();
+        },
+        onSuccess: () => {
+            setLoading(false);
 
-            if (error) {
-                setLoading(false);
-                throw new Error("Unable to update profile");
-            }
-            if (data) {
-                setLoading(false);
-                toast.success("Profile updated successfully");
-                router.push("/dashboard");
-            }
+            toast.success("Profile updated successfully");
+            router.push("/dashboard");
+        },
+        onError: () => {
+            setLoading(false);
+            toast.error("Unable to update profile");
+        }
 
-            console.log({ data, error })
+    })
+
+    const onContactFormSubmission = async (values: any) => {
+        try {
+            setLoading(true);
+            console.log(values);           
+
+            await mutation.mutateAsync(values);
+
         } catch (error) {
             toast.error("Unable to update profile")
         }
