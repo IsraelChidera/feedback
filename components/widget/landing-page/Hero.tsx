@@ -28,7 +28,7 @@ const Hero = () => {
                 className='opacity-40 md:hidden absolute top-[30%] left-0 '
             />
 
-            <section className='pt-20 lg:pt-0 flex items-center justify-center h-full'>
+            <section className='relative z-40 pt-20 lg:pt-0 flex items-center justify-center h-full'>
                 <Container className="lg:grid grid-cols-2 gap-x-3">
                     <div className='text-white'>
                         <h1 className='text-5xl font-semibold leading-tighter'>
@@ -51,7 +51,7 @@ const Hero = () => {
                                 <FiArrowUpRight className='group-hover:animate-bounce text-xl' />
                             </Link> :
                                 <Link href="/register" className='group cursor-pointer flex items-center space-x-2 w-fit  bg-[#FFE492] rounded-md text-base font-medium py-3 px-10 text-primary '>
-                                    <span>Try FeedShare free</span>
+                                    <span>Try FeedShare for free</span>
 
                                     <FiArrowUpRight className='group-hover:animate-bounce text-xl' />
                                 </Link>

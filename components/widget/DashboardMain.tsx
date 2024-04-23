@@ -26,17 +26,7 @@ const DashboardMain = () => {
 
     const supabase = createClientComponentClient();
     const router = useRouter();
-
-    // const queryClient = useQueryClient();
-
-    // queryClient.invalidateQueries({
-    //     queryKey: ['userData'],
-    //     exact: true,
-    // })
-
-
-
-    // console.log("feddd", router)
+    
 
     const handleAddFeedback = () => {
         router.push("/dashboard/add-admin-feedback")
@@ -136,7 +126,10 @@ const DashboardMain = () => {
                             <br />
                             You are now a part of our big family
                         </h1>
-                        <p className='mt-1'>Complete your registration by setting up your <Link className='underline hover:no-underline transition-all ease-linear' href="/dashboard/profile">business profile</Link></p>
+                        <p className='mt-1'>Complete your registration by setting up 
+                        your <Link className='underline hover:no-underline transition-all ease-linear' href="/dashboard/profile">business profile</Link>
+                            & start adding your feedbacks
+                        </p>
                     </section>
             }
 

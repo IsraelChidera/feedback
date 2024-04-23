@@ -71,9 +71,14 @@ const Navbar = () => {
                             </li>
 
                             <li>
-                                <Link className='bg-[#FFE492] rounded-md text-base font-medium py-3 px-10 text-primary' onClick={() => setOpenNavbar(false)} href="/login">
-                                    Login
-                                </Link>
+                                {
+                                    userProfile ? <Link className='bg-[#FFE492] rounded-md text-base font-medium py-3 px-10 text-primary' onClick={() => setOpenNavbar(false)} href="/dashboard">
+                                        Go to dashboard
+                                    </Link> : <Link className='bg-[#FFE492] rounded-md text-base font-medium py-3 px-10 text-primary' onClick={() => setOpenNavbar(false)} href="/login">
+                                        Login
+                                    </Link>
+                                }
+
                             </li>
                         </ul>
                     </div>

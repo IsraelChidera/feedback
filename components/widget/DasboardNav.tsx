@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useEffect, useState } from 'react';
 import { FaCircleUser } from "react-icons/fa6";
 import { FaAngleDown } from "react-icons/fa";
 import Link from 'next/link';
@@ -12,11 +12,14 @@ import { HiMiniBars3CenterLeft } from "react-icons/hi2";
 import { IoCloseOutline } from "react-icons/io5";
 import { IoIosLogOut } from "react-icons/io";
 import Image from 'next/image';
+import { toast } from 'react-toastify';
+import { ImSpinner8 } from 'react-icons/im';
 
 const DashboardNav = () => {
     const [open, setOpen] = useState(false);
     const [currentUser, setCurrentUser] = useState<any>(null);
     const [loading, setLoading] = useState(false);
+    const [userProfile, setUserProfile] = useState<any>([]);
     const [openMobileProfile, setOpenMobileProfile] = useState(false);
     const [openMobileSidebar, setOpenMobileSidebar] = useState(false);
     const supabase = createClientComponentClient()
@@ -29,6 +32,36 @@ const DashboardNav = () => {
         setCurrentUser(user);
         return user
     }
+
+    const getProfile: any = async () => {
+        try {
+            setLoading(true);
+            const { data: { session } } = await supabase.auth.getSession();
+            const user = session?.user;
+            // console.log("user", user);
+            let { data: profiles, error } = await supabase
+                .from('profiles')
+                .select("*")
+                .eq("profileid", user?.id)
+
+            // console.log({ profiles, error });
+
+            if (!error) {
+                setLoading(false);
+                setUserProfile(profiles)
+            }
+            if (error) {
+                throw new Error("Unable to get user");
+            }
+        } catch (error) {
+            toast.error("Unable to get user");
+        }
+    }
+
+    useEffect(() => {
+        getProfile();
+    }, [])
+
 
     useLayoutEffect(() => {
         getUser();
@@ -67,12 +100,12 @@ const DashboardNav = () => {
             <div className='hidden md:flex w-full justify-between items-center relative md:px-0 px-2'>
                 <button className="md:block hidden" onClick={returnToDashboard} type="button">
                     {
-                        pathname === "/dashboard/profile" &&
+                        pathname.includes("/dashboard/") &&
                         <div className='flex items-center space-x-2'>
                             <div> <IoIosArrowRoundBack /> </div>
                             <p className='text-[15px] text-[#0A0A0C] opacity-35'>Back</p>
                         </div>
-                    }                    
+                    }
                 </button>
 
                 <Link className='tracking-tight flex items-center space-x-1 pl-4 md:hidden italic text-xl font-extrabold text-primary' href="/dashboard">
@@ -172,7 +205,15 @@ const DashboardNav = () => {
 
                         <li>
                             <Button onClick={handleLogout} className='text-sm bg-red-400 px-6 text-white py-1.5 rounded-md'>
-                                Logout
+                                {
+                                    loading ? <div className="flex items-center justify-center">
+                                        <ImSpinner8 className="text-white animate-spin" />
+                                    </div>
+                                        :
+                                        <span>
+                                            Logout
+                                        </span>
+                                }
                             </Button>
                         </li>
                     </ul>

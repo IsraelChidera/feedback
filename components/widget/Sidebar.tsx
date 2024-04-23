@@ -52,7 +52,7 @@ const Sidebar = () => {
                     <li>
                         <Link
                             className={`${pathname === '/dashboard/analytics' ? "transition ease-in bg-primary hover:bg-opacity-90 py-2 w-full pl-3 pr-2 text-white block rounded-[30px]" : ""} text-primary text-base font-medium transition ease-in pl-3`}
-                            href="/dashboard/analytics"
+                            href="#"
                         >
                             Analysis
                         </Link>

@@ -18,10 +18,10 @@ const page = () => {
     const supabase = createClientComponentClient()
 
     const initialValues = {
-        businessname: userProfile[0]?.isprofileupdated ? userProfile[0].businessname : "",
-        fullname: userProfile[0]?.isprofileupdated ? userProfile[0].fullname : "",
-        country: userProfile[0]?.isprofileupdated ? userProfile[0].country : "",
-        phone: userProfile[0]?.isprofileupdated ? userProfile[0].phone : "",
+        businessname: userProfile[0]?.isprofileupdated,
+        fullname: userProfile[0]?.isprofileupdated,
+        country: userProfile[0]?.isprofileupdated,
+        phone: userProfile[0]?.isprofileupdated,
     };
 
     const validationSchema = Yup.object({
@@ -40,6 +40,7 @@ const page = () => {
             .min(3, 'Must be 3 characters or more'),
     });
 
+    console.log("user", userProfile)
 
     const onContactFormSubmission = async (values: any) => {
         try {

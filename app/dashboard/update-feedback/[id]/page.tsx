@@ -36,8 +36,7 @@ const page = ({ params }: { params: any }) => {
     };
 
     const validationSchema = Yup.object({
-        businessname: Yup.string()
-            .required('Business name is required')
+        businessname: Yup.string()            
             .min(3, 'Must be 3 characters or more'),
         fullname: Yup.string()
             .required('Full name is required')
@@ -70,7 +69,6 @@ const page = ({ params }: { params: any }) => {
             setLoading(false);
             toast.error("Unable to add feedback");
         }
-
     })
 
 
