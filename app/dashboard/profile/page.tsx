@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from '@/components/Button';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
@@ -8,10 +8,11 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { UserContext } from '@/store/features/User/UserContext';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import { ImSpinner8 } from 'react-icons/im';
 
 const page = () => {
     const { userProfile } = useContext(UserContext);
-
+    const [loading, setLoading] = useState(false);
     const supabase = createClientComponentClient()
     const router = useRouter();
     const initialValues = {
@@ -44,11 +45,12 @@ const page = () => {
     //     let { data: profiles, error } = await supabase
     //     .from('profiles')
     //     .select("*")
-        
+
     // }
 
     const onContactFormSubmission = async (values: any) => {
         try {
+            setLoading(true);
             console.log(values);
 
             const { data, error } = await supabase
@@ -66,12 +68,15 @@ const page = () => {
                 .select();
 
             if (error) {
-                throw new Error("Unable to update profile")
+                setLoading(false);
+                throw new Error("Unable to update profile");
             }
-            if(!data){
+            if (data) {
+                setLoading(false);
                 toast.success("Profile updated successfully");
                 router.push("/dashboard");
             }
+
             console.log({ data, error })
         } catch (error) {
             toast.error("Unable to update profile")
@@ -162,7 +167,15 @@ const page = () => {
                                         </div>
 
                                         <Button type="submit" className="w-full bg-primary text-white rounded-[10px]">
-                                            Save changes
+                                            {
+                                                loading ? <div className="flex items-center justify-center">
+                                                    <ImSpinner8 className="text-white animate-spin" />
+                                                </div>
+                                                    :
+                                                    <span>
+                                                        Save changes
+                                                    </span>
+                                            }
                                         </Button>
 
 

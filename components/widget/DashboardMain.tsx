@@ -128,7 +128,7 @@ const DashboardMain = () => {
                         </h1>
                         <p className='mt-1'>Complete your registration by setting up 
                         your <Link className='underline hover:no-underline transition-all ease-linear' href="/dashboard/profile">business profile</Link>
-                            & start adding your feedbacks
+                            {" "}& start adding your feedbacks
                         </p>
                     </section>
             }

@@ -70,7 +70,7 @@ const page = () => {
 
             if (error) {
                 console.log("error inside", error)
-                throw new Error("Login failed!");
+                throw new Error("Login failed!", error);
             }
         } catch (error: any) {
             setErrors(error);

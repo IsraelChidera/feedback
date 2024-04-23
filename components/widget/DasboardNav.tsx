@@ -95,6 +95,10 @@ const DashboardNav = () => {
         setOpenMobileSidebar(true);
     }
 
+    // if (!userProfile[0]?.isprofileupdated) {
+    //     return router.push("/dashboard/profile")
+    // }
+
     return (
         <nav className='relative bg-white w-full pl-0.5 py-6 px-3 '>
             <div className='hidden md:flex w-full justify-between items-center relative md:px-0 px-2'>
