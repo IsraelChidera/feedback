@@ -12,10 +12,10 @@ export default function WhatWeAre() {
                     </div>
 
                     <div>
-                        <h2 className='font-medium text-[#393939] text-[36px]'>
+                        <h2 className='md:text-left text-center font-medium text-[#393939] text-2xl md:text-[36px]'>
                             What Will You <span className='text-primary'>Get</span> ?
                         </h2>
-                        <p className='text-[#6C6C6C]'>
+                        <p className='md:text-left text-center text-[#6C6C6C]'>
                             Explore the Benefits of Our All-in-One Solution
                         </p>
 
