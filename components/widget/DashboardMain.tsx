@@ -138,13 +138,13 @@ const DashboardMain = () => {
                 <div>
                     <div className='flex items-center justify-start md:justify-end md:space-x-4 space-x-2'>
                         <Button onClick={handleGenerateUserFeedbackLink} type="button" className='text-white cursor-not-allowed items-center flex space-x-2 px-3 text-sm bg-primary' disable>
-                            <span>Generate feedback link</span>
+                            <span>Generate user's feedback link</span>
                         </Button>
 
-                        <Button type="button" className='text-primary items-center flex space-x-2 px-3 text-sm bg-[#C4FFF4]'>
+                        {/* <Button type="button" className='text-primary items-center flex space-x-2 px-3 text-sm bg-[#C4FFF4]'>
                             <Image width={25} height={25} src="/view-icon.svg" alt="view icon" />
                             <p className='md:block hidden'>View User Feedbacks</p>
-                        </Button>
+                        </Button> */}
 
                         <Button type="button" className='text-primary border border-primary flex items-center space-x-2 px-3 text-sm bg-transparent'>
                             <Image width={25} height={25} src="/analytics-icon.svg" alt="view icon" />
