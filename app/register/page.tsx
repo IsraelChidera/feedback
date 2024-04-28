@@ -85,6 +85,7 @@ const page = () => {
             })
             setError(error);
             console.log(data);
+            
 
             if (error) {
                 console.log("error inside", error)
