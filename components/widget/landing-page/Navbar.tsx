@@ -60,7 +60,7 @@ const Navbar = () => {
 
                 {/* Mobile navigation */}
                 {
-                    openNavbar && <div className={`absolute top-10 right-0 w-full md:hidden block mt-2 rounded-md px-3 py-6 bg-white text-primary`}>
+                    openNavbar && <div className={`absolute z-50 top-10 right-0 w-full md:hidden block mt-2 rounded-md px-3 py-6 bg-white text-primary`}>
                         <ul className='space-y-6 text-right'>
                             <li>
                                 <Link onClick={() => setOpenNavbar(false)} href="#features">Features</Link>
