@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { ImSpinner8 } from 'react-icons/im';
 import { useMutation } from '@tanstack/react-query';
+import { FaUserAlt } from "react-icons/fa";
 
 const page = () => {
     const { userProfile } = useContext(UserContext);
@@ -81,7 +82,7 @@ const page = () => {
     const onContactFormSubmission = async (values: any) => {
         try {
             setLoading(true);
-            console.log(values);           
+            console.log(values);
 
             await mutation.mutateAsync(values);
 
@@ -120,6 +121,25 @@ const page = () => {
                             ) => (
                                 <>
                                     <Form className='md:w-[620px] mx-auto space-y-6'>
+
+                                        <div className='relative flex items-center justify-center'>
+                                            <div>
+                                                <div className="shrink-0">
+                                                    <FaUserAlt className='h-16 w-16 bg-violet-50 text-primary rounded-full p-2' />
+                                                </div>
+
+                                                <label className="block">
+                                                    <span className="sr-only">Choose</span>
+                                                    <input type="file" className="opacity-0 w-full text-sm text-slate-500
+                                                file:mr-4 file:py-2 file:px-4
+                                                file:rounded-full file:border-0
+                                                file:text-sm file:font-semibold
+                                                file:bg-violet-50 file:text-violet-700
+                                                hover:file:bg-violet-100
+                                                "/>
+                                                </label>
+                                            </div>
+                                        </div>
 
                                         <div>
                                             <label className='block font-medium'>
