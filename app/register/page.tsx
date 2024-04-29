@@ -91,6 +91,8 @@ const page = () => {
                 console.log("error inside", error)
                 throw new Error("Login failed!");
             }
+
+            router.push('/dashboard');
         } catch (error: any) {
             toast.error("Login failed!");
         }
@@ -108,6 +110,8 @@ const page = () => {
                 console.log("error inside", error)
                 throw new Error("Login failed!");
             }
+
+            router.push('/dashboard');
         } catch (error: any) {
             toast.error("Login failed!");
         }

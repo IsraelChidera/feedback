@@ -135,7 +135,7 @@ const page = () => {
                                                 name="businessname"
                                                 value={values.businessname}
                                                 placeholder="Add business name"
-                                                onChange={handleChange}
+                                                onChange={handleChange}                                                
                                                 className='border text-sm border-[#e0e0e0] w-full rounded-[10px] text-[#111827] py-[16px] pl-[14px] pr-[10px]'
                                             />
                                             <p className='text-xs text-primary'>
