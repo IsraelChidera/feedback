@@ -10,11 +10,15 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { ImSpinner8 } from 'react-icons/im';
 import { useMutation } from '@tanstack/react-query';
-import { FaUserAlt } from "react-icons/fa";
+import { CiCamera } from "react-icons/ci";
+import avatar from '../../../components/Assets/Avatar.png';
 
 const page = () => {
     const { userProfile } = useContext(UserContext);
     const [loading, setLoading] = useState(false);
+    const [filePreview, setFilePreview] = useState<any>("/Avatar.png");
+
+
     const supabase = createClientComponentClient()
     const router = useRouter();
     const initialValues = {
@@ -42,13 +46,6 @@ const page = () => {
 
 
     console.log("userProfile: qq", userProfile)
-
-    // const checkProfileUpdate = async() => {
-    //     let { data: profiles, error } = await supabase
-    //     .from('profiles')
-    //     .select("*")
-
-    // }
 
     const mutation = useMutation({
         mutationFn: async (values: any) => {
@@ -91,8 +88,60 @@ const page = () => {
         }
     }
 
-    if (userProfile[0]?.isprofileupdated) {
-        return router.push("/dashboard/profile/edit")
+    // if (userProfile[0]?.isprofileupdated) {
+    //     return router.push("/dashboard/profile/edit")
+    // }
+
+    const onUpload = async (filePath: any) => {
+        try {
+            setFilePreview(filePath);
+
+            const { data, error: uploadError } = await supabase
+                .from('profiles')
+                .upsert({ 
+                    avatarurl: filePath, 
+                    profileid: userProfile.id,
+                    businessname: "",
+                    fullname: "",
+                    country: "",
+                    phone: "",
+                    isprofileupdated: false
+                })
+                
+                .select();
+
+            if (uploadError) throw uploadError;
+
+            toast.success("awesome test")
+        }
+        catch (error) {
+            toast.error("Error uploading avatar")
+        }
+    }
+
+    const uploadAvatar = async (e: any) => {
+        try {
+            console.log("file event", e.target.files);
+            if (!e.target.files || e.target.files.length === 0) throw Error;
+
+            const file: any = e.target.files[0];
+            const fileExt: any = file.name.split('.').pop();
+            const fileName: any = `${Math.random()}.${fileExt}`;
+            const filePath: any = `${fileName}`;
+
+            console.log("file extr", filePath);
+
+            const { error: uploadError } = await supabase.storage.from('avatars').upload(filePath, file);
+
+            if (uploadError) {
+                console.log("error before uploading",uploadError);
+                throw uploadError
+            }
+
+            onUpload(filePath);
+        } catch (error) {
+            toast.error("error picking profile avatar")
+        }
     }
 
     return (
@@ -122,22 +171,36 @@ const page = () => {
                                 <>
                                     <Form className='md:w-[620px] mx-auto space-y-6'>
 
-                                        <div className='relative flex items-center justify-center'>
-                                            <div>
-                                                <div className="shrink-0">
-                                                    <FaUserAlt className='h-16 w-16 bg-violet-50 text-primary rounded-full p-2' />
-                                                </div>
+                                        <div className='relative  flex items-center justify-center'>
+                                            <div className='flex flex-col justify-center shrink-0 relative z-30'>
 
-                                                <label className="block">
-                                                    <span className="sr-only">Choose</span>
-                                                    <input type="file" className="opacity-0 w-full text-sm text-slate-500
-                                                file:mr-4 file:py-2 file:px-4
-                                                file:rounded-full file:border-0
-                                                file:text-sm file:font-semibold
-                                                file:bg-violet-50 file:text-violet-700
-                                                hover:file:bg-violet-100
-                                                "/>
+                                                <label htmlFor="files" className=" z-50 w-full h-full flex items-end  absolute bottom-0 right-0 cursor-pointer">
+                                                    {/* <span className="sr-only">Choose</span> */}
+                                                    <div className="bg-primary rounded-full text-white p-0.5">
+                                                        <CiCamera />
+                                                    </div>
                                                 </label>
+
+                                                <img
+                                                    src={filePreview}
+                                                    className='h-20 w-20 object-cover rounded-full '
+                                                    alt="current profile preview"
+
+                                                />
+
+                                                <input
+                                                    type="file"
+                                                    id="files"
+                                                    accept="image/*"
+                                                    className="hidden w-full text-sm text-slate-500
+                                                        file:mr-4 file:py-2 file:px-4
+                                                        file:rounded-full file:border-0
+                                                        file:text-xs file:font-semibold
+                                                        file:bg-violet-50 file:text-violet-700
+                                                        hover:file:bg-violet-100
+                                                    "
+                                                    onChange={uploadAvatar}
+                                                />
                                             </div>
                                         </div>
 
