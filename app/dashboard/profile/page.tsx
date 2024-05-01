@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from '@/components/Button';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
@@ -92,14 +92,18 @@ const page = () => {
     //     return router.push("/dashboard/profile/edit")
     // }
 
+
+
+
+
     const onUpload = async (filePath: any) => {
         try {
             setFilePreview(filePath);
 
             const { data, error: uploadError } = await supabase
                 .from('profiles')
-                .upsert({ 
-                    avatarurl: filePath, 
+                .upsert({
+                    avatarurl: filePath,
                     profileid: userProfile.id,
                     businessname: "",
                     fullname: "",
@@ -107,10 +111,13 @@ const page = () => {
                     phone: "",
                     isprofileupdated: false
                 })
-                
                 .select();
 
-            if (uploadError) throw uploadError;
+
+            if (uploadError) {
+                console.log("check here", uploadError);
+                throw uploadError
+            }
 
             toast.success("awesome test")
         }
@@ -134,7 +141,7 @@ const page = () => {
             const { error: uploadError } = await supabase.storage.from('avatars').upload(filePath, file);
 
             if (uploadError) {
-                console.log("error before uploading",uploadError);
+                console.log("error before uploading", uploadError);
                 throw uploadError
             }
 
@@ -171,11 +178,10 @@ const page = () => {
                                 <>
                                     <Form className='md:w-[620px] mx-auto space-y-6'>
 
-                                        <div className='relative  flex items-center justify-center'>
+                                        {/* <div className='relative  flex items-center justify-center'>
                                             <div className='flex flex-col justify-center shrink-0 relative z-30'>
 
-                                                <label htmlFor="files" className=" z-50 w-full h-full flex items-end  absolute bottom-0 right-0 cursor-pointer">
-                                                    {/* <span className="sr-only">Choose</span> */}
+                                                <label htmlFor="files" className=" z-50 w-full h-full flex items-end  absolute bottom-0 right-0 cursor-pointer">                                                    
                                                     <div className="bg-primary rounded-full text-white p-0.5">
                                                         <CiCamera />
                                                     </div>
@@ -202,7 +208,7 @@ const page = () => {
                                                     onChange={uploadAvatar}
                                                 />
                                             </div>
-                                        </div>
+                                        </div> */}
 
                                         <div>
                                             <label className='block font-medium'>
