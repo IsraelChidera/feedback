@@ -4,7 +4,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import Button from '@/components/Button';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { UserContext } from '@/store/features/User/UserContext';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
@@ -12,6 +11,7 @@ import { ImSpinner8 } from 'react-icons/im';
 import { useMutation } from '@tanstack/react-query';
 import { CiCamera } from "react-icons/ci";
 import avatar from '../../../components/Assets/Avatar.png';
+import { createClient } from '@/app/utils/supabase/client';
 
 const page = () => {
     const { userProfile } = useContext(UserContext);
@@ -19,7 +19,7 @@ const page = () => {
     const [filePreview, setFilePreview] = useState<any>("/Avatar.png");
 
 
-    const supabase = createClientComponentClient()
+    const supabase = createClient()
     const router = useRouter();
     const initialValues = {
         businessname: "",

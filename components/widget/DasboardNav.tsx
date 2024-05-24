@@ -6,7 +6,6 @@ import { FaAngleDown } from "react-icons/fa";
 import Link from 'next/link';
 import Button from '@/components/Button';
 import { usePathname, useRouter } from 'next/navigation';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { HiMiniBars3CenterLeft } from "react-icons/hi2";
 import { IoCloseOutline } from "react-icons/io5";
@@ -14,6 +13,7 @@ import { IoIosLogOut } from "react-icons/io";
 import Image from 'next/image';
 import { toast } from 'react-toastify';
 import { ImSpinner8 } from 'react-icons/im';
+import { createClient } from '@/app/utils/supabase/client';
 
 const DashboardNav = () => {
     const [open, setOpen] = useState(false);
@@ -22,7 +22,7 @@ const DashboardNav = () => {
     const [userProfile, setUserProfile] = useState<any>([]);
     const [openMobileProfile, setOpenMobileProfile] = useState(false);
     const [openMobileSidebar, setOpenMobileSidebar] = useState(false);
-    const supabase = createClientComponentClient()
+    const supabase = createClient()
     const router = useRouter();
     const pathname = usePathname();
 

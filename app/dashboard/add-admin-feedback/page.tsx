@@ -4,7 +4,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import Button from '@/components/Button';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { ImSpinner8 } from "react-icons/im";
@@ -13,6 +12,7 @@ import {
     useQueryClient,
     useMutation
 } from '@tanstack/react-query';
+import { createClient } from '@/app/utils/supabase/client';
 
 const page = () => {
     const [loading, setLoading] = useState(false);
@@ -21,7 +21,7 @@ const page = () => {
     const queryClient = useQueryClient();
 
 
-    const supabase = createClientComponentClient();
+    const supabase = createClient();
     const router = useRouter();
 
     const initialValues = {

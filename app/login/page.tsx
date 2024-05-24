@@ -8,15 +8,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
 import { ImSpinner8 } from "react-icons/im";
 import { FaFacebook } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
 import { toast } from 'react-toastify';
+import { createClient } from '../utils/supabase/client';
 
 const page = () => {
-    const supabase = createClientComponentClient();
+    const supabase = createClient();
     const router = useRouter();
     const [error, setError] = useState<any>();
     const [errors, setErrors] = useState<any>();

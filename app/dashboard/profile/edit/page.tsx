@@ -4,18 +4,18 @@ import React, { useState, useEffect, useContext } from 'react';
 import Button from '@/components/Button';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { UserContext } from '@/store/features/User/UserContext';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { ImSpinner8 } from "react-icons/im";
+import { createClient } from '@/app/utils/supabase/client';
 
 const page = () => {
     const [userProfile, setUserProfile] = useState<any>([]);
     const [loading, setLoading] = useState<boolean>(false);
 
     const router = useRouter();
-    const supabase = createClientComponentClient()
+    const supabase = createClient()
 
     const initialValues = {
         businessname: userProfile[0]?.isprofileupdated,

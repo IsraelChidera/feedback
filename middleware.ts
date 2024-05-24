@@ -1,25 +1,24 @@
-import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from 'next/server'
+import { updateSession } from './app/utils/supabase/middleware'
+import { createClient } from './app/utils/supabase/server'
+import { redirect } from 'next/navigation';
 
+export async function middleware(request: NextRequest) {
 
-export async function middleware(req: any) {
-    const res = NextResponse.next();
-    const supabase = createMiddlewareClient({ req, res });
-    await supabase.auth.getSession();
-    
-    const { data: { user } } = await supabase.auth.getUser();    
-
-    if (user && req.nextUrl.pathname === "/login") {
-        return NextResponse.redirect(new URL('/dashboard', req.url));
+    try {
+        return await updateSession(request)
+    } catch (error) {
+        console.log("Middleware error: ", error);
     }
-
-    if (!user && req.nextUrl.pathname !== "/login") {
-        return NextResponse.redirect(new URL('/login', req.url));
-    }
-
-    return res;
 }
 
+
 export const config = {
-    matcher: ['/login', '/dashboard', '/dashboard/profile', '/dashboard/add-admin-feedback']
+    matcher: [
+        '/login',
+        '/dashboard',
+        '/dashboard/profile',
+        '/dashboard/add-admin-feedback',
+        '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    ]
 }

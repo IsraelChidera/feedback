@@ -5,14 +5,14 @@ import Button from '@/components/Button';
 import { usePathname } from 'next/navigation';
 import { MdOutlineLogout } from "react-icons/md";
 import Image from 'next/image';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
 import { ImSpinner8 } from "react-icons/im";
+import { createClient } from '@/app/utils/supabase/client';
 
 const Sidebar = () => {
 
     const pathname = usePathname();
-    const supabase = createClientComponentClient();
+    const supabase = createClient();
     const router = useRouter();
     const [loading, setLoading] = useState(false);
 

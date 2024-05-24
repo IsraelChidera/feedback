@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState } from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import Container from '@/components/Container';
 import Button from '@/components/Button';
 import TextField from '@/components/Forms/TextField';
@@ -14,9 +13,10 @@ import { ImSpinner8 } from "react-icons/im";
 import { FaFacebook } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
 import { toast } from 'react-toastify';
+import { createClient } from '../utils/supabase/client';
 
 const page = () => {
-    const supabase = createClientComponentClient();
+    const supabase = createClient();
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<any>({});
@@ -85,7 +85,7 @@ const page = () => {
             })
             setError(error);
             console.log(data);
-            
+
 
             if (error) {
                 console.log("error inside", error)
@@ -102,6 +102,9 @@ const page = () => {
         try {
             const { data, error } = await supabase.auth.signInWithOAuth({
                 provider: 'facebook',
+                options: {
+                    redirectTo: `http://example.com/auth/callback`,
+                },
             });
 
             setError(error);

@@ -6,7 +6,6 @@ import * as Yup from 'yup';
 import Button from '@/components/Button';
 import TextField from '@/components/Forms/TextField';
 import { FeedbackContext } from '@/store/features/Feedback/FeedbackContext';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { ImSpinner8 } from "react-icons/im";
@@ -14,6 +13,7 @@ import {
     useQueryClient,
     useMutation
 } from '@tanstack/react-query';
+import { createClient } from '@/app/utils/supabase/client';
 
 const page = ({ params }: { params: any }) => {
 
@@ -24,7 +24,7 @@ const page = ({ params }: { params: any }) => {
     const queryClient = useQueryClient();
     const router = useRouter();
 
-    const supabase = createClientComponentClient();
+    const supabase = createClient();
 
     const feedback: any = feedbacks?.find((item: any) => item.id === params.id);
 

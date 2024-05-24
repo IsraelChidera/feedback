@@ -9,7 +9,6 @@ import { IoReloadSharp } from "react-icons/io5";
 import { useRouter } from 'next/navigation';
 import Feedback from '../utils/Feedback';
 import { FeedbackContext } from '@/store/features/Feedback/FeedbackContext';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import CopyToClipboardButton from './CopyToClipboardButton';
 import { toast } from 'react-toastify';
 import { MdOutlineFeed } from "react-icons/md";
@@ -17,6 +16,7 @@ import { FaUsersLine } from "react-icons/fa6";
 import { MdOutlineMoreTime } from "react-icons/md";
 import { GetTime } from '../utils/GetTime';
 import { MdWavingHand } from "react-icons/md";
+import { createClient } from '@/app/utils/supabase/client';
 
 const DashboardMain = () => {
     const [userProfile, setUserProfile] = useState<any>([]);
@@ -24,7 +24,7 @@ const DashboardMain = () => {
     const { loading: loadFeedback, getFeedbacks: feedbacks } = useContext(FeedbackContext);
     const [info, setInfo] = useState<any>("");
 
-    const supabase = createClientComponentClient();
+    const supabase = createClient();
     const router = useRouter();
     
 
