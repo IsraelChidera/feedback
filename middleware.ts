@@ -1,11 +1,12 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { updateSession } from './app/utils/supabase/middleware'
-import { createClient } from './app/utils/supabase/server'
-import { redirect } from 'next/navigation';
+
 
 export async function middleware(request: NextRequest) {
 
     try {
+       
+
         return await updateSession(request)
     } catch (error) {
         console.log("Middleware error: ", error);
