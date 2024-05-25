@@ -4,15 +4,15 @@ import React, { useContext, useEffect, useState } from 'react';
 import Button from '@/components/Button';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter, usePathname } from 'next/navigation';
 import InvalidFeedback from '@/components/widget/InvalidFeedback';
+import { createClient } from '@/app/utils/supabase/client';
 
 const page = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [data, setData] = useState<any>([]);
     const [profileId, setProfileId] = useState<any>([]);
-    const supabase = createClientComponentClient();
+    const supabase = createClient();
 
     const router = useRouter();
     const pathname: string = usePathname();

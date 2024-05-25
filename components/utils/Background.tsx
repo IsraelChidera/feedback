@@ -5,7 +5,6 @@ import html2canvas from 'html2canvas';
 import { saveAs } from 'file-saver';
 import { BsDownload } from "react-icons/bs";
 import { AiFillDelete } from "react-icons/ai";
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { FeedbackContext } from '@/store/features/Feedback/FeedbackContext';
 import { useRouter } from 'next/navigation';
 import {
@@ -13,6 +12,7 @@ import {
     useMutation
 } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
+import { createClient } from '@/app/utils/supabase/client';
 
 const Background = ({ children, params, feedback: dd, }: { children: React.ReactNode, params?: any, feedback: any }) => {
     const { feedbacks } = useContext(FeedbackContext);
@@ -24,7 +24,7 @@ const Background = ({ children, params, feedback: dd, }: { children: React.React
     const [backgroundColor, setBackgroundColor] = useState<any>(generateRandomColor());
     const backgroundRef: any = useRef(null);
 
-    const supabase = createClientComponentClient();
+    const supabase = createClient();
 
     // Function to generate a random color
     function generateRandomColor() {

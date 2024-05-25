@@ -2,21 +2,14 @@
 
 import React, { useContext } from 'react';
 import Button from '@/components/Button';
-import Link from 'next/link';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { UserContext } from '@/store/features/User/UserContext';
-import { useRouter, usePathname } from 'next/navigation';
-import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 
 const page = () => {
     // const [currentUser, setCurrentUser] = useState<any>(null);
 
-    const supabase = createClientComponentClient();
-
-    const router = useRouter();
     const pathname = usePathname();
 
     console.log(pathname);
