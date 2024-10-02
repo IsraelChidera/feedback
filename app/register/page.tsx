@@ -264,11 +264,12 @@ const page = () => {
                         </div>
 
                         <div className='mt-3 flex items-center justify-center'>
-                            <div className='flex space-x-5 items-center'>
-                                <FaGoogle onClick={LoginWithGoogle} className='cursor-pointer text-3xl text-[#ea4335]' />
-                                <FaFacebook onClick={LoginWithFacebook} className='cursor-pointer text-3xl text-[#316ff6]' />
-                                {/* <FaXTwitter className='text-3xl text-[#000]' />                                 */}
-                            </div>
+                        <Button className="bg-green-50 text-green-800 w-fit px-4">
+                                        <div className="flex items-center space-x-2">
+                                            <FaGoogle onClick={LoginWithGoogle} className='text-3xl text-[#ea4335] cursor-pointer' />
+                                            <span className="block font-medium">Continue with Google</span>                                        
+                                        </div>
+                                    </Button>
                         </div>
 
                     </div>
