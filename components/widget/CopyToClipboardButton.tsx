@@ -1,4 +1,5 @@
-// components/CopyToClipboardButton.js
+"use client"
+
 import { useState } from 'react';
 import { FaRegClipboard } from "react-icons/fa";
 

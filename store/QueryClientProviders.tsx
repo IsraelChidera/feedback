@@ -14,7 +14,7 @@ const queryClient = new QueryClient({
     },
 });
 
-const QueryClientProviders = async ({ children }: { children: React.ReactNode }) => {   
+const QueryClientProviders = ({ children }: { children: React.ReactNode }) => {   
     // await queryClient.invalidateQueries(
     //     {
     //         queryKey: ['feedbackData'],
