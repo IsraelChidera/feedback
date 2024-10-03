@@ -103,16 +103,10 @@ const Background = ({ children, params, feedback: dd, }: { children: React.React
     }
 
     return (
-        <div>
-            <div className='flex justify-end my-4'>
-                <button onClick={handleDeleteFeedback} className="bg-red-600 hover:bg-red-400 flex items-center space-x-3 text-white py-2 rounded-md px-6">
-                    <span className='text-sm'>Delete</span>
-                    <AiFillDelete />
-                </button>
-            </div>
+        <div>            
             <div ref={backgroundRef}
                 style={{
-                    backgroundColor: backgroundColor,
+                    backgroundColor: "#fff",
                     width: '100%',
                     height: 'auto',
                     display: 'flex',
@@ -125,10 +119,17 @@ const Background = ({ children, params, feedback: dd, }: { children: React.React
                 {children}
 
             </div>
-            <div className='mt-3 flex justify-center items-center'>
-                <button type="button" className='bg-primary p-3 text-white cursor-pointer rounded-full' onClick={downloadBackground}>
-                    <BsDownload className='text-2xl ' />
-                </button>
+            <div className='mt-3 flex justify-end w-full'>
+                <div className="flex space-x-2">
+                    <button type="button" className='p-3 text-white cursor-pointer rounded-full' onClick={downloadBackground}>
+                        <BsDownload className='text-2xl text-green-700' />
+                    </button>
+
+                    <button onClick={handleDeleteFeedback} className="bg-red-600 hover:bg-red-400 flex items-center space-x-3 text-white py-2 rounded-md px-3">                        
+                        <AiFillDelete />                        
+                    </button>
+                    
+                </div>
             </div>
         </div>
     );

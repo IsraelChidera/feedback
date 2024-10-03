@@ -85,8 +85,6 @@ const page = () => {
     }
 
     const feedbacklinks = async () => {
-
-
         let { data: clientfeedbacklinks, error } = await supabase
             .from('clientfeedbacklinks')
             .select('*')

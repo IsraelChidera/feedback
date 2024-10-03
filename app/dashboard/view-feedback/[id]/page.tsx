@@ -19,23 +19,22 @@ const page = ({ params }: { params: any }) => {
 
     return (
         <section className='mx-auto mt-10 mb-12 w-[98%] bg-white rounded-2xl py-5 px-6'>
-
             <Background feedback={feedback}>
-                <div className='py-3 px-3 rounded-3xl'>
+                <div className='py-3 px-1 rounded-3xl'>
                     <div>
-                        <div className='block'>
+                        <div className='grid grid-cols-1 w-full'>
                             <img src="/feedback-banner.png" alt="feedback banner" className='w-full' />
                         </div>
 
-                        <div className="px-5 py-4  rounded-lg mt-6 border-t-8 border-b-4 border-b-white border-t-primary ">
-                            <h3 className='text-2xl md:text-3xl text-[#202124]'>{feedback?.fullname}'s Feedback</h3>
+                        <div className="px-5 py-4  rounded-lg mt-6 border-t-8 border-b-4 border-b-white  ">
+                            <h3 className='text-2xl md:text-3xl text-[#202124]'>
+                                {feedback?.fullname} <span className='italic'>submitted a feedback</span>
+                            </h3>
                             <p className="text-[15px] text-[#202124] mt-1">
-                                {feedback?.feedback}
+                                <span className='italic'>Saying . . . </span>{feedback?.feedback}
                             </p>
                         </div>
-
                     </div>
-
                 </div>
             </Background>
         </section>
