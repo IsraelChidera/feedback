@@ -18,6 +18,7 @@ import { MdOutlineMoreTime } from "react-icons/md";
 import { GetTime } from '../utils/GetTime';
 import { MdWavingHand } from "react-icons/md";
 import { createClient } from '@/app/utils/supabase/client';
+import { Area, AreaChart, Bar, BarChart, CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
 
 const DashboardMain = () => {
     const [userProfile, setUserProfile] = useState<any>([]);
@@ -27,7 +28,9 @@ const DashboardMain = () => {
 
     const supabase = createClient();
     const router = useRouter();
-    
+
+    console.log("check all feedbacks: ", feedbacks)
+
 
     const handleAddFeedback = () => {
         router.push("/dashboard/add-admin-feedback")
@@ -127,8 +130,8 @@ const DashboardMain = () => {
                             <br />
                             You are now a part of our big family
                         </h1>
-                        <p className='mt-1'>Complete your registration by setting up 
-                        your <Link className='underline hover:no-underline transition-all ease-linear' href="/dashboard/profile">business profile</Link>
+                        <p className='mt-1'>Complete your registration by setting up
+                            your <Link className='underline hover:no-underline transition-all ease-linear' href="/dashboard/profile">business profile</Link>
                             {" "}& start adding your feedbacks
                         </p>
                     </section>
@@ -193,6 +196,17 @@ const DashboardMain = () => {
                         <MdOutlineMoreTime className='text-2xl text-primary' />
                     </div>
                 </div>
+            </section>
+
+            <section className='py-6 px-4 w-full bg-white my-3 rounded-[10px]'>
+                <BarChart width={730} height={250} data={feedbacks}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="createdat" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="fullname" fill="#8884d8" />                    
+                </BarChart>
             </section>
 
             <section className="py-6 mb-10 px-4 bg-white mt-6 w-full rounded-[10px] ">

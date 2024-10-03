@@ -10,7 +10,7 @@ const page = () => {
 
     const { loading: loadFeedback, getFeedbacks: feedbacks } = useContext(FeedbackContext);
     return (
-        <main className='mx-auto my-6 w-[98%] bg-white px-3 py-6'>
+        <main className='mx-auto my-6 w-[98%] bg-white min-h-screen px-3 py-6'>
             <section>
                 <div className='md:mb-4 mb-6 flex justify-end'>
                     <Link className='flex hover:underline group transition-all ease-linear items-center space-x-2' href="/dashboard">
