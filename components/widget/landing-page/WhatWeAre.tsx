@@ -27,7 +27,7 @@ export default function WhatWeAre() {
                                     </div>
 
                                     <div>
-                                        <h3 className='text-lg font-semibold text-[#393939]'>
+                                        <h3 className='text-lg font-medium text-[#393939]'>
                                             Streamlined Feedback Gathering
                                         </h3>
                                         <p className='text-sm text-[#8D8D8D]'>
@@ -46,7 +46,7 @@ export default function WhatWeAre() {
                                     </div>
 
                                     <div>
-                                        <h3 className='text-lg font-semibold text-[#393939]'>
+                                        <h3 className='text-lg font-medium text-[#393939]'>
                                             Intuitive Organization
                                         </h3>
                                         <p className='text-sm text-[#8D8D8D]'>
@@ -65,7 +65,7 @@ export default function WhatWeAre() {
                                     </div>
 
                                     <div>
-                                        <h3 className='text-lg font-semibold text-[#393939]'>
+                                        <h3 className='text-lg font-medium text-[#393939]'>
                                             Social Sharing Made Simple
                                         </h3>
                                         <p className='text-sm text-[#8D8D8D]'>

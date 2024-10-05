@@ -13,14 +13,17 @@ import {
 } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { createClient } from '@/app/utils/supabase/client';
+import { FaXTwitter } from 'react-icons/fa6';
+import Link from 'next/link';
 
 const Background = ({ children, params, feedback: dd, }: { children: React.ReactNode, params?: any, feedback: any }) => {
     const { feedbacks } = useContext(FeedbackContext);
     const router = useRouter();
 
     const queryClient = useQueryClient();
-    const feedback = feedbacks?.find((item: any) => item.id === params?.id);
+    const feedbackItem = `${dd?.fullname} shared a feedback saying ${dd?.feedback.substring(0,20)}...\nManage your feedbacks on "https://feedback-share.vercel.app/"`
 
+    console.log("bg feedbavk: ", dd);
     const [backgroundColor, setBackgroundColor] = useState<any>(generateRandomColor());
     const backgroundRef: any = useRef(null);
 
@@ -103,7 +106,7 @@ const Background = ({ children, params, feedback: dd, }: { children: React.React
     }
 
     return (
-        <div>            
+        <div>
             <div ref={backgroundRef}
                 style={{
                     backgroundColor: "#fff",
@@ -119,16 +122,25 @@ const Background = ({ children, params, feedback: dd, }: { children: React.React
                 {children}
 
             </div>
-            <div className='mt-3 flex justify-end w-full'>
+            <div className='mt-3 flex justify-between items-center w-full'>
+                <div>
+                    <p className="text-sm mb-2">Share on</p>
+                    <div className="flex items-center space-x-2">
+                        <Link href={`https://twitter.com/intent/tweet?url=${feedbackItem}`}>
+                            <FaXTwitter className="cursor-pointer text-xl" />
+                        </Link>
+
+                    </div>
+                </div>
+
                 <div className="flex space-x-2">
                     <button type="button" className='p-3 text-white cursor-pointer rounded-full' onClick={downloadBackground}>
                         <BsDownload className='text-2xl text-green-700' />
                     </button>
 
-                    <button onClick={handleDeleteFeedback} className="bg-red-600 hover:bg-red-400 flex items-center space-x-3 text-white py-2 rounded-md px-3">                        
-                        <AiFillDelete />                        
+                    <button onClick={handleDeleteFeedback} className="bg-red-600 hover:bg-red-400 flex items-center space-x-3 text-white py-2 rounded-md px-3">
+                        <AiFillDelete />
                     </button>
-                    
                 </div>
             </div>
         </div>

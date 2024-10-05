@@ -14,10 +14,15 @@ html {
   scroll-behavior: smooth;
 }
 
+@font-face {
+  font-family: 'mulish';
+  src: url('/font/Mulish.ttf');
+}
+
 body {
   line-height: 1.6;
   scroll-behavior: smooth;
-  font-family: "Outfit", sans-serif;
+  font-family: "mulish";
 }
 
 a {

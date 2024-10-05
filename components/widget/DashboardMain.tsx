@@ -198,16 +198,26 @@ const DashboardMain = () => {
                 </div>
             </section>
 
-            <section className='py-6 px-4 w-full bg-white my-3 rounded-[10px]'>
-                <BarChart width={730} height={250} data={feedbacks}>
+            {/* <section className='py-6 px-4 w-full bg-white my-3 rounded-[10px]'>
+                <BarChart width={930} height={350} data={feedbacks}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="createdat" />
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="fullname" fill="#8884d8" />                    
+                    <Bar dataKey="feedbackid" fill="#8884d8" />
                 </BarChart>
-            </section>
+
+                <LineChart width={730} height={250} data={feedbacks}
+                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="createdat" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="createdat" stroke="#8884d8" />                    
+                </LineChart>
+            </section> */}
 
             <section className="py-6 mb-10 px-4 bg-white mt-6 w-full rounded-[10px] ">
                 {
