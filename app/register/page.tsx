@@ -63,9 +63,10 @@ const page = () => {
 
             console.log({ data, error });
 
-            if (error) {
-                throw new Error("Registration failed!")
-            }
+            // if (error) {
+            //     throw new Error("Registration failed!")
+            // }
+            
             toast.success("Registration successful");
             toast.info("Complete your email verification to continue the app");
             router.push('/login');
@@ -264,12 +265,12 @@ const page = () => {
                         </div>
 
                         <div className='mt-3 flex items-center justify-center'>
-                        <Button className="bg-green-50 text-green-800 w-fit px-4">
-                                        <div className="flex items-center space-x-2">
-                                            <FaGoogle onClick={LoginWithGoogle} className='text-3xl text-[#ea4335] cursor-pointer' />
-                                            <span className="block font-medium">Continue with Google</span>                                        
-                                        </div>
-                                    </Button>
+                            <Button className="bg-green-50 text-green-800 w-fit px-4">
+                                <div className="flex items-center space-x-2">
+                                    <FaGoogle onClick={LoginWithGoogle} className='text-3xl text-[#ea4335] cursor-pointer' />
+                                    <span className="block font-medium">Continue with Google</span>
+                                </div>
+                            </Button>
                         </div>
 
                     </div>
