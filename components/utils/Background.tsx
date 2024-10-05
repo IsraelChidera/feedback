@@ -13,7 +13,7 @@ import {
 } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { createClient } from '@/app/utils/supabase/client';
-import { FaXTwitter } from 'react-icons/fa6';
+import { FaLinkedin, FaSquareFacebook, FaTelegram, FaXTwitter } from 'react-icons/fa6';
 import Link from 'next/link';
 
 const Background = ({ children, params, feedback: dd, }: { children: React.ReactNode, params?: any, feedback: any }) => {
@@ -21,7 +21,7 @@ const Background = ({ children, params, feedback: dd, }: { children: React.React
     const router = useRouter();
 
     const queryClient = useQueryClient();
-    const feedbackItem = `${dd?.fullname} shared a feedback saying ${dd?.feedback.substring(0,20)}...\nManage your feedbacks on "https://feedback-share.vercel.app/"`
+    const feedbackItem = `${dd?.fullname} shared a feedback saying ${dd?.feedback.substring(0, 40)}...\n As a biz owner, you can also manage your feedbacks on "https://feedback-share.vercel.app/"`
 
     console.log("bg feedbavk: ", dd);
     const [backgroundColor, setBackgroundColor] = useState<any>(generateRandomColor());
@@ -126,10 +126,13 @@ const Background = ({ children, params, feedback: dd, }: { children: React.React
                 <div>
                     <p className="text-sm mb-2">Share on</p>
                     <div className="flex items-center space-x-2">
-                        <Link href={`https://twitter.com/intent/tweet?url=${feedbackItem}`}>
+                        <Link target='_blank' href={`https://twitter.com/intent/tweet?url=${feedbackItem}`}>
                             <FaXTwitter className="cursor-pointer text-xl" />
                         </Link>
 
+                        <Link target="_blank" href={`https://web.facebook.com/share_channel/?link=${feedbackItem}`}>
+                            <FaSquareFacebook className="cursor-pointer text-xl" />
+                        </Link>                    
                     </div>
                 </div>
 
