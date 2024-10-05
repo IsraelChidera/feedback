@@ -130,8 +130,8 @@ const Background = ({ children, params, feedback: dd, }: { children: React.React
                             <FaXTwitter className="cursor-pointer text-xl" />
                         </Link>
 
-                        <Link target="_blank" href={`https://web.facebook.com/share_channel/?link=${feedbackItem}`}>
-                            <FaSquareFacebook className="cursor-pointer text-xl" />
+                        <Link target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=${feedbackItem}`}>
+                            <FaSquareFacebook className="cursor-pointer text-xl text-[#4267B2]" />
                         </Link>                    
                     </div>
                 </div>
