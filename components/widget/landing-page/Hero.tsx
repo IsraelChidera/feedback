@@ -18,17 +18,17 @@ const Hero = () => {
                 src="/swirl.svg"
                 alt="swirl svg"
                 height={547} width={2254}
-                className='opacity-20 md:block hidden absolute top-[30%] left-0 '
+                className='opacity-20 md:block hidden absolute top-[30%] left-0 z-10 '
             />
 
             <Image
                 src="/swirl.svg"
                 alt="swirl svg"
                 height={1047} width={254}
-                className='opacity-40 md:hidden absolute top-[30%] left-0 '
+                className='opacity-40 md:hidden absolute top-[30%] left-0 z-10'
             />
 
-            <section className='relative z-40 pt-20 lg:pt-0 flex items-center justify-center h-full'>
+            <section className='relative z-20 pt-20 lg:pt-0 flex items-center justify-center h-full'>
                 <Container className="lg:grid grid-cols-2 gap-x-3">
                     <div className='text-white'>
                         <h1 className='text-5xl font-semibold leading-tighter'>
@@ -55,7 +55,7 @@ const Hero = () => {
 
                                     <FiArrowUpRight className='group-hover:animate-bounce text-xl' />
                                 </Link>
-                        }                       
+                        }
                     </div>
 
                     <div className='relative lg:mt-0 mt-10 block lg:flex items-center justify-center'>

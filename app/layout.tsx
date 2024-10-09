@@ -5,6 +5,8 @@ import { FeedbackContextProvider } from "@/store/features/Feedback/FeedbackConte
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import QueryClientProviders from "@/store/QueryClientProviders";
+import "@copilotkit/react-ui/styles.css";
+import { CopilotKit } from "@copilotkit/react-core"; 
 
 export const metadata: Metadata = {
   title: "Feedback Share - Get More Done with Feedback Share",
@@ -19,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+      <CopilotKit runtimeUrl="/api/copilotkit">          
         <QueryClientProviders>
           <UserContextProvider>
             <FeedbackContextProvider>
@@ -27,6 +30,7 @@ export default function RootLayout({
             </FeedbackContextProvider>
           </UserContextProvider>
         </QueryClientProviders>
+        </CopilotKit>
       </body>
     </html>
   );
