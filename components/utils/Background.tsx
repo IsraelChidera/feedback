@@ -45,7 +45,7 @@ const Background = ({ children, params, feedback: dd, }: { children: React.React
         html2canvas(backgroundRef.current).then(canvas => {
             canvas.toBlob((blob: any) => {
                 {
-                    saveAs(blob, 'background.png');
+                    saveAs(blob, 'feedback.png');
                 }
             });
         });
@@ -131,17 +131,17 @@ const Background = ({ children, params, feedback: dd, }: { children: React.React
                         </Link>
 
                         <Link target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=${feedbackItem}`}>
-                            <FaSquareFacebook className="cursor-pointer text-xl text-[#4267B2]" />
+                            <FaSquareFacebook className="cursor-pointer text-xl text-white" />
                         </Link>                    
                     </div>
                 </div>
 
-                <div className="flex space-x-2">
+                <div className="flex space-x-2 mt-4">
                     <button type="button" className='p-3 text-white cursor-pointer rounded-full' onClick={downloadBackground}>
-                        <BsDownload className='text-2xl text-green-700' />
+                        <BsDownload className='text-2xl text-white' />
                     </button>
 
-                    <button onClick={handleDeleteFeedback} className="bg-red-600 hover:bg-red-400 flex items-center space-x-3 text-white py-2 rounded-md px-3">
+                    <button onClick={handleDeleteFeedback} className="bg-white hover:bg-red-400 flex items-center space-x-3 text-red-400 py-2 rounded-md px-3">
                         <AiFillDelete />
                     </button>
                 </div>

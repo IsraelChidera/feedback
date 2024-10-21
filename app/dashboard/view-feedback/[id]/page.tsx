@@ -18,15 +18,15 @@ const page = ({ params }: { params: any }) => {
     };
 
     return (
-        <section className='mx-auto mt-10 mb-12 w-[98%] bg-white rounded-2xl py-5 px-6'>
+        <section className='mx-auto mt-10 mb-12 w-[98%] bg-primary text-white rounded-2xl py-5 px-6'>
             <Background feedback={feedback}>
                 <div className='py-3 px-1 rounded-3xl'>
                     <div>
-                        <div className='grid grid-cols-1 w-full'>
+                        {/* <div className='grid grid-cols-1 w-full'>
                             <img src="/feedback-banner.png" alt="feedback banner" className='w-full' />
-                        </div>
+                        </div> */}
 
-                        <div className="px-5 py-4  rounded-lg mt-6 border-t-8 border-b-4 border-b-white  ">
+                        <div className="px-5 py-4  rounded-lg mt-6 ">
                             <h3 className='text-2xl md:text-3xl text-[#202124]'>
                                 {feedback?.fullname} <span className='italic'>submitted a feedback</span>
                             </h3>
