@@ -7,7 +7,7 @@ import OpenAI from 'openai';
 import { NextRequest } from 'next/server';
 
 const openai = new OpenAI({ apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY });
-const serviceAdapter: any = new OpenAIAdapter({ openai });
+const serviceAdapter: any = new OpenAIAdapter({ openai, model: 'gpt-3.5-turbo' });
 
 const runtime = new CopilotRuntime();
 

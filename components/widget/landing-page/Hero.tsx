@@ -36,7 +36,7 @@ const Hero = () => {
                             Feedback Share
                         </h1>
 
-                        <p className='mt-1 mb-10'>
+                        <p className='mt-1 mb-10 text-lg'>
                             Project management software that enables you and your teams
                             to collate, analyze and manage everyday feedbacks.
 
