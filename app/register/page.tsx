@@ -10,7 +10,6 @@ import { Form, Formik } from 'formik';
 import { useRouter } from 'next/navigation';
 import * as Yup from 'yup';
 import { ImSpinner8 } from "react-icons/im";
-import { FaFacebook } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
 import { toast } from 'react-toastify';
 import { createClient } from '../utils/supabase/client';
@@ -63,16 +62,15 @@ const page = () => {
 
             console.log({ data, error });
 
-            // if (error) {
-            //     throw new Error("Registration failed!")
-            // }
-            
+            if (error) {
+                throw new Error("Registration failed!")
+            }
+
             toast.success("Registration successful");
             toast.info("Complete your email verification to continue the app");
             router.push('/login');
         } catch (error) {
-            console.log(error);
-            setLoading(false)
+            // console.log(error);            
             toast.error("Registration failed");
         } finally {
             setLoading(false);
@@ -96,31 +94,10 @@ const page = () => {
             router.push('/dashboard');
         } catch (error: any) {
             toast.error("Login failed!");
+        } finally {
+            setLoading(false);
         }
-    }
-
-    const LoginWithFacebook = async () => {
-        try {
-            const { data, error } = await supabase.auth.signInWithOAuth({
-                provider: 'facebook',
-                options: {
-                    redirectTo: `http://example.com/auth/callback`,
-                },
-            });
-
-            setError(error);
-            console.log("data: ", data);
-            if (error) {
-                console.log("error inside", error)
-                throw new Error("Login failed!");
-            }
-
-            router.push('/dashboard');
-        } catch (error: any) {
-            toast.error("Login failed!");
-        }
-
-    }
+    }   
 
     return (
         <main className='lg:grid grid-cols-5'>

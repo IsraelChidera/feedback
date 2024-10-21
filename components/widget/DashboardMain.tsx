@@ -29,7 +29,7 @@ const DashboardMain = () => {
     const supabase = createClient();
     const router = useRouter();
 
-    console.log("check all feedbacks: ", feedbacks)
+    // console.log("check all feedbacks: ", feedbacks)
 
 
     const handleAddFeedback = () => {

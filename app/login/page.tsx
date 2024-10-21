@@ -10,7 +10,6 @@ import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { ImSpinner8 } from "react-icons/im";
-import { FaFacebook } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
 import { toast } from 'react-toastify';
 import { createClient } from '../utils/supabase/client';
@@ -47,12 +46,12 @@ const page = () => {
 
             console.log({ data, error });
 
-            // if (error || !data?.session) {
-            //     console.log("error inside", error)
-            //     throw new Error("Login failed!");
-            // }
+            if (error || !data?.session) {
+                console.log("error inside", error)
+                throw new Error("Login failed!");
+            }
 
-           return  router.push("/dashboard");
+            return router.push("/dashboard");
         } catch (error: any) {
             setErrors(error);
             toast.error("Login failed!");
@@ -78,28 +77,9 @@ const page = () => {
         } catch (error: any) {
             setErrors(error);
             toast.error("Login failed!");
+        } finally {
+            setLoading(false);
         }
-    }
-
-    const LoginWithFacebook = async () => {
-        try {
-            const { data, error } = await supabase.auth.signInWithOAuth({
-                provider: 'facebook',
-            });
-
-            setError(error);
-            console.log("data: ", data);
-            if (error) {
-                console.log("error inside", error)
-                throw new Error("Login failed!");
-            }
-
-            router.push('/dashboard');
-        } catch (error: any) {
-            setErrors(error);
-            toast.error("Login failed! ");
-        }
-
     }
 
     return (
@@ -152,8 +132,8 @@ const page = () => {
                             <Formik
                                 initialValues={initialValues}
                                 validationSchema={validationSchema}
-                                onSubmit={(values, { resetForm }: { resetForm: any }) => {
-                                    onLogin(values);
+                                onSubmit={async (values: any, { resetForm }: { resetForm: any }) => {
+                                    await onLogin(values);
                                     resetForm({ values: '' });
                                 }}
                             >
@@ -214,9 +194,9 @@ const page = () => {
                                     <Button className="bg-green-50 text-green-800 w-fit px-4">
                                         <div className="flex items-center space-x-2">
                                             <FaGoogle onClick={LoginWithGoogle} className='text-3xl text-[#ea4335] cursor-pointer' />
-                                            <span className="block font-medium">Continue with Google</span>                                        
+                                            <span className="block font-medium">Continue with Google</span>
                                         </div>
-                                    </Button>                                  
+                                    </Button>
                                 </div>
 
                             </div>
