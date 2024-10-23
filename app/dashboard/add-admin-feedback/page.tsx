@@ -13,9 +13,11 @@ import {
     useMutation
 } from '@tanstack/react-query';
 import { createClient } from '@/app/utils/supabase/client';
+import { FaMicrophone } from 'react-icons/fa6';
 
 const page = () => {
     const [loading, setLoading] = useState(false);
+    const [transcriptAsFeedback, setTranscriptAsFeedback] = useState<string>("");
 
     const { userProfile } = useContext(UserContext);
     const queryClient = useQueryClient();
@@ -31,8 +33,7 @@ const page = () => {
     };
 
     const validationSchema = Yup.object({
-        businessname: Yup.string()
-            // .required('Full name is required')
+        businessname: Yup.string()            
             .min(3, 'Must be 3 characters or more'),
         fullname: Yup.string()
             .required('Business name is required')
@@ -75,8 +76,13 @@ const page = () => {
         try {
             setLoading(true);
 
+            if (transcriptAsFeedback) {
+                values.feedback = transcriptAsFeedback;
+            }
+
             await mutation.mutateAsync(values);
             console.log(values);
+            setTranscriptAsFeedback("");
 
         } catch (error) {
             setLoading(false);
@@ -84,6 +90,19 @@ const page = () => {
         }
     }
 
+    function handleOnRecord() {
+        setTranscriptAsFeedback("");
+        const SpeechRecognition: any = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition: any = new SpeechRecognition();
+
+        recognition.start();
+
+        recognition.onresult = async function (event: any) {
+            const transcript = event.results[0][0].transcript;
+            console.log('transcript', transcript)
+            setTranscriptAsFeedback(transcript)
+        }
+    }
 
     return (
         <section className='mt-2 mx-auto w-[98%]'>
@@ -135,7 +154,7 @@ const page = () => {
                                                 name="businessname"
                                                 value={values.businessname}
                                                 placeholder="Add business name"
-                                                onChange={handleChange}                                                
+                                                onChange={handleChange}
                                                 className='border text-sm border-[#e0e0e0] w-full rounded-[10px] text-[#111827] py-[16px] pl-[14px] pr-[10px]'
                                             />
                                             <p className='text-xs text-primary'>
@@ -149,7 +168,7 @@ const page = () => {
                                             </label>
                                             <textarea
                                                 name="feedback"
-                                                value={values.feedback}
+                                                value={transcriptAsFeedback || values.feedback}
                                                 placeholder="Type your feedback here . . ."
                                                 onChange={handleChange}
                                                 className='border text-sm border-[#e0e0e0] w-full rounded-[10px] text-[#111827] py-[16px] pl-[14px] pr-[10px]'
@@ -162,15 +181,23 @@ const page = () => {
                                             </p>
                                         </div>
 
-                                        <Button type="submit" className="w-full bg-primary text-white rounded-[10px]">
-                                            {loading ? <div className="flex items-center justify-center">
-                                                <ImSpinner8 className="text-white animate-spin" />
+                                        <div className="w-full flex space-x-2">
+                                            <Button type="submit" className=" bg-primary text-white rounded-[10px] w-full">
+                                                {loading ? <div className="flex items-center justify-center">
+                                                    <ImSpinner8 className="text-white animate-spin" />
+                                                </div>
+                                                    :
+                                                    <span>
+                                                        Add feedback
+                                                    </span>}
+                                            </Button>
+
+                                            <div className='flex items-end'>
+                                                <div onClick={handleOnRecord} className='w-fit h-fit bg-primary rounded-[10px] p-2'>
+                                                    <FaMicrophone className="text-yellow-100 text-base" />
+                                                </div>
                                             </div>
-                                                :
-                                                <span>
-                                                    Add feedback
-                                                </span>}
-                                        </Button>
+                                        </div>
 
 
                                     </Form>
